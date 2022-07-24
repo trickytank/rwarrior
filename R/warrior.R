@@ -8,23 +8,40 @@ warrior_new <- function() {
   structure(w, class = c("warrior"))
 }
 
-# Walk the warrior
-# direction is "+" or "right" to move to the right (default), or "-" or "left" to the left.
-walk.warrior <- function(w, direction = "right") {
-  if(direction == "+" || durection == "right" ) {
-    w$x <- "try_right"
-  } elsif(direction == "-" || durection == "left" ) {
-    w$x <- "try_left"
+#' Walk the warrior
+#' direction is "+" or "right" to move to the right (default), or "-" or "left" to the left.
+#' @export
+walk.warrior <- function(w, direction = "right", level_state) {
+  if(direction == "+" || direction == "right" ) {
+    action <- "try_right"
+  } else if(direction == "-" || direction == "left" ) {
+    action <- "try_left"
   } else {
     stop("Invalid direction specified in walk()")
   }
-  update_level_state()
+  if(action == "try_right") {
+    if(level_state[w$x] == " ") {
+      w$x + 1L
+      level_state[w$x] <- " "
+      level_state[w$x + 1L] <- "@"
+    } else if (level_state[w$x] == ">") {
+      w$x + 1L
+      level_state[w$x] <- " "
+      level_state[w$x + 1L] <- "@"
+      at_exit = TRUE
+    } else {
+      message("Warrior is blocked and doesn't move.")
+    }
+  } else if (action == "try_left") {
+    stop("Action \"try_left\" is not yet implemented.")
+  }
+  list(w = w, level_state = level_state, at_exit = at_exit, alive = TRUE)
 }
 
-feel.warrior <- function(w) {
+warrior.feel <- function(w, direction) {
 
 }
 
-attack.warrior <- function(w)
+warrior.attack <- function(w) {
 
 }
