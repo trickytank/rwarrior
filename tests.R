@@ -1,7 +1,8 @@
 # Warrior AI tests
 
-AI <- function(warrior, level_state) {
-  warrior <- warrior.walk()
-  warrior
+AI <- function(warrior, memory = NULL, level_state = NULL) {
+  action <- "walk"
+  list(action = action, memory = memory)
 }
 
+play_warrior(AI)
