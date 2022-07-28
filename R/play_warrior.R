@@ -33,20 +33,20 @@ play_warrior <- function(ai, level = 1, sleep = 0.5) {
     message_level_state(level_state)
     if(health <= 0) {
       message("Your warrior died.")
-      return(FALSE)
+      return(invisible(FALSE))
     }
 
     if(at_exit) {
       message("You found the exit!")
       complete <- TRUE
       message("Success, you have completed level ", level, ".")
-      return(invisible(NULL))
+      return(invisible(TRUE))
     }
 
     turns_left <- turns_left - 1L
     if(turns_left == 0) {
       message("Sorry, you have run out of time.")
-      return(FALSE)
+      return(invisible(FALSE))
     }
 
     message("-----------------------------------")
