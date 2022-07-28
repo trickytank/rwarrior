@@ -1,8 +1,21 @@
 # Warrior AI tests for level 1
 
-AI <- function(warrior, memory = NULL) {
-  action <- "walk"
-  warrior$walk()
-}
+expect_true(play_warrior(
+  function(warrior) {
+    warrior$walk()
+  },
+  sleep = 0)
+)
 
-assert(play_warrior(AI, sleep = 0))
+expect_false(play_warrior(
+  function(warrior) {
+    warrior$walk("lef")
+  },
+  sleep = 0)
+)
+
+expect_error(play_warrior(
+  function(warrior) {
+    warrior$walk("goat")
+  },
+  sleep = 0))
