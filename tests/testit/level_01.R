@@ -1,4 +1,4 @@
-# Warrior AI tests
+# Warrior AI tests for level 1
 
 AI <- function(warrior, memory = NULL) {
   action <- "walk"
