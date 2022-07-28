@@ -12,52 +12,46 @@
 #'   warrior
 #' }
 #' play_warrior(AI, level = 1)
-play_warrior <- function(ai, level = 1) {
-  w <- warrior_new()
-  level_state <- level_01
+play_warrior <- function(ai, level = 1, sleep = 0.5) {
+  level_state <- Level_state$new(levels[level])
   at_exit <- FALSE
   complete <- FALSE
   turns_left <- 100L
   alive <- TRUE
+  health = 20L
   while(!complete) {
     message("Turns left: ", turns_left)
-    result <- warrior_turn(ai, w, level_state)
-    w <- result$w
-    level_state <- result$level_state
+    lss <- strsplit(level_state$state, "")[[1]]
+    x <- which(lss == "@")
+    feel_left <- ifelse(x == 1, "|", lss[x-1])
+    feel_right <- ifelse(x == length(lss), "|", lss[x+1])
+    w <- Warrior_action$new(health, feel_left, feel_right)
+    ai(w)
+    at_exit  <- warrior_turn(w, health, level_state)
+
+
     message_level_state(level_state)
-    at_exit <- result$at_exit
-    alive <- result$alive
-    turns_left <- turns_left - 1L
-    if(!alive) {
+    if(health <= 0) {
       message("Your warrior died.")
       return(FALSE)
     }
+
     if(at_exit) {
       message("You found the exit!")
       complete <- TRUE
+      message("Success, you have completed level ", level, ".")
+      return(invisible(NULL))
     }
+
+    turns_left <- turns_left - 1L
     if(turns_left == 0) {
       message("Sorry, you have run out of time.")
       return(FALSE)
     }
+
     message("-----------------------------------")
+    Sys.sleep(sleep)
   }
-  message("Success, you have completed level ", level, ".")
-  return(NULL)
+  return(invisible(NULL))
 }
 
-warrior_turn <- function(ai, w, level_state) {
-  ai_result <- ai(w, level_state)
-  if(ai_result$action == "walk") {
-    if(is.null(ai_result$direction)) {
-      ai_result$direction <- "right"
-    }
-    action_result <- walk(w, ai_result$direction, level_state)
-  }
-  if(action_result$at_exit) {
-    return(action_result)
-  }
-  #TODO: enemy attacks
-  return(action_result)
-  #list(w, level_state, at_exit, alive)
-}
