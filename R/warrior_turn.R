@@ -8,7 +8,8 @@ warrior_turn <- function(w, health, level_state) {
   x <- level_state$x
 
   if(w$action == "walk") {
-    if(str_detect(w$direction, "^r(i(g(ht?)?)?)?")) {
+    #if(str_detect(w$direction, "^r(i(g(ht?)?)?)?")) {
+    if(!is.na(pmatch(w$direction, "right"))) {
       if(lss[x + 1L] == " ") {
         lss[x] <- " "
         lss[x + 1L] <- "@"
@@ -20,7 +21,7 @@ warrior_turn <- function(w, health, level_state) {
         message("Warrior is blocked and doesn't move.")
       }
       x <- x + 1L
-    } else if (str_detect(w$direction, "^l(e(ft?)?)?")) {
+    } else if (!is.na(pmatch(w$direction, "left"))) {
       if(lss[x - 1L] == " ") {
         lss[x] <- " "
         lss[x - 1L] <- "@"
