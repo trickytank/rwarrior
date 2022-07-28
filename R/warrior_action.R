@@ -1,4 +1,4 @@
-# Definitions for the S3 class warrior.
+# Definitions for the R6 class Warrior_action.
 
 Warrior_action <- R6Class(
   "Warrior_action",
