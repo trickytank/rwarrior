@@ -12,7 +12,7 @@ Warrior_action <- R6Class(
       self$feel_left <- feel_left
       self$feel_right <- feel_right
     },
-    walk = function(direction = "+") {
+    walk = function(direction = "right") {
       if(!is.null(private$action)) {
         stop("A warrior action has already been defined.")
       }
