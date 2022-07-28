@@ -21,7 +21,7 @@ play_warrior <- function(ai, level = 1, sleep = 0.5) {
   health = 20L
   while(!complete) {
     message("Turns left: ", turns_left)
-    lss <- strsplit(level_state$state, "")[[1]]
+    lss <- level_state$vec
     x <- which(lss == "@")
     feel_left <- ifelse(x == 1, "|", lss[x-1])
     feel_right <- ifelse(x == length(lss), "|", lss[x+1])

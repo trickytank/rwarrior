@@ -6,5 +6,10 @@ Level_state <- R6Class(
       self$state <- level_map
       invisible(self$state)
     }
+  ),
+  active = list(
+    vec = function() {
+      strsplit(self$state, "")[[1]]
+    }
   )
 )

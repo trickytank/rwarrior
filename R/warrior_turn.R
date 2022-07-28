@@ -4,7 +4,7 @@ warrior_turn <- function(w, health, level_state) {
     stop("No warrior action was provided.")
   }
   at_exit = FALSE
-  lss <- strsplit(level_state$state, "")[[1]]
+  lss <- level_state$vec
   x <- which(lss == "@")
 
   if(w$action == "walk") {
