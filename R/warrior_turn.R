@@ -1,17 +1,14 @@
-
+#' @import stringr
 warrior_turn <- function(w, health, level_state) {
   if(is.null(w$action)) {
     stop("No warrior action was provided.")
   }
   at_exit = FALSE
   lss <- level_state$vec
-  x <- which(lss == "@")
+  x <- level_state$x
 
   if(w$action == "walk") {
-    if(w$direction != "+" && w$direction != "-" ) {
-      stop("Invalid direction specified in walk()")
-    }
-    if(w$direction == "+") {
+    if(str_detect(w$direction, "^r(i(g(ht?)?)?)?")) {
       if(lss[x + 1L] == " ") {
         lss[x] <- " "
         lss[x + 1L] <- "@"
@@ -23,12 +20,24 @@ warrior_turn <- function(w, health, level_state) {
         message("Warrior is blocked and doesn't move.")
       }
       x <- x + 1L
-    } else if (w$direction == "-") {
-      stop("Action \"try_left\" is not yet implemented.")
+    } else if (str_detect(w$direction, "^l(e(ft?)?)?")) {
+      if(lss[x - 1L] == " ") {
+        lss[x] <- " "
+        lss[x - 1L] <- "@"
+      } else if (lss[x - 1L] == ">") {
+        lss[x] <- " "
+        lss[x - 1L] <- "@"
+        at_exit = TRUE
+      } else {
+        message("Warrior is blocked and doesn't move.")
+      }
+      x <- x + 1L
+    } else {
+      stop("Invalid direction specified in walk()")
     }
   }
 
-  level_state$state <- paste0(lss, collapse = "")
+  level_state$vec <- lss
   at_exit
 }
 
