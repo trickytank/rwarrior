@@ -1,3 +1,4 @@
+#' @import R6
 Level_state <- R6Class(
   "Level_state",
   public = list(
@@ -8,8 +9,19 @@ Level_state <- R6Class(
     }
   ),
   active = list(
-    vec = function() {
-      strsplit(self$state, "")[[1]]
+    vec = function(value) {
+      if (missing(value)) {
+        strsplit(self$state, "")[[1]]
+      } else {
+        self$state <- paste0(value, collapse = "")
+      }
+    },
+    x = function(value) {
+      if (missing(value)) {
+        which(self$vec == "@")
+      } else {
+        stop("Cannot assign X")
+      }
     }
   )
 )
