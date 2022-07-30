@@ -13,13 +13,13 @@ Warrior_action <- R6Class(
       self$feel_right <- feel_right
     },
     walk = function(direction = "right") {
-      self$check_one_action()
+      private$check_one_action()
       self$action <- "walk"
       self$direction <- direction
       invisible(self)
     },
     fight = function(direction = "right") {
-      self$check_one_action()
+      private$check_one_action()
       self$action <- "fight"
       self$direction <- direction
       invisible(self)
@@ -27,7 +27,7 @@ Warrior_action <- R6Class(
   ),
   private = list(
     health = NULL,
-    check_one_action <- function() {
+    check_one_action = function() {
       if(!is.null(self$action)) {
         stop("A warrior action has already been defined.")
       }

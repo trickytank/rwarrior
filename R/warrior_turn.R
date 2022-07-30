@@ -4,42 +4,46 @@ warrior_turn <- function(w, health, level_state) {
     stop("No warrior action was provided.")
   }
   at_exit = FALSE
-  lss <- level_state$vec
+  map <- level_state$map
   x <- level_state$x
+  y <- level_state$y
 
   if(w$action == "walk") {
-    #if(str_detect(w$direction, "^r(i(g(ht?)?)?)?")) {
     if(!is.na(pmatch(w$direction, "right"))) {
-      if(lss[x + 1L] == " ") {
-        lss[x] <- " "
-        lss[x + 1L] <- "@"
-      } else if (lss[x + 1L] == ">") {
-        lss[x] <- " "
-        lss[x + 1L] <- "@"
+      if(map[y, x + 1L] == " ") {
+        map <- swap_positions(map, x, y, x+1, y)
+      } else if (map[y, x + 1L] == ">") {
+        map[y, x] <- " "
+        map[y, x + 1L] <- "@"
         at_exit = TRUE
       } else {
         message("Warrior is blocked and doesn't move.")
       }
       x <- x + 1L
     } else if (!is.na(pmatch(w$direction, "left"))) {
-      if(lss[x - 1L] == " ") {
-        lss[x] <- " "
-        lss[x - 1L] <- "@"
-      } else if (lss[x - 1L] == ">") {
-        lss[x] <- " "
-        lss[x - 1L] <- "@"
+      if(map[y, x - 1L] == " ") {
+        map <- swap_positions(map, x, y, x-1, y)
+      } else if (map[y, x - 1L] == ">") {
+        map[y, x] <- " "
+        map[y, x - 1L] <- "@"
         at_exit = TRUE
       } else {
         message("Warrior is blocked and doesn't move.")
       }
-      x <- x + 1L
+      x <- x - 1L
     } else {
       stop("Invalid direction specified in walk()")
     }
   }
-
-  level_state$vec <- lss
+  level_state$map <- map
   at_exit
+}
+
+swap_positions <- function(M, x1, y1, x2, y2) {
+  temp <- M[y1, x1]
+  M[y1, x1] <- M[y2, x2]
+  M[y2, x2] <- temp
+  M
 }
 
 

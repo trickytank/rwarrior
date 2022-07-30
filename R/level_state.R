@@ -2,23 +2,42 @@
 Level_state <- R6Class(
   "Level_state",
   public = list(
-    state = NULL,
+    map = NULL,
+    hp = NULL,
     initialize = function(level_map) {
-      self$state <- level_map
-      invisible(self$state)
+      d <- dim(level_map)
+      tpmatrix <- matrix(c(" ", rep("—", d[2]), " "), nrow = 1)
+      sidematrix <- matrix(rep("|", d[1]))
+      self$map <- rbind(tpmatrix,
+                        cbind(sidematrix, level_map, sidematrix),
+                        tpmatrix)
+      self$hp <- matrix(rep(NA_integer_, nrow(self$map) * ncol(self$map)), nrow = nrow(self$map), ncol = ncol(self$map))
+      self$hp[self$map == "s"] <- 12L
+      invisible(self)
     }
   ),
   active = list(
-    vec = function(value) {
-      if (missing(value)) {
-        strsplit(self$state, "")[[1]]
-      } else {
-        self$state <- paste0(value, collapse = "")
-      }
-    },
     x = function(value) {
       if (missing(value)) {
-        which(self$vec == "@")
+        floor((which(self$map == "@") - 1) / nrow(self$map)) + 1
+      } else {
+        stop("Cannot assign X")
+      }
+    },
+    y = function(value) {
+      if (missing(value)) {
+        (which(self$map == "@" ) - 1) %% 3 + 1
+      } else {
+        stop("Cannot assign Y")
+      }
+    },
+    ascii = function(value) {
+      if (missing(value)) {
+        lines <- ""
+        for(i in seq_len(nrow(self$map))) {
+          lines <- paste0(lines, paste0(self$map[i, ], collapse = ""), "\n")
+        }
+        return(lines)
       } else {
         stop("Cannot assign X")
       }

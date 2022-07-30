@@ -13,7 +13,7 @@
 #' }
 #' play_warrior(AI, level = 1)
 play_warrior <- function(ai, level = 1, sleep = 0.5) {
-  level_state <- Level_state$new(levels[level])
+  level_state <- Level_state$new(levels[[level]])
   at_exit <- FALSE
   complete <- FALSE
   turns_left <- 100L
@@ -21,14 +21,17 @@ play_warrior <- function(ai, level = 1, sleep = 0.5) {
   health = 20L
   while(!complete) {
     message("Turns left: ", turns_left)
-    lss <- level_state$vec
+    map <- level_state$map
     x <- level_state$x
-    feel_left <- ifelse(x == 1, "|", lss[x-1])
-    feel_right <- ifelse(x == length(lss), "|", lss[x+1])
+    y <- level_state$y
+    feel_left <- level_state$map[y, x-1]
+    feel_right <- level_state$map[y, x+1]
+    # TODO: feel_up, feel_down
     w <- Warrior_action$new(health, feel_left, feel_right)
     ai(w)
     at_exit  <- warrior_turn(w, health, level_state)
 
+    cat(level_state$ascii)
 
     message_level_state(level_state)
     if(health <= 0) {
