@@ -18,4 +18,5 @@ expect_error(play_warrior(
   function(warrior) {
     warrior$walk("goat")
   },
-  sleep = 0))
+  sleep = 0)
+)
