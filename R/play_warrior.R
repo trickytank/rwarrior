@@ -49,6 +49,7 @@ play_warrior <- function(ai, level = 1, sleep = 0.5, warrior_name = "Fisher") {
           "Clear Bonus: NA\n",
           "Total Score: NA\n")
       # 0 8 2 10
+      message(paste0("See the readme for the next level of the tower with level_readme(", level + 1, ")"))
       return(invisible(TRUE))
     }
 
