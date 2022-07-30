@@ -12,15 +12,17 @@
 #'   warrior
 #' }
 #' play_warrior(AI, level = 1)
-play_warrior <- function(ai, level = 1, sleep = 0.5) {
+play_warrior <- function(ai, level = 1, sleep = 0.5, warrior_name = "Fisher") {
   level_state <- Level_state$new(levels[[level]])
   at_exit <- FALSE
   complete <- FALSE
-  turns_left <- 100L
+  turn <- 1L
   alive <- TRUE
   health = 20L
   while(!complete) {
-    message("Turns left: ", turns_left)
+    message("-----------------------------------")
+    cat("- Turn", turn, "-\n")
+    cat(level_state$ascii)
     map <- level_state$map
     x <- level_state$x
     y <- level_state$y
@@ -29,9 +31,9 @@ play_warrior <- function(ai, level = 1, sleep = 0.5) {
     # TODO: feel_up, feel_down
     w <- Warrior_action$new(health, feel_left, feel_right)
     ai(w)
-    at_exit  <- warrior_turn(w, health, level_state)
+    at_exit <- warrior_turn(w, health, level_state, warrior_name)
 
-    cat(level_state$ascii)
+
 
     message_level_state(level_state)
     if(health <= 0) {
@@ -40,19 +42,22 @@ play_warrior <- function(ai, level = 1, sleep = 0.5) {
     }
 
     if(at_exit) {
-      message("You found the exit!")
       complete <- TRUE
-      message("Success, you have completed level ", level, ".")
+      message("Success, you have found the stairs.")
+      cat("Level Score: NA\n",
+          "Time Bonus: NA\n",
+          "Clear Bonus: NA\n",
+          "Total Score: NA\n")
+      # 0 8 2 10
       return(invisible(TRUE))
     }
 
-    turns_left <- turns_left - 1L
-    if(turns_left == 0) {
+    turn <- turn + 1L
+    if(turn == 101) {
       message("Sorry, you have run out of time.")
       return(invisible(FALSE))
     }
 
-    message("-----------------------------------")
     Sys.sleep(sleep)
   }
   return(invisible(NULL))

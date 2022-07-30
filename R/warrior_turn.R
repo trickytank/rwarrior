@@ -1,5 +1,5 @@
 #' @import stringr
-warrior_turn <- function(w, health, level_state) {
+warrior_turn <- function(w, health, level_state, warrior_name) {
   if(is.null(w$action)) {
     stop("No warrior action was provided.")
   }
@@ -12,23 +12,27 @@ warrior_turn <- function(w, health, level_state) {
     if(!is.na(pmatch(w$direction, "right"))) {
       if(map[y, x + 1L] == " ") {
         map <- swap_positions(map, x, y, x+1, y)
+        cat(warrior_name, "walks forward.")
       } else if (map[y, x + 1L] == ">") {
         map[y, x] <- " "
         map[y, x + 1L] <- "@"
+        cat(warrior_name, "walks forward.")
         at_exit = TRUE
       } else {
-        message("Warrior is blocked and doesn't move.")
+        message(warrior_name, "is blocked and doesn't move.")
       }
       x <- x + 1L
     } else if (!is.na(pmatch(w$direction, "left"))) {
       if(map[y, x - 1L] == " ") {
         map <- swap_positions(map, x, y, x-1, y)
+        cat(warrior_name, "walks back.")
       } else if (map[y, x - 1L] == ">") {
         map[y, x] <- " "
         map[y, x - 1L] <- "@"
+        cat(warrior_name, "walks back.")
         at_exit = TRUE
       } else {
-        message("Warrior is blocked and doesn't move.")
+        message(warrior_name, "is blocked and doesn't move.")
       }
       x <- x - 1L
     } else {
