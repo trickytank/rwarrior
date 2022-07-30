@@ -13,7 +13,7 @@
 #' }
 #' play_warrior(AI, level = 1)
 play_warrior <- function(ai, level = 1, sleep = 0.5, warrior_name = "Fisher") {
-  level_state <- Level_state$new(levels[[level]])
+  level_state <- Level_state$new(levels[[level]]$map)
   at_exit <- FALSE
   complete <- FALSE
   turn <- 1L
@@ -45,7 +45,7 @@ play_warrior <- function(ai, level = 1, sleep = 0.5, warrior_name = "Fisher") {
       complete <- TRUE
       message("Success, you have found the stairs.")
       cat("Level Score: NA\n",
-          "Time Bonus: NA\n",
+          "Time Bonus:", max(0, levels[[level]]$time_bonus - turn), "\n",
           "Clear Bonus: NA\n",
           "Total Score: NA\n")
       # 0 8 2 10
