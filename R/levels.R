@@ -6,6 +6,7 @@ levels[[1]] <- list(
   map = matrix(c("@", " ", " ", " ", " ", " ", " ", ">"), nrow = 1, byrow = TRUE),
   tip = "Call warrior$walk() to walk forward in your AI.",
   time_bonus = 15,
-  ace_score = 10
+  ace_score = 10,
+  methods = c("walk")
 )
 levels[[2]] <- matrix(c("@", " ", " ", "s", " ", " ", " ", ">"), nrow = 1, byrow = TRUE)
