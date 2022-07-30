@@ -26,10 +26,7 @@ play_warrior <- function(ai, level = 1, sleep = 0.5, warrior_name = "Fisher") {
     map <- level_state$map
     x <- level_state$x
     y <- level_state$y
-    feel_left <- level_state$map[y, x-1]
-    feel_right <- level_state$map[y, x+1]
-    # TODO: feel_up, feel_down
-    w <- Warrior_action$new(health, feel_left, feel_right)
+    w <- Warrior_action$new(health, level_state)
     ai(w)
     at_exit <- warrior_turn(w, health, level_state, warrior_name)
 
