@@ -9,7 +9,7 @@ warrior_turn <- function(w, health, level_state, warrior_name) {
   y <- level_state$y
 
   if(w$action == "walk") {
-    if(!is.na(pmatch(w$direction, "right"))) {
+    if(!is.na(pmatch(w$direction, "forward"))) {
       if(map[y, x + 1L] == " ") {
         map <- swap_positions(map, x, y, x+1, y)
         cat(warrior_name, "walks forward.")
@@ -22,7 +22,7 @@ warrior_turn <- function(w, health, level_state, warrior_name) {
         message(warrior_name, "is blocked and doesn't move.")
       }
       x <- x + 1L
-    } else if (!is.na(pmatch(w$direction, "left"))) {
+    } else if (!is.na(pmatch(w$direction, "backward"))) {
       if(map[y, x - 1L] == " ") {
         map <- swap_positions(map, x, y, x-1, y)
         cat(warrior_name, "walks back.")
