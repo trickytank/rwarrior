@@ -27,6 +27,10 @@ Warrior_action <- R6Class(
         level_state$map[y, x+1]
       } else if (str_detect(direction, "^l(e(ft?)?)?")) {
         level_state$map[y, x-1]
+      } else if (str_detect(direction, "^up?")) {
+        level_state$map[y-1, x]
+      } else if (str_detect(direction, "^d(o(wn?)?)?")) {
+        level_state$map[y+1, x]
       } else {
         stop("Unspecified direction in $feel.")
       }
