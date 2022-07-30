@@ -19,14 +19,14 @@ Level_state <- R6Class(
   active = list(
     x = function(value) {
       if (missing(value)) {
-        floor((which(self$map == "@") - 1) / nrow(self$map)) + 1
+        which(self$map == "@", arr.ind = TRUE)[1, 2]
       } else {
         stop("Cannot assign X")
       }
     },
     y = function(value) {
       if (missing(value)) {
-        (which(self$map == "@" ) - 1) %% 3 + 1
+        which(self$map == "@", arr.ind = TRUE)[1, 1]
       } else {
         stop("Cannot assign Y")
       }
