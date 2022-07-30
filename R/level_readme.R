@@ -18,11 +18,11 @@ method_description <- function(method) {
     cat('    - "up"\n')
     cat('    - "down"\n')
   } else if (method == "feel$empty") {
-    cat('- warrior$feel$empty')
-    cat('  Returns TRUE if the space in front is empty or the stairs, and FALSE otherwise.')
+    cat('- warrior$feel$empty\n')
+    cat('  Returns TRUE if the space in front is empty or the stairs, and FALSE otherwise.\n')
   } else if (method == "attack") {
-    cat('- warrior$attack(direction = "forward")')
-    cat('  Attack the space in the given direction (foward by default).')
+    cat('- warrior$attack(direction = "forward")\n')
+    cat('  Attack the space in the given direction (foward by default).\n')
   } else {
     stop("Internal error, level has undefined method. (Please report this bug).")
   }
