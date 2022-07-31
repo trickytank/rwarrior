@@ -28,7 +28,7 @@ play_warrior <- function(ai, level = 1, sleep = 0.5, warrior_name = "Fisher") {
     y <- level_state$y
     w <- Warrior_action$new(health, level_state)
     ai(w)
-    result <- warrior_turn(w, health, level_state, warrior_name)
+    result <- warrior_turn(w, health, level_state, warrior_name, sleep)
     at_exit <- result$at_exit
     health <- result$health
 

@@ -1,5 +1,5 @@
 #' @import stringr
-warrior_turn <- function(w, health, level_state, warrior_name) {
+warrior_turn <- function(w, health, level_state, warrior_name, sleep = 0) {
   if(is.null(w$action)) {
     stop("No warrior action was provided.")
   }
@@ -38,7 +38,9 @@ warrior_turn <- function(w, health, level_state, warrior_name) {
       enemy <- enemy_types[enemy_short]
       level_state$hp[y, x + offset] <- level_state$hp[y, x + offset] - attack_power
       message(warrior_name, " attacks ", direc, " and hits ", enemy, ".")
+      Sys.sleep(sleep)
       message(enemy, " takes ", attack_power, " damage, ", level_state$hp[y, x + offset], " health power left.")
+      Sys.sleep(sleep)
       if(level_state$hp[y, x + offset] <= 0) {
         map[y, x + offset] <- " "
         level_state$hp[y, x + offset] <- NA
@@ -48,6 +50,7 @@ warrior_turn <- function(w, health, level_state, warrior_name) {
       # check by doing a rest at the enemy
       health <- health - enemy_power[enemy_short]
       message(enemy, " attacks ", direc," and hits ", warrior_name, ".")
+      Sys.sleep(sleep)
       message(warrior_name, " takes ", enemy_power[enemy_short], " damage, ", health, " health power left.")
     } else {
       message(warrior_name, " attacks forward and hits nothing.")
