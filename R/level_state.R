@@ -60,6 +60,7 @@ Level_state <- R6Class(
         if(self$map[self$y - 1, self$x] %in% names(enemy_types)) {
           enemies <- c(enemies, self$map[self$y - 1, self$x])
         }
+        enemies
       } else {
         stop("Cannot assign closeby_enemies")
       }
