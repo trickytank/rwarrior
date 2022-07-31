@@ -23,6 +23,13 @@ method_description <- function(method) {
   } else if (method == "attack") {
     cat('- warrior$attack(direction = "forward")\n')
     cat('  Attack the space in the given direction (foward by default).\n')
+  } else if(method == "rest") {
+    cat('- warrior$rest()')
+    cat('  Rest and heal 10% of the your warrior\'s health.')
+  } else if(method == "health") {
+    cat('- warrior$health\n')
+    cat('  Returns the health of the warrior, up to 20HP.')
+  }
   } else {
     stop("Internal error, level has undefined method. (Please report this bug).")
   }
