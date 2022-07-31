@@ -22,6 +22,11 @@ Warrior_action <- R6Class(
       self$direction <- direction
       invisible(self)
     },
+    rest = function() {
+      private$check_one_action()
+      self$action <- "rest"
+      invisible(self)
+    },
     feel = function(direction = "forward") {
       if(!is.na(pmatch(direction, "forward"))) {
         list(empty = private$level_state$map[private$level_state$y, private$level_state$x + 1] %in% c(" ", ">"))
