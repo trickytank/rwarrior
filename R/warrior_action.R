@@ -16,17 +16,17 @@ Warrior_action <- R6Class(
       self$direction <- direction
       invisible(self)
     },
-    fight = function(direction = "forward") {
+    attack = function(direction = "forward") {
       private$check_one_action()
-      self$action <- "fight"
+      self$action <- "attack"
       self$direction <- direction
       invisible(self)
     },
     feel = function(direction = "forward") {
       if(!is.na(pmatch(direction, "forward"))) {
-        c(empty = level_state$map[y, x+1] %in% c(" ", ">"))
+        list(empty = private$level_state$map[private$level_state$y, private$level_state$x + 1] %in% c(" ", ">"))
       } else if (!is.na(pmatch(direction, "backward"))) {
-        c(empty = level_state$map[y, x-1] %in% c(" ", ">"))
+        list(empty = private$level_state$map[private$level_state$y, private$level_state$x - 1] %in% c(" ", ">"))
       } else {
         stop("Invalid direction in $feel.")
       }
