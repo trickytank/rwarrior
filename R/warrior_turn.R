@@ -7,6 +7,7 @@ warrior_turn <- function(w, health, level_state, warrior_name, sleep = 0) {
   map <- level_state$map
   x <- level_state$x
   y <- level_state$y
+  points <- 0
   if(w$action %in% c("walk", "attack")) {
     if(!is.na(pmatch(w$direction, "forward"))) {
       direc <- "forward"
@@ -45,13 +46,10 @@ warrior_turn <- function(w, health, level_state, warrior_name, sleep = 0) {
         map[y, x + offset] <- " "
         level_state$hp[y, x + offset] <- NA
         message(enemy, " dies.")
+        Sys.sleep(sleep)
+        message(warrior_name, " earns ", enemy_points[enemy_short], " points.")
+        points <- points + enemy_points[enemy_short]
       }
-      # TODO: This might happen regardless of whether an attack occurred, so move outside.
-      # check by doing a rest at the enemy
-      health <- health - enemy_power[enemy_short]
-      message(enemy, " attacks ", direc," and hits ", warrior_name, ".")
-      Sys.sleep(sleep)
-      message(warrior_name, " takes ", enemy_power[enemy_short], " damage, ", health, " health power left.")
     } else {
       message(warrior_name, " attacks forward and hits nothing.")
     }
@@ -59,8 +57,17 @@ warrior_turn <- function(w, health, level_state, warrior_name, sleep = 0) {
     stop("Invalid warrior action (this is a bug).")
   }
 
+  # Check if an enemy is close by
+  for(enemy_short in level_state$closeby_enemies) {
+    # TODO: This might happen regardless of whether an attack occurred, so move outside.
+    # check by doing a rest at the enemy
+    health <- health - enemy_power[enemy_short]
+    message(enemy, " attacks ", direc," and hits ", warrior_name, ".")
+    Sys.sleep(sleep)
+    message(warrior_name, " takes ", enemy_power[enemy_short], " damage, ", health, " health power left.")
+  }
   level_state$map <- map
-  list(at_exit = at_exit, health = health)
+  list(at_exit = at_exit, health = health, points = points)
 }
 
 swap_positions <- function(M, x1, y1, x2, y2) {
@@ -72,6 +79,7 @@ swap_positions <- function(M, x1, y1, x2, y2) {
 
 enemy_types <- c("s" = "Sludge", "S" = "Super Sludge")
 enemy_power <- c("s" = 3, "S" = NA)
+enemy_points <- c("s" = 12, "S" = NA)
 attack_power <- 5
 
 
