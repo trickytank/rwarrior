@@ -29,7 +29,6 @@ method_description <- function(method) {
   } else if(method == "health") {
     cat('- warrior$health\n')
     cat('  Returns the health of the warrior, up to 20HP.')
-  }
   } else {
     stop("Internal error, level has undefined method. (Please report this bug).")
   }
