@@ -12,7 +12,7 @@ levels[[1]] <- list(
 
 levels[[2]] <- list(
   description = "It is too dark to see anything, but you smell sludge nearby.",
-  matrix(c("@", " ", " ", " ", "s", " ", " ", ">"), nrow = 1, byrow = TRUE),
+  map = matrix(c("@", " ", " ", " ", "s", " ", " ", ">"), nrow = 1, byrow = TRUE),
   tip = "Use warrior$feel$empty to see if there is anything in front of you, and warrior$attack() to fight it.\nRemember, you can only do one actionper turn.",
   time_bonus = 20,
   ace_score = 26,
