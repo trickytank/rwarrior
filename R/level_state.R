@@ -42,7 +42,26 @@ Level_state <- R6Class(
         }
         return(lines)
       } else {
-        stop("Cannot assign X")
+        stop("Cannot assign ascii")
+      }
+    },
+    closeby_enemies = function(value) {
+      if (missing(value)) {
+        enemies <- c()
+        if(self$map[self$y, self$x + 1] %in% names(enemy_types)) {
+          enemies <- c(enemies, self$map[self$y, self$x + 1])
+        }
+        if(self$map[self$y, self$x - 1] %in% names(enemy_types)) {
+          enemies <- c(enemies, self$map[self$y, self$x - 1])
+        }
+        if(self$map[self$y + 1, self$x] %in% names(enemy_types)) {
+          enemies <- c(enemies, self$map[self$y + 1, self$x])
+        }
+        if(self$map[self$y - 1, self$x] %in% names(enemy_types)) {
+          enemies <- c(enemies, self$map[self$y - 1, self$x])
+        }
+      } else {
+        stop("Cannot assign closeby_enemies")
       }
     }
   )
