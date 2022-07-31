@@ -9,7 +9,7 @@ expect_true(play_warrior(
 
 expect_false(play_warrior(
   function(warrior) {
-    warrior$walk("lef")
+    warrior$walk("bac")
   },
   sleep = 0)
 )
