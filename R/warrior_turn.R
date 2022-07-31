@@ -50,6 +50,16 @@ warrior_turn <- function(w, health, level_state, warrior_name, sleep = 0) {
         message(warrior_name, " earns ", enemy_points[enemy_short], " points.")
         points <- points + enemy_points[enemy_short]
       }
+    } else if(w$action == "rest") {
+      if(health >= 20) {
+        message(warrior_name, " is already fit as a fiddle.")
+      } else if(health == 19) {
+        health <- health + 1
+        message(warrior_name, " receives 1 health from resting, up to ", health, " health.")
+      } else {
+        health <- health + 2
+        message(warrior_name, " receives 2 health from resting, up to ", health, " health.")
+      }
     } else {
       message(warrior_name, " attacks forward and hits nothing.")
     }
