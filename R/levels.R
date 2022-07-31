@@ -18,3 +18,12 @@ levels[[2]] <- list(
   ace_score = 26,
   methods = c("walk", "attack", "feel$empty")
 )
+
+levels[[3]] <- list(
+  description = "The air feels thicker than before. There must be a horde of sludge.",
+  map = matrix(c("@", " ", "s", " ", "s", "s", " ", "s", ">"), nrow = 1, byrow = TRUE),
+  tip = "Be careful not to die! Use warrior.health to keep an eye on your health, and warrior.rest! to earn 10% of max health back.",
+  time_bonus = 35,
+  ace_score = 71,
+  methods = c("walk", "attack", "feel$empty", "health", "rest")
+)
