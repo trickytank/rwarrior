@@ -50,18 +50,18 @@ warrior_turn <- function(w, health, level_state, warrior_name, sleep = 0) {
         message(warrior_name, " earns ", enemy_points[enemy_short], " points.")
         points <- points + enemy_points[enemy_short]
       }
-    } else if(w$action == "rest") {
-      if(health >= 20) {
-        message(warrior_name, " is already fit as a fiddle.")
-      } else if(health == 19) {
-        health <- health + 1
-        message(warrior_name, " receives 1 health from resting, up to ", health, " health.")
-      } else {
-        health <- health + 2
-        message(warrior_name, " receives 2 health from resting, up to ", health, " health.")
-      }
     } else {
       message(warrior_name, " attacks forward and hits nothing.")
+    }
+  } else if(w$action == "rest") {
+    if(health >= 20) {
+      message(warrior_name, " is already fit as a fiddle.")
+    } else if(health == 19) {
+      health <- health + 1
+      message(warrior_name, " receives 1 health from resting, up to ", health, " health.")
+    } else {
+      health <- health + 2
+      message(warrior_name, " receives 2 health from resting, up to ", health, " health.")
     }
   } else {
     stop("Invalid warrior action (this is a bug).")
@@ -72,7 +72,7 @@ warrior_turn <- function(w, health, level_state, warrior_name, sleep = 0) {
     # TODO: This might happen regardless of whether an attack occurred, so move outside.
     # check by doing a rest at the enemy
     health <- health - enemy_power[enemy_short]
-    message(enemy, " attacks ", direc," and hits ", warrior_name, ".")
+    message(enemy_types[enemy_short], " attacks forward and hits ", warrior_name, ".")
     Sys.sleep(sleep)
     message(warrior_name, " takes ", enemy_power[enemy_short], " damage, ", health, " health power left.")
   }
