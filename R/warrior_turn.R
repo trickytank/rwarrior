@@ -7,38 +7,7 @@ warrior_turn <- function(w, health, level_state, warrior_name) {
   map <- level_state$map
   x <- level_state$x
   y <- level_state$y
-
-  if(w$action == "walk") {
-    if(!is.na(pmatch(w$direction, "forward"))) {
-      if(map[y, x + 1L] == " ") {
-        map <- swap_positions(map, x, y, x+1, y)
-        cat(warrior_name, "walks forward.")
-      } else if (map[y, x + 1L] == ">") {
-        map[y, x] <- " "
-        map[y, x + 1L] <- "@"
-        cat(warrior_name, "walks forward.")
-        at_exit = TRUE
-      } else {
-        message(warrior_name, "is blocked and doesn't move.")
-      }
-      x <- x + 1L
-    } else if (!is.na(pmatch(w$direction, "backward"))) {
-      if(map[y, x - 1L] == " ") {
-        map <- swap_positions(map, x, y, x-1, y)
-        cat(warrior_name, "walks back.")
-      } else if (map[y, x - 1L] == ">") {
-        map[y, x] <- " "
-        map[y, x - 1L] <- "@"
-        cat(warrior_name, "walks back.")
-        at_exit = TRUE
-      } else {
-        message(warrior_name, "is blocked and doesn't move.")
-      }
-      x <- x - 1L
-    } else {
-      stop("Invalid direction specified in walk()")
-    }
-  } else if (w$action == "fight") {
+  if(w$action %in% c("walk", "attack")) {
     if(!is.na(pmatch(w$direction, "forward"))) {
       direc <- "forward"
       offset <- 1L
@@ -46,23 +15,47 @@ warrior_turn <- function(w, health, level_state, warrior_name) {
       direc <- "backward"
       offset <- -1L
     } else {
-      stop("Invalid direction specified in fight()")
+      stop("Invalid direction specified.")
     }
+  }
+  if(w$action == "walk") {
+    if(map[y, x + offset] == " ") {
+      map <- swap_positions(map, x, y, x + offset, y)
+      cat(warrior_name, "walks", paste0(direc, "."))
+    } else if (map[y, x + offset] == ">") {
+      map[y, x] <- " "
+      map[y, x + offset] <- "@"
+      cat(warrior_name, "walks", paste0(direc, "."))
+      at_exit = TRUE
+    } else {
+      message(warrior_name, "is blocked and doesn't move.")
+    }
+    x <- x + offset
+
+  } else if (w$action == "attack") {
     if(map[y, x + offset] %in% names(enemy_types)) {
       enemy_short <- map[y, x + offset]
       enemy <- enemy_types[enemy_short]
-      level_state$hp[y, x + 1L] <- level_state$hp[y, x + offset] - attack_power
-      message(warrior_name, "attacks", direc, "and hits", paste0(enemy, "."))
-      message(enemy, "takes", attack_power, "damage,", level_state$hp[y, x + offset], "health power left.")
+      level_state$hp[y, x + offset] <- level_state$hp[y, x + offset] - attack_power
+      message(warrior_name, " attacks ", direc, " and hits ", enemy, ".")
+      message(enemy, " takes ", attack_power, " damage, ", level_state$hp[y, x + offset], " health power left.")
+      if(level_state$hp[y, x + offset] <= 0) {
+        map[y, x + offset] <- " "
+        level_state$hp[y, x + offset] <- NA
+        message(enemy, " dies.")
+      }
+      # TODO: This might happen regardless of whether an attack occurred, so move outside.
+      # check by doing a rest at the enemy
       health <- health - enemy_power[enemy_short]
-      message(enemy, "attacks", direc,"and hits", paste0(warrior_name, "."))
-      message(warrior_name, "takes", enemy_power[enemy_short], "damage,", health, "health power left.")
+      message(enemy, " attacks ", direc," and hits ", warrior_name, ".")
+      message(warrior_name, " takes ", enemy_power[enemy_short], " damage, ", health, " health power left.")
     } else {
-      message(warrior_name, "attacks forward and hits nothing.")
+      message(warrior_name, " attacks forward and hits nothing.")
     }
   } else {
     stop("Invalid warrior action (this is a bug).")
   }
+
   level_state$map <- map
   list(at_exit = at_exit, health = health)
 }
