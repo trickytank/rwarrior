@@ -6,6 +6,9 @@ Level_state <- R6Class(
     hp = NULL,
     initialize = function(level_map) {
       d <- dim(level_map)
+      if(is.null(level_map)) {
+        stop("No map is definied (this is a bug).")
+      }
       tpmatrix <- matrix(c(" ", rep("—", d[2]), " "), nrow = 1)
       sidematrix <- matrix(rep("|", d[1]))
       self$map <- rbind(tpmatrix,
