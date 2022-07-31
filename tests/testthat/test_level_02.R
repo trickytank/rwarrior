@@ -6,5 +6,5 @@ expect_true(play_warrior(
       warrior$attack()
     }
   },
-  sleep = 0)
+  sleep = 0, level = 2)
 )
