@@ -3,8 +3,11 @@ Level_state <- R6Class(
   "Level_state",
   public = list(
     map = NULL,
-    hp = NULL,
-    initialize = function(level_map) {
+    hp = 20,
+    npcs = NULL,
+    exit = NULL,
+    initialize = function(level_spec) {
+      level_map <- level_spec$map
       d <- dim(level_map)
       if(is.null(level_map)) {
         stop("No map is definied (this is a bug).")

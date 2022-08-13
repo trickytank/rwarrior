@@ -1,6 +1,7 @@
 #' export
 level_readme <- function(level = 1) {
-  cat("Level", level, "\n")
+  cat("Level", level, "\n\n")
+  cat(Level_state$new(levels[[level]])$ascii, "\n")
   cat(levels[[level]]$description, "\n")
   cat("Tip:", levels[[level]]$tip, "\n")
   for(meth in levels[[level]]$methods) {
