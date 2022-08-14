@@ -19,29 +19,30 @@ play_warrior <- function(ai, level = 1, sleep = 0.5, warrior_name = "Fisher") {
   turn <- 1L
   alive <- TRUE
   level_score <- 0L
+  memory <- NULL
   while(!complete) {
     message("-----------------------------------")
     cat("- Turn", turn, "-\n")
     cat(level_state$ascii)
-    map <- level_state$map
     x <- level_state$x
     y <- level_state$y
-    w <- Warrior_action$new(level_state$warrior$hp, level_state)
-    ai(w)
+    # clone here to prevent tampering the level_state. Doesn't prevent all cheating such as inspecting the entire level_state.
+    w <- Warrior_action$new(level_state$clone())
+    # w is also modified here
+    memory <- ai(w, memory)
     result <- warrior_turn(w, level_state, warrior_name, sleep)
-    at_exit <- result$at_exit
     points <- result$points
 
     level_score <- level_score + points
 
-
     message_level_state(level_state)
+
     if(level_state$warrior$hp <= 0) {
       message(warrior_name, " died.")
       return(invisible(FALSE))
     }
 
-    if(at_exit) {
+    if(level_state$at_exit) {
       complete <- TRUE
       message("Success, you have found the stairs.")
       time_bonus <- max(0, levels[[level]]$time_bonus - turn)
