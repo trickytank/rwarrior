@@ -1,5 +1,5 @@
 #' @import stringr
-warrior_turn <- function(w, health, level_state, warrior_name, sleep = 0) {
+warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
   if(is.null(w$action)) {
     stop("No warrior action was provided.")
   }
@@ -8,24 +8,38 @@ warrior_turn <- function(w, health, level_state, warrior_name, sleep = 0) {
   x <- level_state$x
   y <- level_state$y
   points <- 0
+  x_offset <- 0
+  y_offset <- 0
   if(w$action %in% c("walk", "attack")) {
+    if(level_state$warrior$direction == "east") {
+      x_offset <- 1L
+    }
+    if(level_state$warrior$direction == "west") {
+      x_offset <- -1L
+    }
+    if(level_state$warrior$direction == "north") {
+      y_offset <- -1L
+    }
+    if(level_state$warrior$direction == "south") {
+      x_offset <- 1L
+    }
     if(!is.na(pmatch(w$direction, "forward"))) {
       direc <- "forward"
-      offset <- 1L
     } else if (!is.na(pmatch(w$direction, "backward"))) {
       direc <- "backward"
-      offset <- -1L
+      x_offset <- x_offset * -1L
+      y_offset <- y_offset * -1L
     } else {
       stop("Invalid direction specified.")
     }
   }
   if(w$action == "walk") {
-    if(map[y, x + offset] == " ") {
+    if(map[y + y_offset, x + x_offset] == " ") {
       map <- swap_positions(map, x, y, x + offset, y)
       cat(warrior_name, "walks", paste0(direc, "."))
     } else if (map[y, x + offset] == ">") {
       map[y, x] <- " "
-      map[y, x + offset] <- "@"
+      map[y, x + x_offset] <- "@"
       cat(warrior_name, "walks", paste0(direc, "."))
       at_exit = TRUE
     } else {
@@ -54,14 +68,14 @@ warrior_turn <- function(w, health, level_state, warrior_name, sleep = 0) {
       message(warrior_name, " attacks forward and hits nothing.")
     }
   } else if(w$action == "rest") {
-    if(health >= 20) {
+    if(level_state$warrior$hp >= level_state$warrior$max_hp) {
       message(warrior_name, " is already fit as a fiddle.")
-    } else if(health == 19) {
-      health <- health + 1
-      message(warrior_name, " receives 1 health from resting, up to ", health, " health.")
+    } else if(level_state$warrior$hp >= level_state$warrior$max_hp - 1L) {
+      level_state$warrior$hp <- level_state$warrior$hp + 1L
+      message(warrior_name, " receives 1 health from resting, up to ", level_state$warrior$hp, " health.")
     } else {
-      health <- health + 2
-      message(warrior_name, " receives 2 health from resting, up to ", health, " health.")
+      level_state$warrior$hp <- level_state$warrior$hp + 2L
+      message(warrior_name, " receives 2 health from resting, up to ", level_state$warrior$hp, " health.")
     }
   } else {
     stop("Invalid warrior action (this is a bug).")
