@@ -27,12 +27,13 @@ NPC <- R6Class(
       self$look <- look
       self$attack <- attack
       self$shoot <- shoot
+      invisible(self)
     },
     set_loc = function(y, x, direction = self$direction_default) {
       self$y <- y
       self$x <- x
       self$direction <- direction
-      self
+      invisible(self)
     }
   )
 )
@@ -58,18 +59,19 @@ WARRIOR <- R6Class(
       self$shoot <- shoot
       self$rest <- rest
       self$health <- health
+      invisible(self)
     }
 
   )
 )
 
 
-npc_sludge <- NPC_TYPE$new("Sludge", "s", 12L, attack_power = 3L, feel = TRUE, attack = TRUE)
+sludge <- NPC_TYPE$new("Sludge", "s", 12L, attack_power = 3L, feel = TRUE, attack = TRUE)
 
-npc_thick_sludge <- NPC_TYPE$new("Thick Sludge", "S", 24L)
+thick_sludge <- NPC_TYPE$new("Thick Sludge", "S", 24L)
 
-npc_archer <- NPC_TYPE$new("Archer", "a", 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)
+archer <- NPC_TYPE$new("Archer", "a", 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)
 
-x <- npc_sludge$clone()$set_loc(1L, 4L)
+x <- sludge$clone()$set_loc(1L, 4L)
 x
 x$hp
