@@ -6,8 +6,8 @@ Warrior_action <- R6Class(
     action = NULL,
     direction = NULL,
     health = NULL,
-    initialize = function(health, level_state) {
-      self$health <- health
+    initialize = function(level_state) {
+      self$health <- level_state$warrior$hp
       private$level_state <- level_state
     },
     walk = function(direction = "forward") {
