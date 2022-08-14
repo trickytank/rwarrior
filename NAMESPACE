@@ -2,4 +2,5 @@
 
 export(play_warrior)
 import(R6)
+import(glue)
 import(stringr)
