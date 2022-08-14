@@ -2,7 +2,6 @@
 Level_state <- R6Class(
   "Level_state",
   public = list(
-    map = NULL,
     size = NULL,
     npcs = NULL,
     exit = NULL,
@@ -11,29 +10,34 @@ Level_state <- R6Class(
       self$npcs <- level_spec$npcs
       self$size <- level_spec$size
       self$warrior <- level_spec$warrior
+      self$exit <- level_spec$exit
       invisible(self)
+    },
+    is_exit = function(y, x) {
+      self$exit[1] == y && self$exit[2] == x
+    },
+    return_object = function(y, x) {
+      for(npc in self$npcs) {
+        if(y == npc$y && x == npc$x) {
+          return(npc)
+        }
+      }
+      if(y == self$warrior$y && x == self$warrior$x) {
+        return(self$warrior)
+      }
+      return(NA)
     }
   ),
   active = list(
-    x = function(value) {
-      if (missing(value)) {
-        which(self$map == "@", arr.ind = TRUE)[1, 2]
-      } else {
-        stop("Cannot assign X")
-      }
-    },
-    y = function(value) {
-      if (missing(value)) {
-        which(self$map == "@", arr.ind = TRUE)[1, 1]
-      } else {
-        stop("Cannot assign Y")
-      }
-    },
     ascii = function(value) {
       if (missing(value)) {
         lines <- ""
         level_map <- matrix(" ", nrow = self$size[1], ncol = self$size[2])
+        level_map[self$exit[1], self$exit[2]] <- ">"
         for(charac in c(list(self$warrior), self$npcs)) {
+          if(level_map[charac$y, charac$x] != " " && level_map[charac$y, charac$x] != ">") {
+            stop("More than one object at location (", y, ", ", x, ")")
+          }
           level_map[charac$y, charac$x] <- charac$symbol
         }
         tpmatrix <- matrix(rep("—", self$size[2] + 2L), nrow = 1)
@@ -50,25 +54,12 @@ Level_state <- R6Class(
         stop("Cannot assign ascii")
       }
     },
-    closeby_enemies = function(value) {
+    at_exit = function(value) {
       if (missing(value)) {
-        enemies <- c()
-        if(self$map[self$y, self$x + 1] %in% names(enemy_types)) {
-          enemies <- c(enemies, self$map[self$y, self$x + 1])
+          self$is_exit(self$warrior$y, self$warrior$x)
+        } else {
+          stop("Cannot assign at_exit")
         }
-        if(self$map[self$y, self$x - 1] %in% names(enemy_types)) {
-          enemies <- c(enemies, self$map[self$y, self$x - 1])
-        }
-        if(self$map[self$y + 1, self$x] %in% names(enemy_types)) {
-          enemies <- c(enemies, self$map[self$y + 1, self$x])
-        }
-        if(self$map[self$y - 1, self$x] %in% names(enemy_types)) {
-          enemies <- c(enemies, self$map[self$y - 1, self$x])
-        }
-        enemies
-      } else {
-        stop("Cannot assign closeby_enemies")
-      }
     }
   )
 )
