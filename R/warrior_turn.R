@@ -1,12 +1,13 @@
 #' @import stringr
+#' @import glue
 warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
   if(is.null(w$action)) {
     stop("No warrior action was provided.")
   }
   at_exit = FALSE
   map <- level_state$map
-  x <- level_state$x
-  y <- level_state$y
+  x <- level_state$warrior$x
+  y <- level_state$warrior$y
   points <- 0
   x_offset <- 0
   y_offset <- 0
@@ -33,19 +34,16 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
       stop("Invalid direction specified.")
     }
   }
+  y_subject <- y + y_offset
+  x_subject <- x + x_offset
   if(w$action == "walk") {
-    if(map[y + y_offset, x + x_offset] == " ") {
-      map <- swap_positions(map, x, y, x + offset, y)
-      cat(warrior_name, "walks", paste0(direc, "."))
-    } else if (map[y, x + offset] == ">") {
-      map[y, x] <- " "
-      map[y, x + x_offset] <- "@"
-      cat(warrior_name, "walks", paste0(direc, "."))
-      at_exit = TRUE
+    if(is.na(level_state$return_object(y_subject, x_subject))) {
+      cat(glue("{warrior_name} walks {direc}."))
+      level_state$warrior$y <- y_subject
+      level_state$warrior$x <- x_subject
     } else {
-      message(warrior_name, "is blocked and doesn't move.")
+      message(glue("{warrior_name is blocked and doesn't move."))
     }
-    x <- x + offset
 
   } else if (w$action == "attack") {
     if(map[y, x + offset] %in% names(enemy_types)) {
@@ -90,8 +88,7 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
     Sys.sleep(sleep)
     message(warrior_name, " takes ", enemy_power[enemy_short], " damage, ", health, " health power left.")
   }
-  level_state$map <- map
-  list(at_exit = at_exit, health = health, points = points)
+  list(points = points)
 }
 
 swap_positions <- function(M, x1, y1, x2, y2) {
