@@ -18,7 +18,6 @@ play_warrior <- function(ai, level = 1, sleep = 0.5, warrior_name = "Fisher") {
   complete <- FALSE
   turn <- 1L
   alive <- TRUE
-  health = 20L
   level_score <- 0L
   while(!complete) {
     message("-----------------------------------")
@@ -27,18 +26,17 @@ play_warrior <- function(ai, level = 1, sleep = 0.5, warrior_name = "Fisher") {
     map <- level_state$map
     x <- level_state$x
     y <- level_state$y
-    w <- Warrior_action$new(health, level_state)
+    w <- Warrior_action$new(level_state$warrior$hp, level_state)
     ai(w)
-    result <- warrior_turn(w, health, level_state, warrior_name, sleep)
+    result <- warrior_turn(w, level_state, warrior_name, sleep)
     at_exit <- result$at_exit
-    health <- result$health
     points <- result$points
 
     level_score <- level_score + points
 
 
     message_level_state(level_state)
-    if(health <= 0) {
+    if(level_state$warrior$hp <= 0) {
       message(warrior_name, " died.")
       return(invisible(FALSE))
     }
