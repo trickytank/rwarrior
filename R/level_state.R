@@ -3,22 +3,14 @@ Level_state <- R6Class(
   "Level_state",
   public = list(
     map = NULL,
-    hp = 20,
+    size = NULL,
     npcs = NULL,
     exit = NULL,
+    warrior = NULL,
     initialize = function(level_spec) {
-      level_map <- level_spec$map
-      d <- dim(level_map)
-      if(is.null(level_map)) {
-        stop("No map is definied (this is a bug).")
-      }
-      tpmatrix <- matrix(rep("—", d[2] + 2L), nrow = 1)
-      sidematrix <- matrix(rep("|", d[1]))
-      self$map <- rbind(tpmatrix,
-                        cbind(sidematrix, level_map, sidematrix),
-                        tpmatrix)
-      self$hp <- matrix(rep(NA_integer_, nrow(self$map) * ncol(self$map)), nrow = nrow(self$map), ncol = ncol(self$map))
-      self$hp[self$map == "s"] <- 12L
+      self$npcs <- level_spec$npcs
+      self$size <- level_spec$size
+      self$warrior <- level_spec$warrior
       invisible(self)
     }
   ),
@@ -40,8 +32,18 @@ Level_state <- R6Class(
     ascii = function(value) {
       if (missing(value)) {
         lines <- ""
-        for(i in seq_len(nrow(self$map))) {
-          lines <- paste0(lines, paste0(self$map[i, ], collapse = ""), "\n")
+        level_map <- matrix(" ", nrow = self$size[1], ncol = self$size[2])
+        for(charac in c(list(self$warrior), self$npcs)) {
+          level_map[charac$y, charac$x] <- charac$symbol
+        }
+        tpmatrix <- matrix(rep("—", self$size[2] + 2L), nrow = 1)
+        sidematrix <- matrix(rep("|", self$size[1]))
+        draw <- rbind(tpmatrix,
+                          cbind(sidematrix, level_map, sidematrix),
+                          tpmatrix)
+        for(i in seq_len(nrow(draw))) {
+          lines <- paste0(lines, paste0(draw[i, ], collapse = ""), "\n")
+
         }
         return(lines)
       } else {
