@@ -1,9 +1,15 @@
 # level 1
 
 levels <- list()
+
+# Level 1
+# "@      >"
 levels[[1]] <- list(
   description = "You see before yourself a long hallway with stairs at the end. There is nothing in the way.",
   map = matrix(c("@", " ", " ", " ", " ", " ", " ", ">"), nrow = 1, byrow = TRUE),
+  start = c(1,1),
+  npcs = list(),
+  stairs = c(1,8),
   tip = "Call warrior$walk() to walk forward in your AI.",
   time_bonus = 15,
   ace_score = 10,
