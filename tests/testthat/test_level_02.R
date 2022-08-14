@@ -1,5 +1,5 @@
 expect_true(play_warrior(
-  function(warrior) {
+  function(warrior, memory) {
     if(warrior$feel()$empty) {
       warrior$walk()
     } else {

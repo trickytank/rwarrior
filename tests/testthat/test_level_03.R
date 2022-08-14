@@ -1,5 +1,5 @@
 expect_true(play_warrior(
-  function(warrior) {
+  function(warrior, memory) {
     if(warrior$feel()$empty) {
       if(warrior$health < 15) {
         warrior$rest()
@@ -15,7 +15,7 @@ expect_true(play_warrior(
 
 # Check that resting in front of enemy makes you die
 expect_false(play_warrior(
-  function(warrior) {
+  function(warrior, memory) {
     if(warrior$feel()$empty) {
       if(warrior$health < 15) {
         warrior$rest()
