@@ -66,11 +66,11 @@ WARRIOR <- R6Class(
 )
 
 
-sludge <- NPC_TYPE$new("Sludge", "s", 12L, attack_power = 3L, feel = TRUE, attack = TRUE)
+sludge <- NPC$new("Sludge", "s", 12L, attack_power = 3L, feel = TRUE, attack = TRUE)
 
-thick_sludge <- NPC_TYPE$new("Thick Sludge", "S", 24L)
+thick_sludge <- NPC$new("Thick Sludge", "S", 24L)
 
-archer <- NPC_TYPE$new("Archer", "a", 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)
+archer <- NPC$new("Archer", "a", 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)
 
 x <- sludge$clone()$set_loc(1L, 4L)
 x
