@@ -44,6 +44,8 @@ play_warrior <- function(ai, level = 1, sleep = 0.5, warrior_name = "Fisher") {
 
     if(level_state$at_exit) {
       complete <- TRUE
+      message("-----------------------------------")
+      cat(level_state$ascii)
       message("Success, you have found the stairs.")
       time_bonus <- max(0, levels[[level]]$time_bonus - turn)
       clear_bonus <- level * 2
