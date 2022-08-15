@@ -45,28 +45,18 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
     stop("Invalid warrior action (this is a bug).")
   }
 
-  # Check if an enemy is close by
-  for(enemy_short in level_state$closeby_enemies) {
-    # TODO: This might happen regardless of whether an attack occurred, so move outside.
-    # check by doing a rest at the enemy
-    health <- health - enemy_power[enemy_short]
-    message(enemy_types[enemy_short], " attacks forward and hits ", warrior_name, ".")
-    Sys.sleep(sleep)
-    message(warrior_name, " takes ", enemy_power[enemy_short], " damage, ", health, " health power left.")
+  # Let enemies attack if they are close enough
+  for(enemy in level_state$npcs) {
+    if(enemy$attack) {
+      # check if they are within range
+      if(npc$feel() == "@") {
+        # Do the attacking
+        attack_routine(enemy, level_state$warrior, direc, sleep)
+      }
+    }
+    if(enemy$shoot) {
+      # Not implemented
+    }
   }
   list(points = points)
 }
-
-swap_positions <- function(M, x1, y1, x2, y2) {
-  temp <- M[y1, x1]
-  M[y1, x1] <- M[y2, x2]
-  M[y2, x2] <- temp
-  M
-}
-
-enemy_types <- c("s" = "Sludge", "S" = "Super Sludge")
-enemy_power <- c("s" = 3, "S" = NA)
-enemy_points <- c("s" = 12, "S" = NA)
-attack_power <- 5
-
-
