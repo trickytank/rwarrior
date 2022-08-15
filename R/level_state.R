@@ -28,12 +28,12 @@ Level_state <- R6Class(
       if(y == self$warrior$y && x == self$warrior$x) {
         return(self$warrior)
       }
-      return(NA)
+      return(NULL)
     },
-    feel = function(direction = "forward") {
-      coord <- give_coordinates(self$warrior$compass, direction, self$warrior$y, self$warrior$x)
-      object <- private$level_state$return_object(coord$y_subject, coord$x_subject)
-      if(is.na(object)) {
+    feel = function(charac, direction = "forward") {
+      coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)
+      object <- self$return_object(coord$y_subject, coord$x_subject)
+      if(is.null(object)) {
         return(" ")
       } else {
         return(object$symbol)
@@ -41,18 +41,22 @@ Level_state <- R6Class(
     },
     attack_routine = function(attacker, defender, direction, sleep = 0) {
       defender$hp <- defender$hp - attacker$attack_power
-      message(attacker$name, " attacks ", direc, " and hits ", defender, ".")
+      message(attacker$name, " attacks ", direction, " and hits ", defender$name, ".")
       Sys.sleep(sleep)
       message(defender$name, " takes ", attacker$attack_power, " damage, ", defender$hp, " health power left.")
       Sys.sleep(sleep)
-      if(defender <= 0 && ! class(defender) %in% "WARRIOR") {
+      if(defender$hp <= 0 && ! "WARRIOR" %in% class(defender)) {
         # defender is an enemy and has died
         points <- defender$max_hp
         message(defender$name, " dies.")
         Sys.sleep(sleep)
         message(attacker$name, " earns ", points, " points.")
-        defender <- NA
-        self$npcs <- self$npcs[!is.na(self$npcs)]
+        defender$death_flag <- TRUE
+        for(i in seq_along(self$npcs)) {
+          if(self$npcs[[i]]$death_flag) {
+            self$npcs[[i]] <- NULL
+          }
+        }
         return(points)
       }
       return(0)
