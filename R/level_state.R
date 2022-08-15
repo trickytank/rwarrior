@@ -7,9 +7,12 @@ Level_state <- R6Class(
     exit = NULL,
     warrior = NULL,
     initialize = function(level_spec) {
-      self$npcs <- level_spec$npcs
+      self$npcs <- list()
+      for(i in seq_along(level_spec$npcs)) {
+        self$npcs[[i]] <- level_spec$npcs[[i]]$clone()
+      }
       self$size <- level_spec$size
-      self$warrior <- level_spec$warrior
+      self$warrior <- level_spec$warrior$clone()
       self$exit <- level_spec$exit
       invisible(self)
     },
@@ -36,7 +39,7 @@ Level_state <- R6Class(
         return(object$symbol)
       }
     },
-    attack_routine <- function(attacker, defender, direction, sleep = 0) {
+    attack_routine = function(attacker, defender, direction, sleep = 0) {
       defender$hp <- defender$hp - attacker$attack_power
       message(attacker$name, " attacks ", direc, " and hits ", defender, ".")
       Sys.sleep(sleep)
