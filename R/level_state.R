@@ -16,6 +16,13 @@ Level_state <- R6Class(
       self$exit <- level_spec$exit
       invisible(self)
     },
+    deep_clone = function() {
+      X <- self$clone(deep = TRUE)
+      for(i in seq_along(self$npcs)) {
+        X$npcs[[i]] <- self$npcs[[i]]$clone()
+      }
+      X
+    },
     is_exit = function(y, x) {
       self$exit[1] == y && self$exit[2] == x
     },
