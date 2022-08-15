@@ -1,4 +1,6 @@
 give_coordinates <- function(compass, direction, y = 0, x = 0) {
+  y_offset <- 0
+  x_offset <- 0
   if(compass == "east") {
     x_offset <- 1L
   }
@@ -22,5 +24,5 @@ give_coordinates <- function(compass, direction, y = 0, x = 0) {
   }
   y_subject <- y + y_offset
   x_subject <- x + x_offset
-  list(direc, y_offset, x_offset)
+  list(direc = direc, y_subject = y_subject, x_subject = x_subject)
 }
