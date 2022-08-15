@@ -3,16 +3,17 @@
 #' Play R Warrior
 #'
 #' @param ai AI function to control your warrior
-#' @param y Level number.
+#' @param level Level number.
+#' @param warrior_name Name of your warrior, for flavour.
+#' @param sleep Time between text updates.
 #' @return A logical that is TRUE on successfully getting to the exit
 #' @export
 #' @examples
-#' AI <- AI <- function(warrior, level_state) {
-#'   warrior <- warrior.walk()
-#'   warrior
+#' AI <- AI <- function(warrior, memory) {
+#'   warrior$walk()
 #' }
 #' play_warrior(AI, level = 1)
-play_warrior <- function(ai, level = 1, sleep = 0.5, warrior_name = "Fisher") {
+play_warrior <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0.5) {
   level_state <- Level_state$new(levels[[level]])
   level_state$warrior$name <- warrior_name
   at_exit <- FALSE

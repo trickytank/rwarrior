@@ -5,6 +5,7 @@ level_readme <- function(level = 1) {
   cat(levels[[level]]$description, "\n")
   cat("Tip:", levels[[level]]$tip, "\n\n")
   method_description(levels[[level]]$warrior)
+  invisible(TRUE)
 }
 
 method_description <- function(warrior) {
