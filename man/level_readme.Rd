@@ -2,10 +2,17 @@
 % Please edit documentation in R/level_readme.R
 \name{level_readme}
 \alias{level_readme}
-\title{export}
+\title{Level read me}
 \usage{
 level_readme(level = 1)
 }
+\arguments{
+\item{level}{The level number.}
+}
 \description{
-export
+Level read me
+}
+\examples{
+
+level_readme(1)
 }

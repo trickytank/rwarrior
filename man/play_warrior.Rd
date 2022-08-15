@@ -4,12 +4,16 @@
 \alias{play_warrior}
 \title{Play R Warrior}
 \usage{
-play_warrior(ai, level = 1, sleep = 0.5, warrior_name = "Fisher")
+play_warrior(ai, level = 1, warrior_name = "Fisher", sleep = 0.5)
 }
 \arguments{
 \item{ai}{AI function to control your warrior}
 
-\item{y}{Level number.}
+\item{level}{Level number.}
+
+\item{warrior_name}{Name of your warrior, for flavour.}
+
+\item{sleep}{Time between text updates.}
 }
 \value{
 A logical that is TRUE on successfully getting to the exit
