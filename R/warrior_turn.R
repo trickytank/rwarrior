@@ -11,31 +11,10 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
   points <- 0
   x_offset <- 0
   y_offset <- 0
-  if(w$action %in% c("walk", "attack")) {
-    if(level_state$warrior$direction == "east") {
-      x_offset <- 1L
-    }
-    if(level_state$warrior$direction == "west") {
-      x_offset <- -1L
-    }
-    if(level_state$warrior$direction == "north") {
-      y_offset <- -1L
-    }
-    if(level_state$warrior$direction == "south") {
-      x_offset <- 1L
-    }
-    if(!is.na(pmatch(w$direction, "forward"))) {
-      direc <- "forward"
-    } else if (!is.na(pmatch(w$direction, "backward"))) {
-      direc <- "backward"
-      x_offset <- x_offset * -1L
-      y_offset <- y_offset * -1L
-    } else {
-      stop("Invalid direction specified.")
-    }
-  }
-  y_subject <- y + y_offset
-  x_subject <- x + x_offset
+  coord <- give_coordinates(level_state$warrior$compass, w$direction, y, x)
+  y_subject <- coord$y_subject
+  x_subject <- coord$x_subject
+  direc <- coord$direc
   if(w$action == "walk") {
     if(is.na(level_state$return_object(y_subject, x_subject))) {
       cat(glue("{warrior_name} walks {direc}."))
