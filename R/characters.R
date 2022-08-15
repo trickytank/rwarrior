@@ -29,7 +29,7 @@ NPC <- R6Class(
       self$shoot <- shoot
       invisible(self)
     },
-    set_loc = function(y, x, compass = self$direction_default) {
+    set_loc = function(y, x, compass = self$compass_default) {
       self$y <- y
       self$x <- x
       self$compass <- compass
