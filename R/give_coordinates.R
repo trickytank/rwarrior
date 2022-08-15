@@ -18,7 +18,7 @@ give_coordinates <- function(compass, direction, y = 0, x = 0) {
     x_offset <- x_offset * -1L
     y_offset <- y_offset * -1L
   } else {
-    stop("Invalid direction specified.")
+    stop("Invalid direction specified: ", direction, "")
   }
   y_subject <- y + y_offset
   x_subject <- x + x_offset
