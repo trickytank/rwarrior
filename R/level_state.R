@@ -26,6 +26,15 @@ Level_state <- R6Class(
         return(self$warrior)
       }
       return(NA)
+    },
+    feel = function(direction = "forward") {
+      coord <- give_coordinates(self$warrior$compass, direction, self$warrior$y, self$warrior$x)
+      object <- private$level_state$return_object(coord$y_subject, coord$x_subject)
+      if(is.na(object)) {
+        return(" ")
+      } else {
+        return(object$symbol)
+      }
     }
   ),
   active = list(
