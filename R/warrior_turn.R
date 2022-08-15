@@ -25,24 +25,11 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
     }
 
   } else if (w$action == "attack") {
-    if(map[y, x + offset] %in% names(enemy_types)) {
-      enemy_short <- map[y, x + offset]
-      enemy <- enemy_types[enemy_short]
-      level_state$hp[y, x + offset] <- level_state$hp[y, x + offset] - attack_power
-      message(warrior_name, " attacks ", direc, " and hits ", enemy, ".")
-      Sys.sleep(sleep)
-      message(enemy, " takes ", attack_power, " damage, ", level_state$hp[y, x + offset], " health power left.")
-      Sys.sleep(sleep)
-      if(level_state$hp[y, x + offset] <= 0) {
-        map[y, x + offset] <- " "
-        level_state$hp[y, x + offset] <- NA
-        message(enemy, " dies.")
-        Sys.sleep(sleep)
-        message(warrior_name, " earns ", enemy_points[enemy_short], " points.")
-        points <- points + enemy_points[enemy_short]
-      }
-    } else {
+    enemy <- level_state$return_object(y_subject, x_subject)
+    if(is.na(enemy)) {
       message(warrior_name, " attacks forward and hits nothing.")
+    } else {
+      points <- points + attack_routine(level_state$warrior, enemy, direc, sleep)
     }
   } else if(w$action == "rest") {
     if(level_state$warrior$hp >= level_state$warrior$max_hp) {
