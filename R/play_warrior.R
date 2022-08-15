@@ -7,9 +7,8 @@
 #' @return A logical that is TRUE on successfully getting to the exit
 #' @export
 #' @examples
-#' AI <- AI <- function(warrior, level_state) {
-#'   warrior <- warrior.walk()
-#'   warrior
+#' AI <- AI <- function(warrior, memory) {
+#'   warrior$walk()
 #' }
 #' play_warrior(AI, level = 1)
 play_warrior <- function(ai, level = 1, sleep = 0.5, warrior_name = "Fisher") {
