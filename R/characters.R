@@ -13,8 +13,8 @@ NPC <- R6Class(
     shoot = NULL,
     x = NULL,
     y = NULL,
-    direction = NULL,
-    direction_default = "west",
+    compass = NULL,
+    compass_default = "west",
     initialize = function(name, symbol, max_hp, attack_power = NULL, shoot_power = NULL,
                feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE) {
       self$name <- name
@@ -29,10 +29,10 @@ NPC <- R6Class(
       self$shoot <- shoot
       invisible(self)
     },
-    set_loc = function(y, x, direction = self$direction_default) {
+    set_loc = function(y, x, compass = self$direction_default) {
       self$y <- y
       self$x <- x
-      self$direction <- direction
+      self$compass <- compass
       invisible(self)
     }
   )
@@ -49,7 +49,7 @@ WARRIOR <- R6Class(
     walk = NULL,
     rest = NULL,
     health = NULL,
-    direction_default = "east",
+    compass_default = "east",
     initialize = function(walk = FALSE, feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE,
                           rest = FALSE, health = FALSE) {
       self$walk <- walk
