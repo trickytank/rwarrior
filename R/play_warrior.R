@@ -14,6 +14,7 @@
 #' play_warrior(AI, level = 1)
 play_warrior <- function(ai, level = 1, sleep = 0.5, warrior_name = "Fisher") {
   level_state <- Level_state$new(levels[[level]])
+  level_state$warrior$name <- warrior_name
   at_exit <- FALSE
   complete <- FALSE
   turn <- 1L
