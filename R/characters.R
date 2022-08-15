@@ -15,6 +15,7 @@ NPC <- R6Class(
     y = NULL,
     compass = NULL,
     compass_default = "west",
+    death_flag = FALSE,
     initialize = function(name, symbol, max_hp, attack_power = NULL, shoot_power = NULL,
                feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE) {
       self$name <- name
