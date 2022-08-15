@@ -17,18 +17,30 @@ Warrior_action <- R6Class(
       invisible(self)
     },
     attack = function(direction = "forward") {
-      private$check_one_action()
-      self$action <- "attack"
-      self$direction <- direction
-      invisible(self)
+      if(private$level_state$warrior$attack) {
+        private$check_one_action()
+        self$action <- "attack"
+        self$direction <- direction
+        invisible(self)
+      } else {
+        stop("Warrior does not yet have the attack function.")
+      }
     },
     rest = function() {
-      private$check_one_action()
-      self$action <- "rest"
-      invisible(self)
+      if(private$level_state$warrior$rest) {
+        private$check_one_action()
+        self$action <- "rest"
+        invisible(self)
+      } else {
+        stop("Warrior does not yet have the rest function.")
+      }
     },
     feel = function(direction = "forward") {
-      private$level_state$feel(direction)
+      if(private$level_state$warrior$feel) {
+        private$level_state$feel(direction)
+      } else {
+        stop("Warrior does not yet have the feel function.")
+      }
     }
   ),
   private = list(
