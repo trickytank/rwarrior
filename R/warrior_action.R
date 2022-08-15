@@ -37,7 +37,7 @@ Warrior_action <- R6Class(
     },
     feel = function(direction = "forward") {
       if(private$level_state$warrior$feel) {
-        private$level_state$feel(direction)
+        private$level_state$feel(private$level_state$warrior, direction)
       } else {
         stop("Warrior does not yet have the feel function.")
       }
