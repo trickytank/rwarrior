@@ -1,4 +1,10 @@
-#' export
+#' Level read me
+#'
+#' @param level The level number.
+#' @export
+#' @examples
+#'
+#' level_readme(1)
 level_readme <- function(level = 1) {
   cat("Level", level, "\n")
   cat(Level_state$new(levels[[level]])$ascii, "\n")
