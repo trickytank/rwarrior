@@ -28,13 +28,7 @@ Warrior_action <- R6Class(
       invisible(self)
     },
     feel = function(direction = "forward") {
-      if(!is.na(pmatch(direction, "forward"))) {
-        list(empty = private$level_state$map[private$level_state$y, private$level_state$x + 1] %in% c(" ", ">"))
-      } else if (!is.na(pmatch(direction, "backward"))) {
-        list(empty = private$level_state$map[private$level_state$y, private$level_state$x - 1] %in% c(" ", ">"))
-      } else {
-        stop("Invalid direction in $feel.")
-      }
+      private$level_state$feel(direction)
     }
   ),
   private = list(
