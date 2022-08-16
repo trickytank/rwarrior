@@ -36,6 +36,7 @@ AI <- function(warrior, memory) {
 warrior_name <- "Fisher" # A name for your warrior
     
 play_warrior(AI, warrior_name = warrior_name, level = 1)
+```
 
 More advanced levels require either using a non-copy on write object or use of the memory argument to the AI. 
 
@@ -49,6 +50,4 @@ AI <- function(warrior, memory) {
       # The AI result should be the memory
       return(memory)
     }
-```
-
 ```
