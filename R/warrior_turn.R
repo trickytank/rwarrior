@@ -33,7 +33,7 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
   } else if(w$action == "rest") {
     if(level_state$warrior$hp >= level_state$warrior$max_hp) {
       message(warrior_name, " is already fit as a fiddle.")
-    } else if(level_state$warrior$hp >= level_state$warrior$max_hp - 1L) {
+    } else if(level_state$warrior$hp == level_state$warrior$max_hp - 1L) {
       level_state$warrior$hp <- level_state$warrior$hp + 1L
       message(warrior_name, " receives 1 health from resting, up to ", level_state$warrior$hp, " health.")
     } else {
