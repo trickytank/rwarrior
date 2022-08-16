@@ -15,7 +15,7 @@ level_readme <- function(level = 1) {
 }
 
 method_description <- function(warrior) {
-  if(warrior$walk) {
+  if(TRUE) {
     cat("- warrior$walk(direction = \"forward\")\n")
     cat("  Move the warrior in the given direction, any of:\n")
     cat('    - "forward"\n')
