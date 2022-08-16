@@ -1,32 +1,46 @@
-expect_true(play_warrior(
-  function(warrior, memory) {
-    if(warrior$feel()$empty) {
-      if(warrior$health < 15) {
-        warrior$rest()
+test_that("Solutions not working for level 3.", {
+  expect_true(play_warrior(
+    function(warrior, memory) {
+      if(warrior$feel() == " ") {
+        if(warrior$health < 15) {
+          warrior$rest()
+        } else {
+          warrior$walk()
+        }
       } else {
-        warrior$walk()
+        warrior$attack()
       }
-    } else {
-      warrior$attack()
-    }
-  },
-  sleep = 0, level = 3)
-)
+    },
+    sleep = 0, level = 3)
+  )
+})
 
 # Check that resting in front of enemy makes you die
-expect_false(play_warrior(
-  function(warrior, memory) {
-    if(warrior$feel()$empty) {
-      if(warrior$health < 15) {
-        warrior$rest()
+test_that("Resting in front of enemy is not causing death.", {
+  expect_message(play_warrior(
+    function(warrior, memory) {
+      if(warrior$feel() == " ") {
+        if(warrior$health < 15) {
+          warrior$rest()
+        } else {
+          warrior$walk()
+        }
       } else {
-        warrior$walk()
+        warrior$rest()
       }
-    } else {
-      warrior$rest()
-    }
-  },
-  sleep = 0, level = 3)
-)
+    },
+    sleep = 0, level = 3),
+    "Fisher died.\n"
+  )
+})
 
-#TODO: check you can't rest above 20
+# Check that resting in front of enemy makes you die
+test_that("Can rest above 20 health", {
+  expect_message(play_warrior(
+    function(warrior, memory) {
+      warrior$rest()
+    },
+    sleep = 0, level = 3),
+    " is already fit as a fiddle."
+  )
+})
