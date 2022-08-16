@@ -11,10 +11,12 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
   points <- 0
   x_offset <- 0
   y_offset <- 0
-  coord <- give_coordinates(level_state$warrior$compass, w$direction, y, x)
-  y_subject <- coord$y_subject
-  x_subject <- coord$x_subject
-  direc <- coord$direc
+  if(w$action %in% c("walk", "attack")) {
+    coord <- give_coordinates(level_state$warrior$compass, w$direction, y, x)
+    y_subject <- coord$y_subject
+    x_subject <- coord$x_subject
+    direc <- coord$direc
+  }
   if(w$action == "walk") {
     if(is.null(level_state$return_object(y_subject, x_subject))) {
       cat(glue("{warrior_name} walks {direc}.\n\n"))
@@ -29,6 +31,7 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
       message(warrior_name, " attacks forward and hits nothing.")
     } else {
       points <- points + level_state$attack_routine(level_state$warrior, enemy, direc, sleep)
+      Sys.sleep(sleep)
     }
   } else if(w$action == "rest") {
     if(level_state$warrior$hp >= level_state$warrior$max_hp) {
@@ -57,6 +60,7 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
       # Not implemented
     }
   }
+  Sys.sleep(sleep)
 
   list(points = points)
 }

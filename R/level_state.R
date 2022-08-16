@@ -51,9 +51,9 @@ Level_state <- R6Class(
       message(attacker$name, " attacks ", direction, " and hits ", defender$name, ".")
       Sys.sleep(sleep)
       message(defender$name, " takes ", attacker$attack_power, " damage, ", defender$hp, " health power left.")
-      Sys.sleep(sleep)
       if(defender$hp <= 0 && ! "WARRIOR" %in% class(defender)) {
         # defender is an enemy and has died
+        Sys.sleep(sleep)
         points <- defender$max_hp
         message(defender$name, " dies.")
         Sys.sleep(sleep)
@@ -62,6 +62,7 @@ Level_state <- R6Class(
         for(i in seq_along(self$npcs)) {
           if(self$npcs[[i]]$death_flag) {
             self$npcs[[i]] <- NULL
+            break
           }
         }
         return(points)

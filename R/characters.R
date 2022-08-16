@@ -46,6 +46,7 @@ WARRIOR <- R6Class(
     name = "Warrior",
     symbol = "@",
     hp = 20L,
+    max_hp = 20L,
     attack_power = 5L,
     walk = NULL,
     rest = NULL,
