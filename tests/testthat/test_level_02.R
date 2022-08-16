@@ -1,4 +1,4 @@
-context("Warrior tests for level 2.")
+# Warrior tests for level 2
 
 test_that("Solutions not working for level 2.", {
   expect_true(

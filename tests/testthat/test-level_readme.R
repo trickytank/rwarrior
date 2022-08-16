@@ -1,7 +1,8 @@
-context("level_readme()")
+# level_readme() tests
 
 test_that("Level readme is successful.", {
-  expect_success(
-    level_readme(2)
+  expect_output(
+    level_readme(2),
+    "warrior\\$feel\\$empty"
   )
 })

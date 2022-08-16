@@ -1,4 +1,4 @@
-context("Warrior AI tests for level 1")
+# Warrior AI tests for level 1
 
 test_that("Solution to level 1 doesn't work.", {
   expect_true(play_warrior(
