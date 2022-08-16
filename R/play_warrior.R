@@ -64,8 +64,6 @@ play_warrior <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0.5) {
       message("Sorry, you have run out of time.")
       return(invisible(FALSE))
     }
-
-    Sys.sleep(sleep)
   }
   return(invisible(NULL))
 }
