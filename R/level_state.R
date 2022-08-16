@@ -81,7 +81,7 @@ Level_state <- R6Class(
           }
           level_map[charac$y, charac$x] <- charac$symbol
         }
-        tpmatrix <- matrix(rep("—", self$size[2] + 2L), nrow = 1)
+        tpmatrix <- matrix(rep("\u2014", self$size[2] + 2L), nrow = 1)
         sidematrix <- matrix(rep("|", self$size[1]))
         draw <- rbind(tpmatrix,
                           cbind(sidematrix, level_map, sidematrix),
