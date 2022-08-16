@@ -22,7 +22,7 @@ method_description <- function(warrior) {
     cat('    - "backward"\n')
   }
   if(warrior$feel) {
-    cat('- warrior$feel\n')
+    cat('- warrior$feel(direction = "forward")\n')
     cat('  Returns " " if the space in front is empty or the stairs, or the object\'s corresponding symbol.\n')
   }
   if(warrior$attack) {

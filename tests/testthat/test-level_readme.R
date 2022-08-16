@@ -3,10 +3,10 @@
 test_that("Level readme is successful.", {
   expect_output(
     level_readme(2),
-    "warrior\\$feel\\$empty"
+    "warrior\\$feel\\("
   )
   expect_output(
     level_readme(3),
-    "warrior\\$feel\\$empty"
+    "warrior\\$feel\\("
   )
 })
