@@ -17,7 +17,7 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
   direc <- coord$direc
   if(w$action == "walk") {
     if(is.null(level_state$return_object(y_subject, x_subject))) {
-      cat(glue("{warrior_name} walks {direc}."))
+      cat(glue("{warrior_name} walks {direc}.\n\n"))
       level_state$warrior$y <- y_subject
       level_state$warrior$x <- x_subject
     } else {

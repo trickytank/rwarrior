@@ -37,8 +37,6 @@ play_warrior <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0.5) {
 
     level_score <- level_score + points
 
-    message_level_state(level_state)
-
     if(level_state$warrior$hp <= 0) {
       message(warrior_name, " died.")
       return(invisible(FALSE))
