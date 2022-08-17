@@ -1,20 +1,37 @@
-NPC <- R6Class(
-  "NPC",
+GAME_OBJECT <- R6Class(
   public = list(
     name = NULL,
+    symbol = NULL,
+    x = NULL,
+    y = NULL,
+    compass = NULL,
+    compass_default = "west",
+    initialize = function(name, symbol) {
+      self$name <- name
+      self$symbol <- symbol
+      invisible(self)
+    },
+    set_loc = function(y, x, compass = self$compass_default) {
+      self$y <- y
+      self$x <- x
+      self$compass <- compass
+      invisible(self)
+    }
+  )
+)
+
+NPC <- R6Class(
+  "NPC",
+  inherit = GAME_OBJECT,
+  public = list(
     hp = NULL,
     max_hp = NULL,
-    symbol = NULL,
     attack_power = NULL,
     shoot_power = NULL,
     feel = NULL,
     look = NULL,
     attack = NULL,
     shoot = NULL,
-    x = NULL,
-    y = NULL,
-    compass = NULL,
-    compass_default = "west",
     death_flag = FALSE,
     initialize = function(name, symbol, max_hp, attack_power = NULL, shoot_power = NULL,
                feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE) {
@@ -28,12 +45,6 @@ NPC <- R6Class(
       self$look <- look
       self$attack <- attack
       self$shoot <- shoot
-      invisible(self)
-    },
-    set_loc = function(y, x, compass = self$compass_default) {
-      self$y <- y
-      self$x <- x
-      self$compass <- compass
       invisible(self)
     }
   )
@@ -67,6 +78,7 @@ WARRIOR <- R6Class(
   )
 )
 
+wall <- GAME_OBJECT$new("Wall", "-")
 
 sludge <- NPC$new("Sludge", "s", 12L, attack_power = 3L, feel = TRUE, attack = TRUE)
 
