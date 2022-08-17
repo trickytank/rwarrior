@@ -18,10 +18,10 @@ play_warrior <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0.5) {
 }
 
 play_warrior_internal <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
-  level_state <- tryCatch(Level_state$new(levels[[level]]), silent = TRUE, error = function(e) { NULL })
-  if(is.null(level_state)) {
+  if(level > length(levels)) {
     stop("Level ", level, " does not exist.")
   }
+  level_state <- Level_state$new(levels[[level]])
   level_state$warrior$name <- warrior_name
   at_exit <- FALSE
   complete <- FALSE
@@ -62,7 +62,14 @@ play_warrior_internal <- function(ai, level = 1, warrior_name = "Fisher", sleep 
           "Clear Bonus:", clear_bonus, "\n",
           "Total Score:", total_score, "\n")
       # 0 8 2 10
-      message(paste0("See the readme for the next level of the tower with level_readme(", level + 1, ")"))
+      if(level + 1 > length(levels)) {
+        message("Congratulations, you have completed all the levels of R warrior.")
+        if(level <= 18) {
+          message(18 - level, " more levels are planned to be ported from Ruby Warrior.")
+        }
+      } else {
+        message(paste0("See the readme for the next level of the tower with level_readme(", level + 1, ")"))
+      }
       return(invisible(TRUE))
     }
 
