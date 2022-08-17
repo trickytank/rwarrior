@@ -14,7 +14,14 @@
 #' }
 #' play_warrior(AI, level = 1)
 play_warrior <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0.5) {
-  level_state <- Level_state$new(levels[[level]])
+  play_warrior_internal(ai = ai, level = level, warrior_name = warrior_name, sleep = sleep, debug = FALSE)
+}
+
+play_warrior_internal <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
+  level_state <- tryCatch(Level_state$new(levels[[level]]), silent = TRUE, error = function(e) { NULL })
+  if(is.null(level_state)) {
+    stop("Level ", level, " does not exist.")
+  }
   level_state$warrior$name <- warrior_name
   at_exit <- FALSE
   complete <- FALSE
@@ -32,7 +39,7 @@ play_warrior <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0.5) {
     w <- Warrior_action$new(level_state$deep_clone())
     # w is also modified here
     memory <- ai(w, memory)
-    result <- warrior_turn(w, level_state, warrior_name, sleep)
+    result <- warrior_turn(w, level_state, warrior_name, sleep, debug = debug)
     points <- result$points
 
     level_score <- level_score + points

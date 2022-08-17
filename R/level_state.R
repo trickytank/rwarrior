@@ -49,17 +49,17 @@ Level_state <- R6Class(
         return(object$symbol)
       }
     },
-    attack_routine = function(attacker, defender, direction, sleep = 0) {
+    attack_routine = function(attacker, defender, direction, sleep = 0, debug = FALSE) {
       defender$hp <- defender$hp - attacker$attack_power
       message(attacker$name, " attacks ", direction, " and hits ", defender$name, ".")
-      Sys.sleep(sleep)
+      message_sleep(sleep, debug)
       message(defender$name, " takes ", attacker$attack_power, " damage, ", defender$hp, " health power left.")
       if(defender$hp <= 0 && ! "WARRIOR" %in% class(defender)) {
         # defender is an enemy and has died
-        Sys.sleep(sleep)
+        message_sleep(sleep, debug)
         points <- defender$max_hp
         message(defender$name, " dies.")
-        Sys.sleep(sleep)
+        message_sleep(sleep, debug)
         message(attacker$name, " earns ", points, " points.")
         defender$death_flag <- TRUE
         for(i in seq_along(self$npcs)) {

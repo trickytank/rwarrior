@@ -1,6 +1,6 @@
 #' @import stringr
 #' @import glue
-warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
+warrior_turn <- function(w, level_state, warrior_name, sleep = 0, debug = FALSE) {
   if(is.null(w$action)) {
     stop("No warrior action was provided.")
   }
@@ -30,8 +30,8 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
     if(is.null(enemy)) {
       message(warrior_name, " attacks forward and hits nothing.")
     } else {
-      points <- points + level_state$attack_routine(level_state$warrior, enemy, direc, sleep)
-      Sys.sleep(sleep)
+      points <- points + level_state$attack_routine(level_state$warrior, enemy, direc, sleep, debug = debug)
+      message_sleep(sleep, debug)
     }
   } else if(w$action == "rest") {
     if(level_state$warrior$hp >= level_state$warrior$max_hp) {
@@ -53,14 +53,14 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0) {
       # check if they are within range
       if(level_state$feel(enemy) == "@") {
         # Do the attacking
-        level_state$attack_routine(enemy, level_state$warrior, "forward", sleep)
+        level_state$attack_routine(enemy, level_state$warrior, "forward", sleep, debug = debug)
       }
     }
     if(enemy$shoot) {
       # Not implemented
     }
   }
-  Sys.sleep(sleep)
+  message_sleep(sleep, debug)
 
   list(points = points)
 }
