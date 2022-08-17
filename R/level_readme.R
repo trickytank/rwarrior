@@ -6,6 +6,12 @@
 #'
 #' level_readme(1)
 level_readme <- function(level = 1) {
+  if(level > length(levels)) {
+    if(level <= 18) {
+      stop("Level ", level, " does not exist, though it is planned for the future.")
+    }
+    stop("Level ", level, " does not exist.")
+  }
   cat("Level", level, "\n")
   cat(Level_state$new(levels[[level]])$ascii, "\n")
   cat(levels[[level]]$description, "\n")

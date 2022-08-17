@@ -19,6 +19,9 @@ play_warrior <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0.5) {
 
 play_warrior_internal <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
   if(level > length(levels)) {
+    if(level <= 18) {
+      stop("Level ", level, " does not exist, though it is planned for the future.")
+    }
     stop("Level ", level, " does not exist.")
   }
   level_state <- Level_state$new(levels[[level]])
