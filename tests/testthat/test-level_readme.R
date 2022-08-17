@@ -9,4 +9,12 @@ test_that("Level readme is successful.", {
     level_readme(3),
     "warrior\\$feel\\("
   )
+  expect_error(
+    level_readme(17),
+    "does not exist, though it is planned"
+  )
+  expect_error(
+    level_readme(20),
+    "does not exist"
+  )
 })
