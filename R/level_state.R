@@ -26,6 +26,9 @@ Level_state <- R6Class(
     is_exit = function(y, x) {
       self$exit[1] == y && self$exit[2] == x
     },
+    is_wall = function(y, x) {
+      y == 0 || x == 0 || y == size[1] + 1 || x == size[2] + 1
+    },
     return_object = function(y, x) {
       for(npc in self$npcs) {
         if(y == npc$y && x == npc$x) {
