@@ -11,6 +11,11 @@ test_that("Solution to level 1 doesn't work.", {
       warrior$walk("for")
     },
     sleep = 0))
+  expect_true(play_warrior_internal(
+    function(warrior, memory) {
+      warrior$walk()
+    },
+    sleep = 0))
 })
 
 # expect_false(play_warrior(

@@ -13,6 +13,20 @@ test_that("Solutions not working for level 3.", {
     },
     sleep = 0, level = 3)
   )
+  expect_true(play_warrior_internal(
+    function(warrior, memory) {
+      if(warrior$feel() == " ") {
+        if(warrior$health < 15) {
+          warrior$rest()
+        } else {
+          warrior$walk()
+        }
+      } else {
+        warrior$attack()
+      }
+    },
+    sleep = 0, level = 3)
+  )
 })
 
 # Check that resting in front of enemy makes you die

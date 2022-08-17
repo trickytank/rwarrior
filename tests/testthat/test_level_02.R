@@ -12,6 +12,17 @@ test_that("Solutions not working for level 2.", {
       },
       sleep = 0, level = 2)
   )
+  expect_true(
+    play_warrior_internal(
+      function(warrior, memory) {
+        if(warrior$feel() == " ") {
+          warrior$walk()
+        } else {
+          warrior$attack()
+        }
+      },
+      sleep = 0, level = 2)
+  )
 })
 
 # Attacking an empty space should do nothing
