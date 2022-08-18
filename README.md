@@ -1,6 +1,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/trickytank/Rwarrior/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/trickytank/Rwarrior/actions/workflows/check-standard.yaml)
+[![test-coverage](https://github.com/trickytank/Rwarrior/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/trickytank/Rwarrior/actions/workflows/test-coverage.yaml)
 [![Codecov test coverage](https://codecov.io/gh/trickytank/Rwarrior/branch/master/graph/badge.svg)](https://app.codecov.io/gh/trickytank/Rwarrior?branch=master)
 
 <!-- badges: end -->
