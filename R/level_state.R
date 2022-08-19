@@ -1,6 +1,6 @@
 #' @import R6
-Level_state <- R6Class(
-  "Level_state",
+LEVEL_STATE <- R6Class(
+  "LEVEL_STATE",
   public = list(
     size = NULL,
     npcs = NULL,
@@ -27,7 +27,7 @@ Level_state <- R6Class(
       self$exit[1] == y && self$exit[2] == x
     },
     is_wall = function(y, x) {
-      y == 0 || x == 0 || y == size[1] + 1 || x == size[2] + 1
+      y == 0 || x == 0 || y == self$size[1] + 1 || x == self$size[2] + 1
     },
     return_object = function(y, x) {
       for(npc in self$npcs) {

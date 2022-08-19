@@ -14,17 +14,23 @@
 #' }
 #' play_warrior(AI, level = 1)
 play_warrior <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0.5) {
-  play_warrior_internal(ai = ai, level = level, warrior_name = warrior_name, sleep = sleep, debug = FALSE)
+  play_warrior_inbuilt_levels(ai = ai, level = level, warrior_name = warrior_name, sleep = sleep, debug = FALSE)
 }
 
-play_warrior_internal <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
+# For inbuilt levels
+play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
   if(level > length(levels)) {
     if(level <= 18) {
       stop("Level ", level, " does not exist, though it is planned for the future.")
     }
     stop("Level ", level, " does not exist.")
   }
-  level_state <- Level_state$new(levels[[level]])
+  level_state <- LEVEL_STATE$new(levels[[level]])
+  play_warrior_work(ai, level_state, warrior_name = warrior_name, sleep = sleep, debug = debug)
+}
+
+# The work of the warrior, allowing for custom levels to be used.
+play_warrior_work <- function(ai, level_state, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
   level_state$warrior$name <- warrior_name
   at_exit <- FALSE
   complete <- FALSE

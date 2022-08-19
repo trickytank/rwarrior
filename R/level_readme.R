@@ -13,7 +13,7 @@ level_readme <- function(level = 1) {
     stop("Level ", level, " does not exist.")
   }
   cat("Level", level, "\n")
-  cat(Level_state$new(levels[[level]])$ascii, "\n")
+  cat(LEVEL_STATE$new(levels[[level]])$ascii, "\n")
   cat(levels[[level]]$description, "\n")
   cat("Tip:", levels[[level]]$tip, "\n\n")
   method_description(levels[[level]]$warrior)
