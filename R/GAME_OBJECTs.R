@@ -79,6 +79,8 @@ WARRIOR <- R6Class(
   )
 )
 
+stairs <- GAME_OBJECT$new("Stairs", ">")
+
 wall <- GAME_OBJECT$new("Wall", "-")
 
 sludge <- NPC$new("Sludge", "s", 12L, attack_power = 3L, feel = TRUE, attack = TRUE)
