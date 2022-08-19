@@ -38,7 +38,18 @@ LEVEL_STATE <- R6Class(
       if(y == self$warrior$y && x == self$warrior$x) {
         return(self$warrior)
       }
+      if(self$is_wall(y, x)) {
+        return(wall$clone()) # clone for safety
+      }
       return(NULL)
+    },
+    feel_object = function(charac, direction = "forward") {
+      coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)
+      object <- self$return_object(coord$y_subject, coord$x_subject)
+      object
+    },
+    feel_warrior = function(direction = "forward") {
+      self$feel_object(self$warrior, direction)
     },
     feel = function(charac, direction = "forward") {
       coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)

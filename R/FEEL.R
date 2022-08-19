@@ -8,8 +8,8 @@ FEEL <- R6Class(
     wall = NULL,
     ticking = NULL,
     golem = NULL,
-    initialize = function(level_state) {
-      A <- level_state$feel_object
+    initialize = function(level_state, direction) {
+      A <- level_state$feel_warrior(direction)
       self$empty <- is.null(A) || A$name == "Stairs"
       self$stairs <- A$name == "Stairs"
       self$enemy <- A$enemy
