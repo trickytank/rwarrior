@@ -51,9 +51,8 @@ LEVEL_STATE <- R6Class(
     feel_warrior = function(direction = "forward") {
       self$feel_object(self$warrior, direction)
     },
-    feel = function(charac, direction = "forward") {
-      coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)
-      object <- self$return_object(coord$y_subject, coord$x_subject)
+    feel_symbol = function(charac, direction = "forward") {
+      object <- self$feel_object(charac, direction)
       if(is.null(object)) {
         return(" ")
       } else {

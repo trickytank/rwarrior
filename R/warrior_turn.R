@@ -14,7 +14,7 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0, debug = FALSE)
   for(enemy in level_state$npcs) {
     if(enemy$attack) {
       # check if they are within range
-      if(level_state$feel(enemy) == "@") {
+      if(level_state$feel_symbol(enemy) == "@") {
         # Prepare to attack
         enemys_to_attack <- c(list(enemy), enemys_to_attack)
       }
