@@ -1,4 +1,5 @@
 GAME_OBJECT <- R6Class(
+  "GAME_OBJECT",
   public = list(
     name = NULL,
     symbol = NULL,
