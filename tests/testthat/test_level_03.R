@@ -1,7 +1,7 @@
 test_that("Solutions not working for level 3.", {
   expect_true(play_warrior(
     function(warrior, memory) {
-      if(warrior$feel() == " ") {
+      if(warrior$feel()$empty) {
         if(warrior$health < 15) {
           warrior$rest()
         } else {
@@ -15,7 +15,7 @@ test_that("Solutions not working for level 3.", {
   )
   expect_true(play_warrior_inbuilt_levels(
     function(warrior, memory) {
-      if(warrior$feel() == " ") {
+      if(warrior$feel()$empty) {
         if(warrior$health < 15) {
           warrior$rest()
         } else {
@@ -33,7 +33,7 @@ test_that("Solutions not working for level 3.", {
 test_that("Resting in front of enemy is not causing death.", {
   expect_message(play_warrior(
     function(warrior, memory) {
-      if(warrior$feel() == " ") {
+      if(warrior$feel()$empty) {
         if(warrior$health < 15) {
           warrior$rest()
         } else {
