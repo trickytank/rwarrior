@@ -51,7 +51,8 @@ More advanced levels require either using a non-copy on write object or use of t
 ```
 AI <- function(warrior, memory) {
       if(is.null(memory)) {
-        memory <- list(variable1 = "initial value") # give initial values when memory is NULL
+        # give initial values when memory is NULL
+        memory <- list(variable1 = "initial value") 
       }
       # Your code goes here #
       # Access memory variable1 with memory$variable1
