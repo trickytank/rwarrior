@@ -79,16 +79,20 @@ WARRIOR <- R6Class(
   )
 )
 
-stairs <- GAME_OBJECT$new("Stairs", ">")
+stairs_here <- function(yx) {
+    GAME_OBJECT$new("Stairs", ">")$set_loc(yx[1], yx[2])
+}
 
 wall <- GAME_OBJECT$new("Wall", "-")
 
-sludge <- NPC$new("Sludge", "s", 12L, attack_power = 3L, feel = TRUE, attack = TRUE)
+sludge_here <- function(y, x) {
+  NPC$new("Sludge", "s", 12L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x)
+}
 
 thick_sludge <- NPC$new("Thick Sludge", "S", 24L)
 
 archer <- NPC$new("Archer", "a", 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)
 
-x <- sludge$clone()$set_loc(1L, 4L)
+x <- sludge_here(1L, 4L)
 x
 x$hp

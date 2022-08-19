@@ -16,7 +16,7 @@ test_levels[[2]] <- list(
   size = c(1,3),
   warrior = WARRIOR$new()$set_loc(1, 1),
   npcs = list(
-    sludge$clone()$set_loc(1, 2)
+    sludge_here(1, 2)
   ),
   stairs = c(1,3),
   tip = "",
@@ -30,7 +30,7 @@ test_levels[[3]] <- list(
   size = c(1,3),
   warrior = WARRIOR$new()$set_loc(1, 1),
   npcs = list(
-    sludge$clone()$set_loc(1, 2)
+    sludge_here(1, 2)
   ),
   stairs = c(1,3),
   tip = "",
