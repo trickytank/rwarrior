@@ -1,11 +1,11 @@
 test_levels <- list()
 
 test_levels[[1]] <- list(
-  description = "Test $at_exit",
+  description = "Test $at_stairs",
   size = c(1,2),
   warrior = WARRIOR$new()$set_loc(1, 2),
   npcs = list(),
-  exit = c(1,2),
+  stairs = c(1,2),
   tip = "",
   time_bonus = 0,
   ace_score = 0
@@ -18,7 +18,7 @@ test_levels[[2]] <- list(
   npcs = list(
     sludge$clone()$set_loc(1, 2)
   ),
-  exit = c(1,3),
+  stairs = c(1,3),
   tip = "",
   time_bonus = 0,
   ace_score = 0
@@ -32,7 +32,7 @@ test_levels[[3]] <- list(
   npcs = list(
     sludge$clone()$set_loc(1, 2)
   ),
-  exit = c(1,3),
+  stairs = c(1,3),
   tip = "",
   time_bonus = 0,
   ace_score = 0
@@ -45,9 +45,9 @@ level_state_2_1 <- LEVEL_STATE$new(levels[[2]])
 test_that("LEVEL_STATE class", {
   # deep_clone()
   expect_error(LEVEL_STATE$new(levels[[1]])$deep_clone(), NA)
-  # is_exit()
-  expect_true(LEVEL_STATE$new(levels[[1]])$is_exit(1, 8))
-  expect_false(LEVEL_STATE$new(levels[[1]])$is_exit(1, 6))
+  # is_stairs()
+  expect_true(LEVEL_STATE$new(levels[[1]])$is_stairs(1, 8))
+  expect_false(LEVEL_STATE$new(levels[[1]])$is_stairs(1, 6))
   # is_wall()
   expect_true(LEVEL_STATE$new(levels[[1]])$is_wall(2, 8))
   expect_true(LEVEL_STATE$new(levels[[1]])$is_wall(0, 4))
@@ -69,10 +69,10 @@ test_that("LEVEL_STATE class", {
   # ascii
   expect_equal(LEVEL_STATE$new(levels[[1]])$ascii, "——————————\n|@      >|\n——————————\n")
   expect_error(LEVEL_STATE$new(levels[[1]])$ascii <- "duck")
-  # at_exit
-  expect_true(LEVEL_STATE$new(test_levels[[1]])$at_exit)
-  expect_false(LEVEL_STATE$new(levels[[1]])$at_exit)
-  expect_error(LEVEL_STATE$new(levels[[1]])$at_exit <- TRUE)
+  # at_stairs
+  expect_true(LEVEL_STATE$new(test_levels[[1]])$at_stairs)
+  expect_false(LEVEL_STATE$new(levels[[1]])$at_stairs)
+  expect_error(LEVEL_STATE$new(levels[[1]])$at_stairs <- TRUE)
 })
 
 test_that("LEVEL_STATE tests that are not working as expected.", {

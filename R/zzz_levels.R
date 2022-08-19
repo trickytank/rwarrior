@@ -9,7 +9,7 @@ levels[[1]] <- list(
   size = c(1,8),
   warrior = WARRIOR$new()$set_loc(1, 1),
   npcs = list(),
-  exit = c(1,8),
+  stairs = c(1,8),
   tip = "Call warrior$walk() to walk forward in your AI.",
   time_bonus = 15,
   ace_score = 10
@@ -23,7 +23,7 @@ levels[[2]] <- list(
   npcs = list(
     sludge$clone()$set_loc(1, 5)
   ),
-  exit = c(1,8),
+  stairs = c(1,8),
   tip = "Use warrior$feel$empty to see if there is anything in front of you, and warrior$attack() to fight it.\nRemember, you can only do one actionper turn.",
   time_bonus = 20,
   ace_score = 26
@@ -40,7 +40,7 @@ levels[[3]] <- list(
     sludge$clone()$set_loc(1, 6),
     sludge$clone()$set_loc(1, 8)
   ),
-  exit = c(1, 9),
+  stairs = c(1, 9),
   tip = "Be careful not to die! Use warrior.health to keep an eye on your health, and warrior.rest! to earn 10% of max health back.",
   time_bonus = 35,
   ace_score = 71

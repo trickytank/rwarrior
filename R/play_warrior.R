@@ -6,7 +6,7 @@
 #' @param level Level number.
 #' @param warrior_name Name of your warrior, for flavour.
 #' @param sleep Time between text updates.
-#' @return A logical that is TRUE on successfully getting to the exit
+#' @return A logical that is TRUE on successfully getting to the stairs
 #' @export
 #' @examples
 #' AI <- AI <- function(warrior, memory) {
@@ -33,7 +33,7 @@ play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher", 
 # TODO: remove level, and store time bonus etc. in the LEVEL_STATE class
 play_warrior_work <- function(ai, level_state, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
   level_state$warrior$name <- warrior_name
-  at_exit <- FALSE
+  at_stairs <- FALSE
   complete <- FALSE
   turn <- 1L
   alive <- TRUE
@@ -59,7 +59,7 @@ play_warrior_work <- function(ai, level_state, level = 1, warrior_name = "Fisher
       return(invisible(FALSE))
     }
 
-    if(level_state$at_exit) {
+    if(level_state$at_stairs) {
       complete <- TRUE
       message("-----------------------------------")
       cat(level_state$ascii)
