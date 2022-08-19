@@ -10,6 +10,7 @@ Warrior_action <- R6Class(
     feel_backward = NULL,
     initialize = function(level_state) {
       self$health <- level_state$warrior$hp
+      private$attack_ability <- level_state$warrior$attack
       if(level_state$warrior$feel) {
         self$feel_forward <- FEEL$new(level_state, "forward")
         self$feel_backward <- FEEL$new(level_state, "backward")
@@ -22,7 +23,7 @@ Warrior_action <- R6Class(
       invisible(self)
     },
     attack = function(direction = "forward") {
-      if(private$level_state$warrior$attack) {
+      if(private$attack_ability) {
         private$check_one_action()
         self$action <- "attack"
         self$direction <- direction
@@ -44,7 +45,6 @@ Warrior_action <- R6Class(
       if(is.null(self$feel_forward)) {
         stop("Warrior does not yet have the feel function.")
       } else {
-        private$level_state$feel(private$level_state$warrior, direction)
         if(!is.na(pmatch(direction, "forward"))) {
           self$feel_forward
         } else if (!is.na(pmatch(direction, "backward"))) {
@@ -56,6 +56,7 @@ Warrior_action <- R6Class(
     }
   ),
   private = list(
+    attack_ability = NULL,
     check_one_action = function() {
       if(!is.null(self$action)) {
         stop("A warrior action has already been defined.")
