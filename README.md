@@ -8,14 +8,20 @@
 
 # R Warrior
 
-Port of [Ruby Warrior](https://github.com/ryanb/ruby-warrior).
+This is a game designed to teach the R language and artificial intelligence in a fun, interactive way.
 
+You play as a warrior climbing a tall tower to reach the precious Hex at the top level.
+On each floor you need to write a R function to instruct the warrior to battle enemies, rescue captives, and reach the stairs. 
+You have some idea of what each floor contains, but you never know for certain what will happen. 
+You must give the Warrior enough artificial intelligence up-front to find their own way.
+
+This is a port of [Ruby Warrior](https://github.com/ryanb/ruby-warrior).
 
 ## Installation
 
 ```
 # install.packages("devtools") # If devtools is not installed
-devtools::install_github("trickytank/Rwarrior")
+devtools::install_github("trickytank/Rwarrior", build_vignettes = TRUE)
 ```
 
 ## Play
