@@ -29,7 +29,15 @@ method_description <- function(warrior) {
   }
   if(warrior$feel) {
     cat('- warrior$feel(direction = "forward")\n')
-    cat('  Returns " " if the space in front is empty or the stairs, or the object\'s corresponding symbol.\n')
+    cat('  Checks what is in front (or behind) the warrior.\n')
+    cat('  Returns a FEEL object with fields as below:\n')
+    cat('    - $empty returns TRUE if the space is empty or the stairs.\n')
+    cat('    - $stairs returns TRUE if the space has the stairs.\n')
+    cat('    - $enemy returns TRUE if the space has an enemy.\n')
+    cat('    - $captive returns TRUE if the space has a captive.\n')
+    cat('    - $wall returns TRUE if the space is a wall. You can\'t walk here.\n')
+    cat('    - $ticking returns TRUE if the space is a bomb which will explode in time.')
+    cat('    - $wall returns TRUE if a golem is occupying this space.\n')
   }
   if(warrior$attack) {
     cat('- warrior$attack(direction = "forward")\n')
