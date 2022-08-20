@@ -36,8 +36,8 @@ method_description <- function(warrior) {
     cat('    - $enemy returns TRUE if the space has an enemy.\n')
     cat('    - $captive returns TRUE if the space has a captive.\n')
     cat('    - $wall returns TRUE if the space is a wall. You can\'t walk here.\n')
-    cat('    - $ticking returns TRUE if the space is a bomb which will explode in time.')
-    cat('    - $wall returns TRUE if a golem is occupying this space.\n')
+    cat('    - $ticking returns TRUE if the space is a bomb which will explode in time.\n')
+    cat('    - $golem returns TRUE if a golem is occupying this space.\n')
   }
   if(warrior$attack) {
     cat('- warrior$attack(direction = "forward")\n')
