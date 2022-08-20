@@ -46,7 +46,7 @@ play_warrior_work <- function(ai, level_state, level = 1, warrior_name = "Fisher
     x <- level_state$x
     y <- level_state$y
     # clone here to prevent tampering the level_state. Doesn't prevent all cheating such as inspecting the entire level_state.
-    w <- Warrior_action$new(level_state$deep_clone())
+    w <- WARRIOR_ACTION$new(level_state$deep_clone())
     # w is also modified here
     memory <- ai(w, memory)
     result <- warrior_turn(w, level_state, warrior_name, sleep, debug = debug)

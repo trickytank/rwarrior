@@ -1,7 +1,7 @@
-# Definitions for the R6 class Warrior_action.
+# Definitions for the R6 class WARRIOR_ACTION.
 
-Warrior_action <- R6Class(
-  "Warrior_action",
+WARRIOR_ACTION <- R6Class(
+  "WARRIOR_ACTION",
   public = list(
     action = NULL,
     direction = NULL,
