@@ -66,12 +66,12 @@ GAME_STATE <- R6Class(
       coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)
       for(a in 1:3) {
         object <- self$return_object(coord$y_subject, coord$x_subject)
-        if(!is.null(object)) {
+        if(!object$empty) {
           return(object)
         }
         coord <- give_coordinates(charac$compass, direction, coord$y_subject, coord$x_subject)
       }
-      return(NULL)
+      return(empty)
     },
     look_symbol = function(charac, direction = "forward") {
       object <- self$look_object(charac, direction)
