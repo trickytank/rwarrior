@@ -6,7 +6,7 @@
 #' @param level Level number.
 #' @param warrior_name Name of your warrior, for flavour.
 #' @param sleep Time between text updates.
-#' @return A logical that is TRUE on successfully getting to the exit
+#' @return A logical that is TRUE on successfully getting to the stairs
 #' @export
 #' @examples
 #' AI <- AI <- function(warrior, memory) {
@@ -14,19 +14,26 @@
 #' }
 #' play_warrior(AI, level = 1)
 play_warrior <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0.5) {
-  play_warrior_internal(ai = ai, level = level, warrior_name = warrior_name, sleep = sleep, debug = FALSE)
+  play_warrior_inbuilt_levels(ai = ai, level = level, warrior_name = warrior_name, sleep = sleep, debug = FALSE)
 }
 
-play_warrior_internal <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
+# For inbuilt levels
+play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
   if(level > length(levels)) {
     if(level <= 18) {
       stop("Level ", level, " does not exist, though it is planned for the future.")
     }
     stop("Level ", level, " does not exist.")
   }
-  level_state <- Level_state$new(levels[[level]])
+  level_state <- LEVEL_STATE$new(levels[[level]])
+  play_warrior_work(ai, level_state, level = level, warrior_name = warrior_name, sleep = sleep, debug = debug)
+}
+
+# The work of the warrior, allowing for custom levels to be used.
+# TODO: remove level, and store time bonus etc. in the LEVEL_STATE class
+play_warrior_work <- function(ai, level_state, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
   level_state$warrior$name <- warrior_name
-  at_exit <- FALSE
+  at_stairs <- FALSE
   complete <- FALSE
   turn <- 1L
   alive <- TRUE
@@ -39,7 +46,7 @@ play_warrior_internal <- function(ai, level = 1, warrior_name = "Fisher", sleep 
     x <- level_state$x
     y <- level_state$y
     # clone here to prevent tampering the level_state. Doesn't prevent all cheating such as inspecting the entire level_state.
-    w <- Warrior_action$new(level_state$deep_clone())
+    w <- WARRIOR_ACTION$new(level_state$deep_clone())
     # w is also modified here
     memory <- ai(w, memory)
     result <- warrior_turn(w, level_state, warrior_name, sleep, debug = debug)
@@ -52,7 +59,7 @@ play_warrior_internal <- function(ai, level = 1, warrior_name = "Fisher", sleep 
       return(invisible(FALSE))
     }
 
-    if(level_state$at_exit) {
+    if(level_state$at_stairs) {
       complete <- TRUE
       message("-----------------------------------")
       cat(level_state$ascii)

@@ -1,14 +1,21 @@
-# Definitions for the R6 class Warrior_action.
+# Definitions for the R6 class WARRIOR_ACTION.
 
-Warrior_action <- R6Class(
-  "Warrior_action",
+WARRIOR_ACTION <- R6Class(
+  "WARRIOR_ACTION",
   public = list(
     action = NULL,
     direction = NULL,
     health = NULL,
+    feel_forward = NULL,
+    feel_backward = NULL,
     initialize = function(level_state) {
       self$health <- level_state$warrior$hp
-      private$level_state <- level_state
+      private$attack_ability <- level_state$warrior$attack
+      private$rest_ability <- level_state$warrior$rest
+      if(level_state$warrior$feel) {
+        self$feel_forward <- FEEL$new(level_state, "forward")
+        self$feel_backward <- FEEL$new(level_state, "backward")
+      }
     },
     walk = function(direction = "forward") {
       private$check_one_action()
@@ -17,7 +24,7 @@ Warrior_action <- R6Class(
       invisible(self)
     },
     attack = function(direction = "forward") {
-      if(private$level_state$warrior$attack) {
+      if(private$attack_ability) {
         private$check_one_action()
         self$action <- "attack"
         self$direction <- direction
@@ -27,7 +34,7 @@ Warrior_action <- R6Class(
       }
     },
     rest = function() {
-      if(private$level_state$warrior$rest) {
+      if(private$rest_ability) {
         private$check_one_action()
         self$action <- "rest"
         invisible(self)
@@ -36,15 +43,22 @@ Warrior_action <- R6Class(
       }
     },
     feel = function(direction = "forward") {
-      if(private$level_state$warrior$feel) {
-        private$level_state$feel(private$level_state$warrior, direction)
-      } else {
+      if(is.null(self$feel_forward)) {
         stop("Warrior does not yet have the feel function.")
+      } else {
+        if(!is.na(pmatch(direction, "forward"))) {
+          self$feel_forward
+        } else if (!is.na(pmatch(direction, "backward"))) {
+          self$feel_backward
+        } else {
+          stop("Invalid direction specified: ", direction, "")
+        }
       }
     }
   ),
   private = list(
-    level_state = NULL,
+    attack_ability = NULL,
+    rest_ability = NULL,
     check_one_action = function() {
       if(!is.null(self$action)) {
         stop("A warrior action has already been defined.")

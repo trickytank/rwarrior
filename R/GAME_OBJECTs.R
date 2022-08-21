@@ -7,6 +7,7 @@ GAME_OBJECT <- R6Class(
     y = NULL,
     compass = NULL,
     compass_default = "west",
+    enemy = FALSE,
     initialize = function(name, symbol) {
       self$name <- name
       self$symbol <- symbol
@@ -33,6 +34,7 @@ NPC <- R6Class(
     look = NULL,
     attack = NULL,
     shoot = NULL,
+    enemy = TRUE,
     death_flag = FALSE,
     initialize = function(name, symbol, max_hp, attack_power = NULL, shoot_power = NULL,
                feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE) {
@@ -64,6 +66,7 @@ WARRIOR <- R6Class(
     rest = NULL,
     health = NULL,
     compass_default = "east",
+    enemy = FALSE,
     initialize = function(walk = FALSE, feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE,
                           rest = FALSE, health = FALSE) {
       self$walk <- walk
@@ -79,14 +82,24 @@ WARRIOR <- R6Class(
   )
 )
 
+stairs_here <- function(yx) {
+    GAME_OBJECT$new("Stairs", ">")$set_loc(yx[1], yx[2])
+}
+
 wall <- GAME_OBJECT$new("Wall", "-")
 
-sludge <- NPC$new("Sludge", "s", 12L, attack_power = 3L, feel = TRUE, attack = TRUE)
+sludge_here <- function(y, x) {
+  NPC$new("Sludge", "s", 12L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x)
+}
 
-thick_sludge <- NPC$new("Thick Sludge", "S", 24L)
+thick_sludge_here <- function(y, x) {
+  thick_sludge <- NPC$new("Thick Sludge", "S", 24L)$set_loc(y, x)
+}
 
-archer <- NPC$new("Archer", "a", 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)
+archer_here <- function(y, x) {
+  NPC$new("Archer", "a", 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)$set_loc(y, x)
+}
 
-x <- sludge$clone()$set_loc(1L, 4L)
+x <- sludge_here(1L, 4L)
 x
 x$hp

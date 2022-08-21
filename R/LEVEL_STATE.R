@@ -1,10 +1,10 @@
 #' @import R6
-Level_state <- R6Class(
-  "Level_state",
+LEVEL_STATE <- R6Class(
+  "LEVEL_STATE",
   public = list(
     size = NULL,
     npcs = NULL,
-    exit = NULL,
+    stairs = NULL,
     warrior = NULL,
     initialize = function(level_spec) {
       self$npcs <- list()
@@ -13,7 +13,7 @@ Level_state <- R6Class(
       }
       self$size <- level_spec$size
       self$warrior <- level_spec$warrior$clone()
-      self$exit <- level_spec$exit
+      self$stairs <- level_spec$stairs
       invisible(self)
     },
     deep_clone = function() {
@@ -23,11 +23,11 @@ Level_state <- R6Class(
       }
       X
     },
-    is_exit = function(y, x) {
-      self$exit[1] == y && self$exit[2] == x
+    is_stairs = function(y, x) {
+      self$stairs[1] == y && self$stairs[2] == x
     },
     is_wall = function(y, x) {
-      y == 0 || x == 0 || y == size[1] + 1 || x == size[2] + 1
+      y == 0 || x == 0 || y == self$size[1] + 1 || x == self$size[2] + 1
     },
     return_object = function(y, x) {
       for(npc in self$npcs) {
@@ -38,11 +38,21 @@ Level_state <- R6Class(
       if(y == self$warrior$y && x == self$warrior$x) {
         return(self$warrior)
       }
+      if(self$is_wall(y, x)) {
+        return(wall$clone()) # clone for safety
+      }
       return(NULL)
     },
-    feel = function(charac, direction = "forward") {
+    feel_object = function(charac, direction = "forward") {
       coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)
       object <- self$return_object(coord$y_subject, coord$x_subject)
+      object
+    },
+    feel_warrior = function(direction = "forward") {
+      self$feel_object(self$warrior, direction)
+    },
+    feel_symbol = function(charac, direction = "forward") {
+      object <- self$feel_object(charac, direction)
       if(is.null(object)) {
         return(" ")
       } else {
@@ -78,7 +88,7 @@ Level_state <- R6Class(
       if (missing(value)) {
         lines <- ""
         level_map <- matrix(" ", nrow = self$size[1], ncol = self$size[2])
-        level_map[self$exit[1], self$exit[2]] <- ">"
+        level_map[self$stairs[1], self$stairs[2]] <- ">"
         for(charac in c(list(self$warrior), self$npcs)) {
           if(level_map[charac$y, charac$x] != " " && level_map[charac$y, charac$x] != ">") {
             stop("More than one object at location (", y, ", ", x, ")")
@@ -99,11 +109,11 @@ Level_state <- R6Class(
         stop("Cannot assign ascii")
       }
     },
-    at_exit = function(value) {
+    at_stairs = function(value) {
       if (missing(value)) {
-          self$is_exit(self$warrior$y, self$warrior$x)
+          self$is_stairs(self$warrior$y, self$warrior$x)
         } else {
-          stop("Cannot assign at_exit")
+          stop("Cannot assign at_stairs")
         }
     }
   )

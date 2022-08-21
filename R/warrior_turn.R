@@ -4,7 +4,7 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0, debug = FALSE)
   if(is.null(w$action)) {
     stop("No warrior action was provided.")
   }
-  at_exit = FALSE
+  at_stairs = FALSE
   map <- level_state$map
   x <- level_state$warrior$x
   y <- level_state$warrior$y
@@ -14,7 +14,7 @@ warrior_turn <- function(w, level_state, warrior_name, sleep = 0, debug = FALSE)
   for(enemy in level_state$npcs) {
     if(enemy$attack) {
       # check if they are within range
-      if(level_state$feel(enemy) == "@") {
+      if(level_state$feel_symbol(enemy) == "@") {
         # Prepare to attack
         enemys_to_attack <- c(list(enemy), enemys_to_attack)
       }
