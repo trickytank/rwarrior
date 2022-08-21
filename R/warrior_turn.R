@@ -68,11 +68,13 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE) 
 
   # Let enemies attack if they are close enough
   for(enemy in enemys_to_attack) {
+    if(enemy$death_flag) { next }
     # Do the attacking
     game_state$attack_routine(enemy, game_state$warrior, "forward", sleep = sleep, debug = debug)
     message_sleep(sleep, debug)
   }
   for(enemy in enemys_to_shoot) {
+    if(enemy$death_flag) { next }
     # Do the attacking
     game_state$attack_routine(enemy, game_state$warrior, "forward", attack_type = "shoots", sleep = sleep, debug = debug)
     message_sleep(sleep, debug)
