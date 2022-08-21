@@ -93,7 +93,7 @@ sludge_here <- function(y, x) {
 }
 
 thick_sludge_here <- function(y, x) {
-  thick_sludge <- NPC$new("Thick Sludge", "S", 24L)$set_loc(y, x)
+  thick_sludge <- NPC$new("Thick Sludge", "S", 24L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x)
 }
 
 archer_here <- function(y, x) {
