@@ -96,7 +96,7 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
 
     turn <- turn + 1L
     if(turn > max_turns) {
-      message("Sorry, you have run out of time.")
+      if(output) cli_text("Sorry, you have run out of time.")
       return(invisible(FALSE))
     }
   }
