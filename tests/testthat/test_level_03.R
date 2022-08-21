@@ -1,5 +1,5 @@
 test_that("Solutions not working for level 3.", {
-  expect_true(play_warrior(
+  expect_true(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       if(warrior$feel()$empty) {
         if(warrior$health < 15) {

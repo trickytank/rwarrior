@@ -83,10 +83,10 @@ test_that("GAME_STATE class", {
   # look
   expect_equal(game_state_1_1$look_symbol(game_state_1_1$warrior), " ")
   # attack_routine()
-  expect_message(game_state_2_1$attack_routine(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "forward"), "Warrior attacks forward and hits Sludge")
-  expect_message(game_state_2_1$attack_routine(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "PLACEHOLDER"), "Warrior attacks PLACEHOLDER and hits Sludge")
-  expect_message(game_state_2_1$attack_routine(game_state_2_1$npcs[[1]], game_state_2_1$warrior, "forward"), "Sludge attacks forward and hits Warrior")
-  expect_message(game_state_test_3_1$attack_routine(game_state_test_3_1$warrior, game_state_test_3_1$npcs[[1]], "forward"), "Sludge dies.")
+  expect_message(game_state_2_1$attack_routine(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "forward", output = TRUE), "Warrior attacks forward and hits Sludge")
+  expect_message(game_state_2_1$attack_routine(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "PLACEHOLDER", output = TRUE), "Warrior attacks PLACEHOLDER and hits Sludge")
+  expect_message(game_state_2_1$attack_routine(game_state_2_1$npcs[[1]], game_state_2_1$warrior, "forward", output = TRUE), "Sludge attacks forward and hits Warrior")
+  expect_message(game_state_test_3_1$attack_routine(game_state_test_3_1$warrior, game_state_test_3_1$npcs[[1]], "forward", output = TRUE), "Sludge dies.")
   expect_error(game_state_2_1$attack_routine(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "forward", attack_type = "gorilla"), "attack_routine() unknown attack_type", fixed = TRUE)
   # ascii
   expect_equal(GAME_STATE$new(levels[[1]])$ascii, "——————————\n|@      >|\n——————————\n")

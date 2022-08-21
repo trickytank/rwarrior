@@ -34,7 +34,7 @@ play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher", 
 # The work of the warrior, allowing for custom levels to be used.
 # TODO: remove level, and store time bonus etc. in the GAME_STATE class
 play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fisher",
-                              sleep = 0, debug = TRUE, output = FALSE) {
+                              sleep = 0, debug = TRUE, output = FALSE, max_turns = 100L) {
   game_state$warrior$name <- warrior_name
   at_stairs <- FALSE
   complete <- FALSE
@@ -93,7 +93,7 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
     }
 
     turn <- turn + 1L
-    if(turn == 101) {
+    if(turn > max_turns) {
       message("Sorry, you have run out of time.")
       return(invisible(FALSE))
     }

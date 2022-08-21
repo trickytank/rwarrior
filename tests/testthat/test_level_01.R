@@ -16,7 +16,7 @@ test_that("Solution to level 1 doesn't work.", {
       warrior$walk()
     },
     sleep = 0))
-  expect_output(play_warrior(
+  expect_message(play_warrior(
     function(warrior, memory) {
       warrior$walk()
     },

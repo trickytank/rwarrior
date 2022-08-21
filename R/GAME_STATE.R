@@ -81,7 +81,7 @@ GAME_STATE <- R6Class(
         return(object$symbol)
       }
     },
-    attack_routine = function(attacker, defender, direction, attack_type = "attacks", sleep = 0, debug = FALSE) {
+    attack_routine = function(attacker, defender, direction, attack_type = "attacks", sleep = 0, debug = FALSE, output = FALSE) {
       if(attack_type == "attacks") {
         hit_power <- attacker$attack_power
       } else if (attack_type == "shoots") {
@@ -90,16 +90,16 @@ GAME_STATE <- R6Class(
         stop("attack_routine() unknown attack_type.")
       }
       defender$hp <- defender$hp - hit_power
-      cli_text("{attacker$name} {attack_type} {direction} and hits {defender$name}.")
+      if(output) cli_text("{attacker$name} {attack_type} {direction} and hits {defender$name}.")
       message_sleep(sleep, debug)
-      cli_text("{defender$name} takes {hit_power} damage, {defender$hp} health power left.")
+      if(output) cli_text("{defender$name} takes {hit_power} damage, {defender$hp} health power left.")
       if(defender$hp <= 0 && ! "WARRIOR" %in% class(defender)) {
         # defender is an enemy and has died
         message_sleep(sleep, debug)
         points <- defender$max_hp
-        cli_text("{defender$name} dies.")
+        if(output) cli_text("{defender$name} dies.")
         message_sleep(sleep, debug)
-        cli_text("{attacker$name} earns {points} points.")
+        if(output) cli_text("{attacker$name} earns {points} points.")
         defender$death_flag <- TRUE
         for(i in seq_along(self$npcs)) {
           if(self$npcs[[i]]$death_flag) {

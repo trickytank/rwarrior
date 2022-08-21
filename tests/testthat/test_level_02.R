@@ -2,7 +2,7 @@
 
 test_that("Solutions not working for level 2.", {
   expect_true(
-    play_warrior(
+    play_warrior_inbuilt_levels(
       function(warrior, memory) {
         if(warrior$feel()$empty) {
           warrior$walk()
