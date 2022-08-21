@@ -35,3 +35,14 @@ test_that("No message that attacking an empty space is failing.", {
     "attacks forward and hits nothing."
   )
 })
+
+test_that("Message should be given is warrior is blocked.", {
+  expect_message(play_warrior(
+    function(warrior, memory) {
+      warrior$walk()
+    },
+    sleep = 0, level = 2),
+    "is blocked and doesn't move."
+  )
+})
+
