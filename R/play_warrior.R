@@ -89,6 +89,5 @@ play_warrior_work <- function(ai, game_state, level = 1, warrior_name = "Fisher"
       return(invisible(FALSE))
     }
   }
-  return(invisible(NULL))
 }
 
