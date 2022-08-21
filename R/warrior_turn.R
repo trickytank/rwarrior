@@ -36,7 +36,7 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE) 
     direc <- coord$direc
   }
   if(w$action == "walk") {
-    if(is.null(game_state$return_object(y_subject, x_subject))) {
+    if(game_state$return_object(y_subject, x_subject)$empty) {
       cat(glue("{warrior_name} walks {direc}.\n\n"))
       game_state$warrior$y <- y_subject
       game_state$warrior$x <- x_subject
@@ -45,8 +45,10 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE) 
     }
   } else if (w$action == "attack") {
     enemy <- game_state$return_object(y_subject, x_subject)
-    if(is.null(enemy)) {
+    if(enemy$empty) {
       message(warrior_name, " attacks forward and hits nothing.")
+    } else if (enemy$name == "Wall") {
+      message(warrior_name, " attacks forward and hits the wall.")
     } else {
       points <- points + game_state$attack_routine(game_state$warrior, enemy, direc, sleep = sleep, debug = debug)
     }

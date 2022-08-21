@@ -71,7 +71,7 @@ test_that("GAME_STATE class", {
   expect_true(GAME_STATE$new(levels[[1]])$is_wall(0, 4))
   expect_false(GAME_STATE$new(levels[[1]])$is_wall(1, 5))
   # return_object()
-  expect_null(GAME_STATE$new(levels[[1]])$return_object(1, 5))
+  expect_true(GAME_STATE$new(levels[[1]])$return_object(1, 5)$empty)
   expect_true(GAME_STATE$new(levels[[1]])$return_object(1, 1)$symbol == "@")
   expect_true(GAME_STATE$new(levels[[2]])$return_object(1, 5)$symbol == "s")
   # feel()

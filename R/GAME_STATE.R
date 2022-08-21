@@ -47,7 +47,7 @@ GAME_STATE <- R6Class(
       if(self$is_wall(y, x)) {
         return(wall$clone()) # clone for safety
       }
-      return(NULL)
+      return(empty)
     },
     feel_object = function(charac, direction = "forward") {
       coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)
@@ -59,11 +59,7 @@ GAME_STATE <- R6Class(
     },
     feel_symbol = function(charac, direction = "forward") {
       object <- self$feel_object(charac, direction)
-      if(is.null(object)) {
-        return(" ")
-      } else {
-        return(object$symbol)
-      }
+      object$symbol
     },
     # Look up to three spaces
     look_object = function(charac, direction = "forward") {

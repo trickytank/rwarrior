@@ -8,9 +8,11 @@ GAME_OBJECT <- R6Class(
     compass = NULL,
     compass_default = "west",
     enemy = FALSE,
-    initialize = function(name, symbol) {
+    empty = FALSE,
+    initialize = function(name, symbol, empty = FALSE) {
       self$name <- name
       self$symbol <- symbol
+      self$empty <- empty
       invisible(self)
     },
     set_loc = function(y, x, compass = self$compass_default) {
@@ -83,8 +85,10 @@ WARRIOR <- R6Class(
 )
 
 stairs_here <- function(yx) {
-    GAME_OBJECT$new("Stairs", ">")$set_loc(yx[1], yx[2])
+    GAME_OBJECT$new("Stairs", ">", empty = TRUE)$set_loc(yx[1], yx[2])
 }
+
+empty <- GAME_OBJECT$new("Empty", " ", empty = TRUE)
 
 wall <- GAME_OBJECT$new("Wall", "-")
 
