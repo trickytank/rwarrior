@@ -1,17 +1,22 @@
 # Warrior AI tests for level 1
 
 test_that("Solution to level 1 doesn't work.", {
-  expect_true(play_warrior(
+  expect_true(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       warrior$walk()
     },
     sleep = 0))
-  expect_true(play_warrior(
+  expect_true(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       warrior$walk("for")
     },
     sleep = 0))
   expect_true(play_warrior_inbuilt_levels(
+    function(warrior, memory) {
+      warrior$walk()
+    },
+    sleep = 0))
+  expect_output(play_warrior(
     function(warrior, memory) {
       warrior$walk()
     },
@@ -26,7 +31,7 @@ test_that("Solution to level 1 doesn't work.", {
 # )
 
 test_that("Invalid direction doesn't result in an error", {
-  expect_error(play_warrior(
+  expect_error(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       warrior$walk("goat")
     },
