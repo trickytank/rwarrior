@@ -73,7 +73,7 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
         clear_bonus <- game_state$level_clear_bonus
         total_score <- time_bonus + level_score + clear_bonus
         cli_text("Level Score: {level_score}")
-        cat(glue("Time Bonus:  {time_bonus}"), "\n")
+        cli_text("Time Bonus:  {time_bonus}") # TODO: preserve this whitespace
         cli_text("Clear Bonus: {clear_bonus}")
         cli_text("Level Score: {level_score}")
         cli_text("Total Score: {total_score}")

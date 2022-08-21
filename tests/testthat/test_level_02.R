@@ -41,7 +41,7 @@ test_that("Message should be given is warrior is blocked.", {
     function(warrior, memory) {
       warrior$walk()
     },
-    sleep = 0, level = 2, output = TRUE, max_turns = 6),
+    sleep = 0, level = 2, output = TRUE, max_turns = 4),
     "is blocked and doesn't move."
   )
 })

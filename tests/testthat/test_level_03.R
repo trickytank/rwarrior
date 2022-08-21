@@ -31,7 +31,7 @@ test_that("Solutions not working for level 3.", {
 
 # Check that resting in front of enemy makes you die
 test_that("Resting in front of enemy is not causing death.", {
-  expect_message(play_warrior(
+  expect_message(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       if(warrior$feel()$empty) {
         if(warrior$health < 15) {
@@ -43,7 +43,7 @@ test_that("Resting in front of enemy is not causing death.", {
         warrior$rest()
       }
     },
-    sleep = 0, level = 3),
+    sleep = 0, level = 3, output = TRUE, max_turns = 20),
     "Fisher died.\n"
   )
 })
