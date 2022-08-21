@@ -14,7 +14,7 @@ test_levels[[1]] <- list(
 test_levels[[2]] <- list(
   description = "Test $attack_routine() and $feel()",
   size = c(1,3),
-  warrior = WARRIOR$new()$set_loc(1, 1),
+  warrior = WARRIOR$new(feel = TRUE)$set_loc(1, 1),
   npcs = list(
     sludge_here(1, 2)
   ),
@@ -57,8 +57,8 @@ game_state_test_4_1 <- GAME_STATE$new(test_levels[[4]])
 
 game_state_1_1 <- GAME_STATE$new(levels[[1]])
 game_state_2_1 <- GAME_STATE$new(levels[[2]])
-game_state_3_1 <- GAME_STATE$new(levels[[2]])
-game_state_4_1 <- GAME_STATE$new(levels[[2]])
+game_state_3_1 <- GAME_STATE$new(levels[[3]])
+game_state_4_1 <- GAME_STATE$new(levels[[4]])
 
 test_that("GAME_STATE class", {
   # deep_clone()
