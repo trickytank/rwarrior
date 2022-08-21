@@ -16,7 +16,7 @@ play_warrior(ai, level = 1, warrior_name = "Fisher", sleep = 0.5)
 \item{sleep}{Time between text updates.}
 }
 \value{
-A logical that is TRUE on successfully getting to the exit
+A logical that is TRUE on successfully getting to the stairs
 }
 \description{
 Play R Warrior
