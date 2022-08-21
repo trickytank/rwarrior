@@ -22,7 +22,7 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE) 
     }
     if(enemy$shoot) {
       # Check if warrior is within shooting range
-      if(game_state$feel_symbol(enemy) == "@") {
+      if(game_state$look_symbol(enemy) == "@") {
         # Prepare to shoot
         enemys_to_shoot <- c(list(enemy), enemys_to_shoot)
       }

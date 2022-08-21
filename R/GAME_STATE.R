@@ -63,7 +63,7 @@ GAME_STATE <- R6Class(
     look_object = function(charac, direction = "forward") {
       coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)
       for(a in 1:3) {
-        object <- return_object(coord$y_subject, coord$x_subject)
+        object <- self$return_object(coord$y_subject, coord$x_subject)
         if(!is.null(object)) {
           return(object)
         }
@@ -80,11 +80,17 @@ GAME_STATE <- R6Class(
       }
     },
     attack_routine = function(attacker, defender, direction, attack_type = "attacks", sleep = 0, debug = FALSE) {
-      defender$hp <- defender$hp - attacker$attack_power
-      #message(attacker$name, " attacks ", direction, " and hits ", defender$name, ".")
+      if(attack_type == "attacks") {
+        hit_power <- attacker$attack_power
+      } else if (attack_type == "shoots") {
+        hit_power <- attacker$shoot_power
+      } else {
+        "attack_routine() unknown attack_type."
+      }
+      defender$hp <- defender$hp - hit_power
       message(glue("{attacker$name} {attack_type} {direction} and hits {defender$name}."))
       message_sleep(sleep, debug)
-      message(defender$name, " takes ", attacker$attack_power, " damage, ", defender$hp, " health power left.")
+      message(glue("{defender$name} takes {hit_power} damage, {defender$hp} health power left."))
       if(defender$hp <= 0 && ! "WARRIOR" %in% class(defender)) {
         # defender is an enemy and has died
         message_sleep(sleep, debug)
