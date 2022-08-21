@@ -59,9 +59,30 @@ GAME_STATE <- R6Class(
         return(object$symbol)
       }
     },
-    attack_routine = function(attacker, defender, direction, sleep = 0, debug = FALSE) {
+    # Look up to three spaces
+    look_object = function(charac, direction = "forward") {
+      coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)
+      for(a in 1:3) {
+        object <- return_object(coord$y_subject, coord$x_subject)
+        if(!is.null(object)) {
+          return(object)
+        }
+        coord <- give_coordinates(charac$compass, direction, coord$y_subject, coord$x_subject)
+      }
+      return(NULL)
+    },
+    look_symbol = function(charac, direction = "forward") {
+      object <- self$look_object(charac, direction)
+      if(is.null(object)) {
+        return(" ")
+      } else {
+        return(object$symbol)
+      }
+    },
+    attack_routine = function(attacker, defender, direction, attack_type = "attacks", sleep = 0, debug = FALSE) {
       defender$hp <- defender$hp - attacker$attack_power
-      message(attacker$name, " attacks ", direction, " and hits ", defender$name, ".")
+      #message(attacker$name, " attacks ", direction, " and hits ", defender$name, ".")
+      message(glue("{attacker$name} {attack_type} {direction} and hits {defender$name}."))
       message_sleep(sleep, debug)
       message(defender$name, " takes ", attacker$attack_power, " damage, ", defender$hp, " health power left.")
       if(defender$hp <= 0 && ! "WARRIOR" %in% class(defender)) {

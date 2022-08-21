@@ -11,16 +11,21 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE) 
   points <- 0
   # Prepare for enemies to attack if they are close enough
   enemys_to_attack <- list()
+  enemys_to_shoot <- list()
   for(enemy in game_state$npcs) {
     if(enemy$attack) {
-      # check if they are within range
+      # Check if warrior is within attack range
       if(game_state$feel_symbol(enemy) == "@") {
         # Prepare to attack
         enemys_to_attack <- c(list(enemy), enemys_to_attack)
       }
     }
     if(enemy$shoot) {
-      # Not implemented
+      # Check if warrior is within shooting range
+      if(game_state$feel_symbol(enemy) == "@") {
+        # Prepare to shoot
+        enemys_to_shoot <- c(list(enemy), enemys_to_shoot)
+      }
     }
   }
 
@@ -36,14 +41,14 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE) 
       game_state$warrior$y <- y_subject
       game_state$warrior$x <- x_subject
     } else {
-      message(glue("{warrior_name is blocked and doesn't move."))
+      message(glue("{warrior_name} is blocked and doesn't move."))
     }
   } else if (w$action == "attack") {
     enemy <- game_state$return_object(y_subject, x_subject)
     if(is.null(enemy)) {
       message(warrior_name, " attacks forward and hits nothing.")
     } else {
-      points <- points + game_state$attack_routine(game_state$warrior, enemy, direc, sleep, debug = debug)
+      points <- points + game_state$attack_routine(game_state$warrior, enemy, direc, sleep = sleep, debug = debug)
     }
   } else if(w$action == "rest") {
     if(game_state$warrior$hp >= game_state$warrior$max_hp) {
@@ -64,7 +69,12 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE) 
   # Let enemies attack if they are close enough
   for(enemy in enemys_to_attack) {
     # Do the attacking
-    game_state$attack_routine(enemy, game_state$warrior, "forward", sleep, debug = debug)
+    game_state$attack_routine(enemy, game_state$warrior, "forward", sleep = sleep, debug = debug)
+    message_sleep(sleep, debug)
+  }
+  for(enemy in enemys_to_shoot) {
+    # Do the attacking
+    game_state$attack_routine(enemy, game_state$warrior, "forward", attack_type = "shoots", sleep = sleep, debug = debug)
     message_sleep(sleep, debug)
   }
 
