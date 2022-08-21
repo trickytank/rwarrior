@@ -30,3 +30,19 @@ test_that("Solutions not working for level 4.", {
     sleep = 0, level = 4)
   )
 })
+
+test_that("Solutions that should not work for level 4", {
+  expect_false(play_warrior_inbuilt_levels(
+    function(warrior, memory) {
+      if(warrior$feel()$empty) {
+        if(warrior$health < 20) {
+          warrior$rest()
+        } else {
+          warrior$walk()
+        }
+      } else {
+        warrior$attack()
+      }
+    },
+    sleep = 0, level = 4))
+})
