@@ -7,6 +7,7 @@
 #' @param warrior_name Name of your warrior, for flavour.
 #' @param sleep Time between text updates.
 #' @return A logical that is TRUE on successfully getting to the stairs
+#' @import cli
 #' @export
 #' @examples
 #' AI <- AI <- function(warrior, memory) {
@@ -31,7 +32,7 @@ play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher", 
 
 # The work of the warrior, allowing for custom levels to be used.
 # TODO: remove level, and store time bonus etc. in the GAME_STATE class
-play_warrior_work <- function(ai, game_state, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE, output = TRUE) {
+play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fisher", sleep = 0, debug = TRUE, output = TRUE) {
   game_state$warrior$name <- warrior_name
   at_stairs <- FALSE
   complete <- FALSE
@@ -64,21 +65,25 @@ play_warrior_work <- function(ai, game_state, level = 1, warrior_name = "Fisher"
       message("-----------------------------------")
       cat(game_state$ascii)
       message("Success, you have found the stairs.")
-      time_bonus <- max(0, levels[[level]]$time_bonus - turn)
-      clear_bonus <- level * 2
+      time_bonus <- max(0, game_state$level_time_bonus - turn)
+      clear_bonus <- game_state$level_clear_bonus
       total_score <- time_bonus + level_score + clear_bonus
       cat("Level Score:", level_score, "\n",
           "Time Bonus:", time_bonus, "\n",
           "Clear Bonus:", clear_bonus, "\n",
           "Total Score:", total_score, "\n")
       # 0 8 2 10
-      if(level + 1 > length(levels)) {
-        message("Congratulations, you have completed all the levels of R Warrior and reached the precious Hex.")
-        if(level <= 18) {
-          message(18 - level, " more levels are planned to be ported from Ruby Warrior.")
-        }
+      if(is.null(level)) {
+        cli_text("Congratulations, you have completed this custom level.")
       } else {
-        message(paste0("See the readme for the next level of the tower with level_readme(", level + 1, ")"))
+        if(level + 1 > length(levels)) {
+          message("Congratulations, you have completed all the levels of R Warrior and reached the precious Hex.")
+          if(level <= 18) {
+            message(18 - level, " more levels are planned to be ported from Ruby Warrior.")
+          }
+        } else {
+          message(paste0("See the readme for the next level of the tower with level_readme(", level + 1, ")"))
+        }
       }
       return(invisible(TRUE))
     }

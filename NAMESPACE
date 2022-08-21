@@ -3,5 +3,6 @@
 export(level_readme)
 export(play_warrior)
 import(R6)
+import(cli)
 import(glue)
 import(stringr)
