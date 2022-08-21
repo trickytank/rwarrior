@@ -86,11 +86,11 @@ test_that("GAME_STATE class", {
   # attack_routine()
   expect_match(purrr::quietly(game_state_2_1$attack_routine)(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "forward", output = TRUE)$messages,
                "Warrior attacks forward and hits Sludge", all = FALSE)
-  expect_match(purrr::quietly(game_state_2_1$attack_routine)(game_state_3_1$warrior, game_state_3_1$npcs[[1]], "PLACEHOLDER", output = TRUE)$messages,
+  expect_match(purrr::quietly(game_state_3_1$attack_routine)(game_state_3_1$warrior, game_state_3_1$npcs[[1]], "PLACEHOLDER", output = TRUE)$messages,
                "Warrior attacks PLACEHOLDER and hits Sludge", all = FALSE)
-  expect_match(purrr::quietly(game_state_2_1$attack_routine)(game_state_3_1$npcs[[1]], game_state_3_1$warrior, "forward", output = TRUE)$messages,
+  expect_match(purrr::quietly(game_state_3_1$attack_routine)(game_state_3_1$npcs[[1]], game_state_3_1$warrior, "forward", output = TRUE)$messages,
                "Sludge attacks forward and hits Warrior", all = FALSE)
-  expect_match(purrr::quietly(game_state_2_1$attack_routine)(game_state_test_3_1$warrior, game_state_test_3_1$npcs[[1]], "forward", output = TRUE)$messages,
+  expect_match(purrr::quietly(game_state_3_1$attack_routine)(game_state_test_3_1$warrior, game_state_test_3_1$npcs[[1]], "forward", output = TRUE)$messages,
                "Sludge dies.", all = FALSE)
   expect_error(game_state_2_1$attack_routine(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "forward", attack_type = "gorilla"), "attack_routine() unknown attack_type", fixed = TRUE)
   # ascii
