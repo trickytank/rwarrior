@@ -73,7 +73,7 @@ play_warrior_work <- function(ai, game_state, level = 1, warrior_name = "Fisher"
           "Total Score:", total_score, "\n")
       # 0 8 2 10
       if(level + 1 > length(levels)) {
-        message("Congratulations, you have completed all the levels of R warrior.")
+        message("Congratulations, you have completed all the levels of R warrioro and reached the precious Hex.")
         if(level <= 18) {
           message(18 - level, " more levels are planned to be ported from Ruby Warrior.")
         }
