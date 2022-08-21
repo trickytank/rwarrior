@@ -85,7 +85,7 @@ GAME_STATE <- R6Class(
       } else if (attack_type == "shoots") {
         hit_power <- attacker$shoot_power
       } else {
-        "attack_routine() unknown attack_type."
+        stop("attack_routine() unknown attack_type.")
       }
       defender$hp <- defender$hp - hit_power
       message(glue("{attacker$name} {attack_type} {direction} and hits {defender$name}."))
@@ -117,8 +117,8 @@ GAME_STATE <- R6Class(
         level_map <- matrix(" ", nrow = self$size[1], ncol = self$size[2])
         level_map[self$stairs[1], self$stairs[2]] <- ">"
         for(charac in c(list(self$warrior), self$npcs)) {
-          if(level_map[charac$y, charac$x] != " " && level_map[charac$y, charac$x] != ">") {
-            stop("More than one object at location (", y, ", ", x, ")")
+          if(level_map[charac$y, charac$x] != " ") {
+            stop("More than one object at location (", charac$y, ", ", charac$x, ")")
           }
           level_map[charac$y, charac$x] <- charac$symbol
         }
