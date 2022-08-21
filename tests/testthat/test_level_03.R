@@ -48,7 +48,6 @@ test_that("Resting in front of enemy is not causing death.", {
   )
 })
 
-# Check that resting in front of enemy makes you die
 test_that("Can rest above 20 health", {
   expect_message(play_warrior(
     function(warrior, memory) {
