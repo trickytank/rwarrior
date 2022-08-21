@@ -49,11 +49,11 @@ test_that("Resting in front of enemy is not causing death.", {
 })
 
 test_that("Can rest above 20 health", {
-  expect_message(play_warrior(
+  expect_message(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       warrior$rest()
     },
-    sleep = 0, level = 3),
+    sleep = 0, level = 3, output = TRUE, max_turns = 1),
     " is already fit as a fiddle."
   )
 })
