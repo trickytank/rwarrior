@@ -61,7 +61,7 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE) 
       message(warrior_name, " receives 2 health from resting, up to ", game_state$warrior$hp, " health.")
     }
   } else {
-    stop("Invalid warrior action (this is a bug).")
+    stop("Invalid warrior action: ", w$action, ".")
   }
 
   message_sleep(sleep, debug)
