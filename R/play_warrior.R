@@ -18,7 +18,7 @@ play_warrior <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0.5) {
 }
 
 # For inbuilt levels
-play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
+play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE, output = TRUE) {
   if(level > length(levels)) {
     if(level <= 18) {
       stop("Level ", level, " does not exist, though it is planned for the future.")
@@ -26,12 +26,12 @@ play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher", 
     stop("Level ", level, " does not exist.")
   }
   game_state <- GAME_STATE$new(levels[[level]])
-  play_warrior_work(ai, game_state, level = level, warrior_name = warrior_name, sleep = sleep, debug = debug)
+  play_warrior_work(ai, game_state, level = level, warrior_name = warrior_name, sleep = sleep, debug = debug, output = output)
 }
 
 # The work of the warrior, allowing for custom levels to be used.
 # TODO: remove level, and store time bonus etc. in the GAME_STATE class
-play_warrior_work <- function(ai, game_state, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
+play_warrior_work <- function(ai, game_state, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE, output = TRUE) {
   game_state$warrior$name <- warrior_name
   at_stairs <- FALSE
   complete <- FALSE
