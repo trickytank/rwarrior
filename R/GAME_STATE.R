@@ -1,6 +1,6 @@
 #' @import R6
-LEVEL_STATE <- R6Class(
-  "LEVEL_STATE",
+GAME_STATE <- R6Class(
+  "GAME_STATE",
   public = list(
     size = NULL,
     npcs = NULL,

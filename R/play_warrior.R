@@ -25,14 +25,14 @@ play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher", 
     }
     stop("Level ", level, " does not exist.")
   }
-  level_state <- LEVEL_STATE$new(levels[[level]])
-  play_warrior_work(ai, level_state, level = level, warrior_name = warrior_name, sleep = sleep, debug = debug)
+  game_state <- GAME_STATE$new(levels[[level]])
+  play_warrior_work(ai, game_state, level = level, warrior_name = warrior_name, sleep = sleep, debug = debug)
 }
 
 # The work of the warrior, allowing for custom levels to be used.
-# TODO: remove level, and store time bonus etc. in the LEVEL_STATE class
-play_warrior_work <- function(ai, level_state, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
-  level_state$warrior$name <- warrior_name
+# TODO: remove level, and store time bonus etc. in the GAME_STATE class
+play_warrior_work <- function(ai, game_state, level = 1, warrior_name = "Fisher", sleep = 0, debug = TRUE) {
+  game_state$warrior$name <- warrior_name
   at_stairs <- FALSE
   complete <- FALSE
   turn <- 1L
@@ -42,27 +42,27 @@ play_warrior_work <- function(ai, level_state, level = 1, warrior_name = "Fisher
   while(!complete) {
     message("-----------------------------------")
     cat("- Turn", turn, "-\n")
-    cat(level_state$ascii)
-    x <- level_state$x
-    y <- level_state$y
-    # clone here to prevent tampering the level_state. Doesn't prevent all cheating such as inspecting the entire level_state.
-    w <- WARRIOR_ACTION$new(level_state$deep_clone())
+    cat(game_state$ascii)
+    x <- game_state$x
+    y <- game_state$y
+    # clone here to prevent tampering the game_state. Doesn't prevent all cheating such as inspecting the entire game_state.
+    w <- WARRIOR_ACTION$new(game_state$deep_clone())
     # w is also modified here
     memory <- ai(w, memory)
-    result <- warrior_turn(w, level_state, warrior_name, sleep, debug = debug)
+    result <- warrior_turn(w, game_state, warrior_name, sleep, debug = debug)
     points <- result$points
 
     level_score <- level_score + points
 
-    if(level_state$warrior$hp <= 0) {
+    if(game_state$warrior$hp <= 0) {
       message(warrior_name, " died.")
       return(invisible(FALSE))
     }
 
-    if(level_state$at_stairs) {
+    if(game_state$at_stairs) {
       complete <- TRUE
       message("-----------------------------------")
-      cat(level_state$ascii)
+      cat(game_state$ascii)
       message("Success, you have found the stairs.")
       time_bonus <- max(0, levels[[level]]$time_bonus - turn)
       clear_bonus <- level * 2
