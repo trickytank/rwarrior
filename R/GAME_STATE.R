@@ -6,6 +6,9 @@ GAME_STATE <- R6Class(
     npcs = NULL,
     stairs = NULL,
     warrior = NULL,
+    level_time_bonus = NULL,
+    level_clear_bonus = NULL,
+    level_ace_score = NULL,
     initialize = function(level_spec) {
       self$npcs <- list()
       for(i in seq_along(level_spec$npcs)) {
@@ -14,6 +17,9 @@ GAME_STATE <- R6Class(
       self$size <- level_spec$size
       self$warrior <- level_spec$warrior$clone()
       self$stairs <- level_spec$stairs
+      self$level_time_bonus <- level_spec$time_bonus
+      self$level_clear_bonus <- level_spec$clear_bonus
+      self$level_ace_score <- level_spec$ace_score
       invisible(self)
     },
     deep_clone = function() {
