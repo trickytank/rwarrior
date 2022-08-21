@@ -117,7 +117,12 @@ GAME_STATE <- R6Class(
         level_map <- matrix(" ", nrow = self$size[1], ncol = self$size[2])
         level_map[self$stairs[1], self$stairs[2]] <- ">"
         for(charac in c(list(self$warrior), self$npcs)) {
-          if(level_map[charac$y, charac$x] != " ") {
+          # either space or
+          # if charac is not warrior, then not allowed
+          # if charac is warrior, then only stairs is allowed
+          if(level_map[charac$y, charac$x] != " " &&
+             (charac$symbol != "@" ||
+             (charac$symbol == "@" && level_map[charac$y, charac$x] != ">"))) {
             stop("More than one object at location (", charac$y, ", ", charac$x, ")")
           }
           level_map[charac$y, charac$x] <- charac$symbol
