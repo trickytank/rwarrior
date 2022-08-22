@@ -13,6 +13,7 @@ levels[[1]] <- list(
   npcs = list(),
   stairs = c(1,8),
   tip = "Call warrior$walk() to walk forward in your AI.",
+  clue = "Just follow the level tip.",
   time_bonus = 15,
   clear_bonus = 2,
   ace_score = 10
