@@ -9,6 +9,7 @@ GAME_STATE <- R6Class(
     level_time_bonus = NULL,
     level_clear_bonus = NULL,
     level_ace_score = NULL,
+    level_clue = NULL,
     initialize = function(level_spec) {
       self$npcs <- list()
       for(i in seq_along(level_spec$npcs)) {
@@ -20,6 +21,7 @@ GAME_STATE <- R6Class(
       self$level_time_bonus <- level_spec$time_bonus
       self$level_clear_bonus <- level_spec$clear_bonus
       self$level_ace_score <- level_spec$ace_score
+      self$level_clue <- level_spec$clue
       invisible(self)
     },
     deep_clone = function() {

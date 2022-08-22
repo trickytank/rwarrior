@@ -60,7 +60,8 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
 
     if(game_state$warrior$hp <= 0) {
       if(output) cli_text("{warrior_name} died.")
-      return(invisible(FALSE))
+      complete <- TRUE
+      next
     }
 
     if(game_state$at_stairs) {
@@ -97,8 +98,11 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
     turn <- turn + 1L
     if(turn > max_turns) {
       if(output) cli_text("Sorry, you have run out of time.")
-      return(invisible(FALSE))
+      complete <- TRUE
+      next
     }
   }
+  if(interactive()) { x <- tolower(readline("Would you like a clue for this level? [yn]")); if(!is.na(pmatch(x, "yes"))) cli_text(game_state$level_clue) }
+  return(invisible(FALSE))
 }
 
