@@ -4,7 +4,12 @@
 \alias{play_warrior}
 \title{Play R Warrior}
 \usage{
-play_warrior(ai, level = 1, warrior_name = "Fisher", sleep = 0.5)
+play_warrior(
+  ai,
+  level = 1,
+  warrior_name = "Fisher",
+  sleep = getOption("Rwarrior.sleep", 0.6)
+)
 }
 \arguments{
 \item{ai}{AI function to control your warrior}
@@ -13,7 +18,7 @@ play_warrior(ai, level = 1, warrior_name = "Fisher", sleep = 0.5)
 
 \item{warrior_name}{Name of your warrior, for flavour.}
 
-\item{sleep}{Time between text updates.}
+\item{sleep}{Time between text updates. Set to "prompt" to only progress when pressing the return key.}
 }
 \value{
 A logical that is TRUE on successfully getting to the stairs
