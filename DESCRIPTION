@@ -13,11 +13,13 @@ RoxygenNote: 7.2.1
 Imports:
     R6,
     glue,
+    cli,
     stringr
 Suggests: 
     covr,
     knitr,
     rmarkdown,
+    purrr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr

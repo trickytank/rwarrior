@@ -71,7 +71,7 @@ test_that("GAME_STATE class", {
   expect_true(GAME_STATE$new(levels[[1]])$is_wall(0, 4))
   expect_false(GAME_STATE$new(levels[[1]])$is_wall(1, 5))
   # return_object()
-  expect_null(GAME_STATE$new(levels[[1]])$return_object(1, 5))
+  expect_true(GAME_STATE$new(levels[[1]])$return_object(1, 5)$empty)
   expect_true(GAME_STATE$new(levels[[1]])$return_object(1, 1)$symbol == "@")
   expect_true(GAME_STATE$new(levels[[2]])$return_object(1, 5)$symbol == "s")
   # feel()
@@ -82,11 +82,16 @@ test_that("GAME_STATE class", {
   expect_equal(game_state_test_2_1$feel_symbol(game_state_test_2_1$npcs[[1]], "f"), "@")
   # look
   expect_equal(game_state_1_1$look_symbol(game_state_1_1$warrior), " ")
+  ### TODO: add check that look finds objects 2 and 3 spaces away, but not 4
   # attack_routine()
-  expect_message(game_state_2_1$attack_routine(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "forward"), "Warrior attacks forward and hits Sludge")
-  expect_message(game_state_2_1$attack_routine(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "PLACEHOLDER"), "Warrior attacks PLACEHOLDER and hits Sludge")
-  expect_message(game_state_2_1$attack_routine(game_state_2_1$npcs[[1]], game_state_2_1$warrior, "forward"), "Sludge attacks forward and hits Warrior")
-  expect_message(game_state_test_3_1$attack_routine(game_state_test_3_1$warrior, game_state_test_3_1$npcs[[1]], "forward"), "Sludge dies.")
+  expect_match(purrr::quietly(game_state_2_1$attack_routine)(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "forward", output = TRUE)$messages,
+               "Warrior attacks forward and hits Sludge", all = FALSE)
+  expect_match(purrr::quietly(game_state_3_1$attack_routine)(game_state_3_1$warrior, game_state_3_1$npcs[[1]], "PLACEHOLDER", output = TRUE)$messages,
+               "Warrior attacks PLACEHOLDER and hits Sludge", all = FALSE)
+  expect_match(purrr::quietly(game_state_3_1$attack_routine)(game_state_3_1$npcs[[1]], game_state_3_1$warrior, "forward", output = TRUE)$messages,
+               "Sludge attacks forward and hits Warrior", all = FALSE)
+  expect_match(purrr::quietly(game_state_3_1$attack_routine)(game_state_test_3_1$warrior, game_state_test_3_1$npcs[[1]], "forward", output = TRUE)$messages,
+               "Sludge dies.", all = FALSE)
   expect_error(game_state_2_1$attack_routine(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "forward", attack_type = "gorilla"), "attack_routine() unknown attack_type", fixed = TRUE)
   # ascii
   expect_equal(GAME_STATE$new(levels[[1]])$ascii, "——————————\n|@      >|\n——————————\n")

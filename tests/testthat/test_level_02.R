@@ -2,7 +2,7 @@
 
 test_that("Solutions not working for level 2.", {
   expect_true(
-    play_warrior(
+    play_warrior_inbuilt_levels(
       function(warrior, memory) {
         if(warrior$feel()$empty) {
           warrior$walk()
@@ -27,22 +27,22 @@ test_that("Solutions not working for level 2.", {
 
 # Attacking an empty space should do nothing
 test_that("No message that attacking an empty space is failing.", {
-  expect_message(play_warrior(
+  expect_match(purrr::quietly(play_warrior_inbuilt_levels)(
     function(warrior, memory) {
       warrior$attack()
     },
-    sleep = 0, level = 2),
-    "attacks forward and hits nothing."
+    sleep = 0, level = 2, max_turns = 2, output = TRUE)$messages,
+    "attacks forward and hits nothing.", all = FALSE
   )
 })
 
 test_that("Message should be given is warrior is blocked.", {
-  expect_message(play_warrior(
+  expect_match(purrr::quietly(play_warrior_inbuilt_levels)(
     function(warrior, memory) {
       warrior$walk()
     },
-    sleep = 0, level = 2),
-    "is blocked and doesn't move."
+    sleep = 0, level = 2, output = TRUE, max_turns = 4)$messages,
+    "is blocked and doesn't move.", all = FALSE
   )
 })
 

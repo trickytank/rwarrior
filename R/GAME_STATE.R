@@ -6,6 +6,10 @@ GAME_STATE <- R6Class(
     npcs = NULL,
     stairs = NULL,
     warrior = NULL,
+    level_time_bonus = NULL,
+    level_clear_bonus = NULL,
+    level_ace_score = NULL,
+    level_clue = NULL,
     initialize = function(level_spec) {
       self$npcs <- list()
       for(i in seq_along(level_spec$npcs)) {
@@ -14,6 +18,10 @@ GAME_STATE <- R6Class(
       self$size <- level_spec$size
       self$warrior <- level_spec$warrior$clone()
       self$stairs <- level_spec$stairs
+      self$level_time_bonus <- level_spec$time_bonus
+      self$level_clear_bonus <- level_spec$clear_bonus
+      self$level_ace_score <- level_spec$ace_score
+      self$level_clue <- level_spec$clue
       invisible(self)
     },
     deep_clone = function() {
@@ -41,7 +49,7 @@ GAME_STATE <- R6Class(
       if(self$is_wall(y, x)) {
         return(wall$clone()) # clone for safety
       }
-      return(NULL)
+      return(empty)
     },
     feel_object = function(charac, direction = "forward") {
       coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)
@@ -53,23 +61,19 @@ GAME_STATE <- R6Class(
     },
     feel_symbol = function(charac, direction = "forward") {
       object <- self$feel_object(charac, direction)
-      if(is.null(object)) {
-        return(" ")
-      } else {
-        return(object$symbol)
-      }
+      object$symbol
     },
     # Look up to three spaces
     look_object = function(charac, direction = "forward") {
       coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)
       for(a in 1:3) {
         object <- self$return_object(coord$y_subject, coord$x_subject)
-        if(!is.null(object)) {
+        if(!object$empty) {
           return(object)
         }
         coord <- give_coordinates(charac$compass, direction, coord$y_subject, coord$x_subject)
       }
-      return(NULL)
+      return(empty)
     },
     look_symbol = function(charac, direction = "forward") {
       object <- self$look_object(charac, direction)
@@ -79,7 +83,7 @@ GAME_STATE <- R6Class(
         return(object$symbol)
       }
     },
-    attack_routine = function(attacker, defender, direction, attack_type = "attacks", sleep = 0, debug = FALSE) {
+    attack_routine = function(attacker, defender, direction, attack_type = "attacks", sleep = 0, debug = FALSE, output = FALSE) {
       if(attack_type == "attacks") {
         hit_power <- attacker$attack_power
       } else if (attack_type == "shoots") {
@@ -88,16 +92,16 @@ GAME_STATE <- R6Class(
         stop("attack_routine() unknown attack_type.")
       }
       defender$hp <- defender$hp - hit_power
-      message(glue("{attacker$name} {attack_type} {direction} and hits {defender$name}."))
+      if(output) cli_text("{attacker$name} {attack_type} {direction} and hits {defender$name}.")
       message_sleep(sleep, debug)
-      message(glue("{defender$name} takes {hit_power} damage, {defender$hp} health power left."))
+      if(output) cli_text("{defender$name} takes {hit_power} damage, {defender$hp} health power left.")
       if(defender$hp <= 0 && ! "WARRIOR" %in% class(defender)) {
         # defender is an enemy and has died
         message_sleep(sleep, debug)
         points <- defender$max_hp
-        message(defender$name, " dies.")
+        if(output) cli_text("{defender$name} dies.")
         message_sleep(sleep, debug)
-        message(attacker$name, " earns ", points, " points.")
+        if(output) cli_text("{attacker$name} earns {points} points.")
         defender$death_flag <- TRUE
         for(i in seq_along(self$npcs)) {
           if(self$npcs[[i]]$death_flag) {

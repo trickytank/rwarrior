@@ -10,7 +10,7 @@ FEEL <- R6Class(
     golem = NULL,
     initialize = function(game_state, direction) {
       A <- game_state$feel_warrior(direction)
-      self$empty <- is.null(A) || A$name == "Stairs"
+      self$empty <- A$empty
       self$stairs <- A$name == "Stairs"
       self$enemy <- A$enemy
       self$captive <- A$name == "Captive"
