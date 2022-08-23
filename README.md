@@ -46,7 +46,8 @@ warrior_name <- "Fisher" # A name for your warrior
 play_warrior(AI, warrior_name = warrior_name, level = 1)
 ```
 
-More advanced levels require either using a non-copy on write object or use of the memory argument to the AI. 
+More advanced levels require use of the memory argument to the AI (or use of a reference class). 
+The returned value of the AI function is given as the second argument to the next call (on the subsequent turn) of the AI function. 
 
 ```
 AI <- function(warrior, memory) {
