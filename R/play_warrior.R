@@ -101,7 +101,9 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
       next
     }
   }
-  if(interactive()) { x <- tolower(readline("Would you like a clue for this level? [yn]")); if(!is.na(pmatch(x, "yes"))) cli_text(game_state$level_clue) }
+  if(askYesNo("Would you like a clue for this level?")){
+    cli_text(game_state$level_clue)
+  }
   return(invisible(FALSE))
 }
 

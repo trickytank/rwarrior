@@ -3,7 +3,7 @@ message_sleep <- function(sleep = 0, debug = FALSE) {
     cli_alert_info("--SLEEP TIME--")
   }
   if(sleep == "prompt") {
-    invisible(readline())
+    invisible(readLines(n = 1L))
   } else {
     Sys.sleep(sleep)
   }
