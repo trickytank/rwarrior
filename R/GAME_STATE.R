@@ -6,6 +6,8 @@ GAME_STATE <- R6Class(
     npcs = NULL,
     stairs = NULL,
     warrior = NULL,
+    level_description = NULL,
+    level_tip = NULL,
     level_time_bonus = NULL,
     level_clear_bonus = NULL,
     level_ace_score = NULL,
@@ -18,6 +20,8 @@ GAME_STATE <- R6Class(
       self$size <- level_spec$size
       self$warrior <- level_spec$warrior$clone()
       self$stairs <- level_spec$stairs
+      self$level_description <- level_spec$description
+      self$level_tip <- level_spec$tip
       self$level_time_bonus <- level_spec$time_bonus
       self$level_clear_bonus <- level_spec$clear_bonus
       self$level_ace_score <- level_spec$ace_score

@@ -83,6 +83,7 @@ test_that("GAME_STATE class", {
   # look
   expect_equal(game_state_1_1$look_symbol(game_state_1_1$warrior), " ")
   ### TODO: add check that look finds objects 2 and 3 spaces away, but not 4
+
   # attack_routine()
   expect_match(purrr::quietly(game_state_2_1$attack_routine)(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "forward", output = TRUE)$messages,
                "Warrior attacks forward and hits Sludge", all = FALSE)

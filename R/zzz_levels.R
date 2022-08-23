@@ -30,7 +30,7 @@ levels[[2]] <- list(
     sludge_here(1, 5)
   ),
   stairs = c(1,8),
-  tip = "Use warrior$feel$empty to see if there is anything in front of you, and warrior$attack() to fight it.\nRemember, you can only do one actionper turn.",
+  tip = "Use warrior$feel$empty to see if there is anything in front of you, and warrior$attack() to fight it.\nRemember, you can only do one action per turn.",
   clue = "Add an if/else condition using warrior$feel$empty to decide whether to warrior$attack() or warrior$walk().",
   time_bonus = 20,
   clear_bonus = 4,

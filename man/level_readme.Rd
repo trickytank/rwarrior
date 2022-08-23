@@ -7,7 +7,7 @@
 level_readme(level = 1)
 }
 \arguments{
-\item{level}{The level number.}
+\item{level}{The level number (or custom level).}
 }
 \description{
 Level read me
