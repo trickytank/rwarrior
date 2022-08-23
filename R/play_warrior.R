@@ -8,6 +8,7 @@
 #' @param sleep Time between text updates. Set to "prompt" to only progress when pressing the return key.
 #' @return A logical that is TRUE on successfully getting to the stairs
 #' @import cli
+#' @importFrom utils askYesNo
 #' @export
 #' @examples
 #' AI <- AI <- function(warrior, memory) {
