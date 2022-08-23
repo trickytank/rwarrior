@@ -81,7 +81,7 @@ test_that("GAME_STATE class", {
   expect_equal(game_state_test_2_1$feel_symbol(game_state_test_2_1$warrior, "f"), "s")
   expect_equal(game_state_test_2_1$feel_symbol(game_state_test_2_1$npcs[[1]], "f"), "@")
   # look
-  expect_equal(game_state_1_1$look_symbol(game_state_1_1$warrior), " ")
+  expect_equal(game_state_1_1$look_first_symbol(game_state_1_1$warrior), " ")
   ### TODO: add check that look finds objects 2 and 3 spaces away, but not 4
 
   # attack_routine()

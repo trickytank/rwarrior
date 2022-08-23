@@ -68,7 +68,7 @@ GAME_STATE <- R6Class(
       object$symbol
     },
     # Look up to three spaces
-    look_object = function(charac, direction = "forward") {
+    look_first_object = function(charac, direction = "forward") {
       coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)
       for(a in 1:3) {
         object <- self$return_object(coord$y_subject, coord$x_subject)
@@ -79,8 +79,8 @@ GAME_STATE <- R6Class(
       }
       return(empty)
     },
-    look_symbol = function(charac, direction = "forward") {
-      object <- self$look_object(charac, direction)
+    look_first_symbol = function(charac, direction = "forward") {
+      object <- self$look_first_object(charac, direction)
       if(is.null(object)) {
         return(" ")
       } else {
