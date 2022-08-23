@@ -68,14 +68,24 @@ GAME_STATE <- R6Class(
       object$symbol
     },
     # Look up to three spaces
+    look_array = function(charac, direction = "forward") {
+      object_list <- list(NULL, NULL, NULL)
+      y_subject <- charac$y
+      x_subject <- charac$x
+      for(i in 1:3) {
+        coord <- give_coordinates(charac$compass, direction, y_subject, x_subject)
+        y_subject <- coord$y_subject
+        x_subject <- coord$x_subject
+        object_list[[i]] <- self$return_object(y_subject, x_subject)
+      }
+      object_list
+    },
     look_first_object = function(charac, direction = "forward") {
-      coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)
-      for(a in 1:3) {
-        object <- self$return_object(coord$y_subject, coord$x_subject)
-        if(!object$empty) {
-          return(object)
+      la <- self$look_array(charac, direction)
+      for(i in seq_along(la)) {
+        if(!la[[i]]$empty) {
+          return(la[[i]])
         }
-        coord <- give_coordinates(charac$compass, direction, coord$y_subject, coord$x_subject)
       }
       return(empty)
     },
