@@ -3,7 +3,7 @@ Type: Package
 Title: R Warrior - An AI programming game
 Version: 0.2.4
 Author: Rick M Tankard
-Maintainer: The package maintainer <rickmtankard@gmail.com>
+Maintainer: Rick M Tankard <rickmtankard@gmail.com>
 Description: A port of Ruby Warrior.
     Teaches R programming in a fun and interactive way.
 License: MIT + file LICENSE
