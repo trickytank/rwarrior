@@ -27,6 +27,13 @@ test_that("Solution to level 1 doesn't work.", {
     },
     sleep = 0)
   )
+  expect_match(purrr::quietly(play_warrior_work)(
+    function(warrior, memory) {
+      warrior$walk("for")
+    },
+    game_state = GAME_STATE$new(levels[[1]]), sleep = 0, output = TRUE, debug = FALSE)$messages,
+    "custom level", all = FALSE
+  )
 })
 
 

@@ -15,14 +15,14 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
   for(enemy in game_state$npcs) {
     if(enemy$attack) {
       # Check if warrior is within attack range
-      if(game_state$feel_symbol(enemy) == "@") {
+      if(game_state$feel_object(enemy)$player) {
         # Prepare to attack
         enemys_to_attack <- c(list(enemy), enemys_to_attack)
       }
     }
     if(enemy$shoot) {
       # Check if warrior is within shooting range
-      if(game_state$look_symbol(enemy) == "@") {
+      if(game_state$look_first_object(enemy)$player) {
         # Prepare to shoot
         enemys_to_shoot <- c(list(enemy), enemys_to_shoot)
       }

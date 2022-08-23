@@ -55,6 +55,49 @@ test_levels[[4]] <- list(
 )
 game_state_test_4_1 <- GAME_STATE$new(test_levels[[4]])
 
+test_levels[[4]] <- list(
+  description = "Test multiple objects at a location causes error on $ascii",
+  size = c(1,3),
+  warrior = WARRIOR$new()$set_loc(1, 1),
+  npcs = list(
+    sludge_here(1, 2),
+    archer_here(1, 2)
+  ),
+  stairs = c(1,3),
+  tip = "",
+  time_bonus = 0,
+  ace_score = 0
+)
+game_state_test_4_1 <- GAME_STATE$new(test_levels[[4]])
+
+test_levels[[5]] <- list(
+  description = "Test that look finds objects 3 spaces away",
+  size = c(1,5),
+  warrior = WARRIOR$new()$set_loc(1, 1),
+  npcs = list(
+    sludge_here(1, 4)
+  ),
+  stairs = c(1,5),
+  tip = "",
+  time_bonus = 0,
+  ace_score = 0
+)
+game_state_test_5_1 <- GAME_STATE$new(test_levels[[5]])
+
+test_levels[[6]] <- list(
+  description = "Test that look does not find objects 4 spaces away",
+  size = c(1,6),
+  warrior = WARRIOR$new()$set_loc(1, 1),
+  npcs = list(
+    sludge_here(1, 5)
+  ),
+  stairs = c(1,6),
+  tip = "",
+  time_bonus = 0,
+  ace_score = 0
+)
+game_state_test_6_1 <- GAME_STATE$new(test_levels[[6]])
+
 game_state_1_1 <- GAME_STATE$new(levels[[1]])
 game_state_2_1 <- GAME_STATE$new(levels[[2]])
 game_state_3_1 <- GAME_STATE$new(levels[[3]])
@@ -81,9 +124,10 @@ test_that("GAME_STATE class", {
   expect_equal(game_state_test_2_1$feel_symbol(game_state_test_2_1$warrior, "f"), "s")
   expect_equal(game_state_test_2_1$feel_symbol(game_state_test_2_1$npcs[[1]], "f"), "@")
   # look
-  expect_equal(game_state_1_1$look_symbol(game_state_1_1$warrior), " ")
-  ### TODO: add check that look finds objects 2 and 3 spaces away, but not 4
-
+  expect_equal(game_state_1_1$look_first_symbol(game_state_1_1$warrior), " ")
+  # look: check that look finds objects 2 and 3 spaces away, but not 4
+  expect_equal(game_state_test_5_1$look_first_symbol(game_state_1_1$warrior), "s")
+  expect_equal(game_state_test_6_1$look_first_symbol(game_state_1_1$warrior), " ")
   # attack_routine()
   expect_match(purrr::quietly(game_state_2_1$attack_routine)(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "forward", output = TRUE)$messages,
                "Warrior attacks forward and hits Sludge", all = FALSE)

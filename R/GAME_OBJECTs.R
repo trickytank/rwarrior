@@ -9,6 +9,7 @@ GAME_OBJECT <- R6Class(
     compass_default = "west",
     enemy = FALSE,
     empty = FALSE,
+    player = FALSE,
     initialize = function(name, symbol, empty = FALSE) {
       self$name <- name
       self$symbol <- symbol
@@ -69,6 +70,7 @@ WARRIOR <- R6Class(
     health = NULL,
     compass_default = "east",
     enemy = FALSE,
+    player = TRUE,
     initialize = function(walk = FALSE, feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE,
                           rest = FALSE, health = FALSE) {
       self$walk <- walk
