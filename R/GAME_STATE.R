@@ -90,12 +90,7 @@ GAME_STATE <- R6Class(
       return(empty)
     },
     look_first_symbol = function(charac, direction = "forward") {
-      object <- self$look_first_object(charac, direction)
-      if(is.null(object)) {
-        return(" ")
-      } else {
-        return(object$symbol)
-      }
+      object <- self$look_first_object(charac, direction)$symbol
     },
     attack_routine = function(attacker, defender, direction, attack_type = "attacks", sleep = 0, debug = FALSE, output = FALSE) {
       if(attack_type == "attacks") {
