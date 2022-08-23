@@ -21,12 +21,12 @@ test_that("Solution to level 1 doesn't work.", {
       warrior$walk()
     },
     sleep = 0), "list")
-  expect_false(play_warrior_inbuilt_levels(
+  purrr::quietly(expect_false)(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       warrior$walk("bac")
     },
     sleep = 0)
-  )
+  )$result
   expect_match(purrr::quietly(play_warrior_work)(
     function(warrior, memory) {
       warrior$walk("for")
