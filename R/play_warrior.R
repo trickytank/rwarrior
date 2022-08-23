@@ -8,6 +8,7 @@
 #' @param sleep Time between text updates. Set to "prompt" to only progress when pressing the return key.
 #' @return A logical that is TRUE on successfully getting to the stairs
 #' @import cli
+#' @importFrom utils askYesNo
 #' @export
 #' @examples
 #' AI <- AI <- function(warrior, memory) {
@@ -101,7 +102,12 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
       next
     }
   }
-  if(interactive()) { x <- tolower(readline("Would you like a clue for this level? [yn]")); if(!is.na(pmatch(x, "yes"))) cli_text(game_state$level_clue) }
+
+  give_clue <- askYesNo("Would you like a clue for this level?", !interactive()) # default TRUE when testing
+  give_clue <- ifelse(is.na(give_clue), FALSE, give_clue) # Account for cancel response
+  if(give_clue){
+    cli_text(game_state$level_clue)
+  }
   return(invisible(FALSE))
 }
 
