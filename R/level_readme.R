@@ -1,23 +1,46 @@
 #' Level read me
 #'
-#' @param level The level number.
+#' @param level The level number (or custom level).
 #' @export
 #' @examples
 #'
 #' level_readme(1)
 level_readme <- function(level = 1) {
-  if(level > length(levels)) {
-    if(level <= 18) {
-      stop("Level ", level, " does not exist, though it is planned for the future.")
+  if(is.numeric(level)) {
+    if(level > length(levels)) {
+      if(level <= 18) {
+        stop("Level ", level, " does not exist, though it is planned for the future.")
+      }
+      stop("Level ", level, " does not exist.")
     }
-    stop("Level ", level, " does not exist.")
+    cat("Level", level, "\n")
+    game_state <- GAME_STATE$new(levels[[level]])
+  } else if(inherits(level, "GAME_STATE")) {
+    game_state <- level
+  } else if(inherits(level, "list")) {
+    game_state <- GAME_STATE$new(level)
+  } else {
+    stop("Incorrect level specification")
   }
-  cat("Level", level, "\n")
-  cat(GAME_STATE$new(levels[[level]])$ascii, "\n")
-  cat(levels[[level]]$description, "\n")
-  cat("Tip:", levels[[level]]$tip, "\n\n")
-  method_description(levels[[level]]$warrior)
+  cli_text(game_state$level_description)
+  cli_text()
+  cli_text("Tip: ", game_state$level_tip)
+  cli_text()
+  cat(game_state$ascii, "\n")
+  map_icon_description(game_state)
+  cat("\n")
+  method_description(game_state$warrior)
   invisible(TRUE)
+}
+
+map_icon_description <- function(game_state) {
+  cat("  > = Stairs\n")
+  names_so_far <- c()
+  for(object in c(list(game_state$warrior), game_state$npcs)) {
+    if(object$name %in% names_so_far) next
+    cat(glue("  {object$symbol} = {object$name} ({object$hp} HP)\n", .trim = FALSE))
+    names_so_far <- c(names_so_far, object$name)
+  }
 }
 
 method_description <- function(warrior) {
@@ -45,10 +68,10 @@ method_description <- function(warrior) {
   }
   if(warrior$rest) {
     cat('- warrior$rest()\n')
-    cat('  Rest and heal 10% of the your warrior\'s health.')
+    cat('  Rest and heal 10% of the your warrior\'s health.\n')
   }
   if(warrior$health) {
     cat('- warrior$health\n')
-    cat('  Returns the health of the warrior, up to 20HP.')
+    cat('  Returns the health of the warrior, up to 20HP.\n')
   }
 }
