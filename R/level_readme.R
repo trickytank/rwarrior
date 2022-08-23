@@ -22,10 +22,8 @@ level_readme <- function(level = 1) {
   } else {
     stop("Incorrect level specification")
   }
-  cli_text(game_state$level_description)
-  cli_text()
-  cli_text("Tip: ", game_state$level_tip)
-  cli_text()
+  cat(game_state$level_description, "\n\n")
+  cat("Tip:", game_state$level_tip, "\n\n")
   cat(game_state$ascii, "\n")
   map_icon_description(game_state)
   cat("\n")
