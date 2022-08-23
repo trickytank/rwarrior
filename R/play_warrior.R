@@ -102,7 +102,10 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
       next
     }
   }
-  if(askYesNo("Would you like a clue for this level?")){
+
+  give_clue <- askYesNo("Would you like a clue for this level?", !interactive()) # default TRUE when testing
+  give_clue <- ifelse(is.na(give_clue), FALSE, give_clue) # Account for cancel response
+  if(give_clue){
     cli_text(game_state$level_clue)
   }
   return(invisible(FALSE))
