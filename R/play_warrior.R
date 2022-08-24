@@ -80,15 +80,15 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
         cli_text("Total Score: {total_score}")
         # 0 8 2 10
         if(is.null(level)) {
-          cli_text(col_blue("Congratulations, you have completed this custom level."))
+          cli_text(col_blue("Congratulations, you have completed this custom level.") %>% style_bold)
         } else {
           if(level + 1 > length(levels)) {
-            cli_text(col_blue("Congratulations, you have completed all the levels of R Warrior and reached the precious Hex."))
+            cli_text(col_blue("Congratulations, you have completed all the levels of R Warrior and reached the precious Hex.") %>% style_bold)
             if(level <= 18) {
-              cli_text(col_blue("{18 - level} more levels are planned to be ported from Ruby Warrior."))
+              cli_text(col_blue("{18 - level} more levels are planned to be ported from Ruby Warrior.") %>% style_bold)
             }
           } else {
-            cli_text(col_blue("See the readme for the next level of the tower with level_readme({level + 1})"))
+            cli_text(col_blue("See the readme for the next level of the tower with level_readme({level + 1})") %>% style_bold)
           }
         }
       }

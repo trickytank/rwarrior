@@ -101,7 +101,7 @@ GAME_STATE <- R6Class(
         stop("attack_routine() unknown attack_type.")
       }
       defender$hp <- defender$hp - hit_power
-      if(output) cli_text("{attacker$name} {attack_type} {direction} and hits {defender$name}.")
+      if(output) cli_text(attacker$name, style_bold(" {attack_type}"),  " {direction} and hits {defender$name}.")
       message_sleep(sleep, debug)
       if(output) cli_text("{defender$name} takes {hit_power} damage, {defender$hp} health power left.")
       if(defender$hp <= 0 && ! "WARRIOR" %in% class(defender)) {
@@ -133,9 +133,7 @@ GAME_STATE <- R6Class(
           # either space or
           # if charac is not warrior, then not allowed
           # if charac is warrior, then only stairs is allowed
-          if(level_map[charac$y, charac$x] != " " &&
-             (!charac$player ||
-             (charac$player && level_map[charac$y, charac$x] != ">"))) {
+          if(level_map[charac$y, charac$x] != " " && level_map[charac$y, charac$x] != stairs_here(c(1,1))$symbol) {
             stop("More than one object at location (", charac$y, ", ", charac$x, ")")
           }
           level_map[charac$y, charac$x] <- charac$symbol
