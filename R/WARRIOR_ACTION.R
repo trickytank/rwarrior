@@ -13,8 +13,8 @@ WARRIOR_ACTION <- R6Class(
       private$attack_ability <- game_state$warrior$attack
       private$rest_ability <- game_state$warrior$rest
       if(game_state$warrior$feel) {
-        self$feel_forward <- FEEL$new(game_state, "forward")
-        self$feel_backward <- FEEL$new(game_state, "backward")
+        self$feel_forward <- SPACE$new(game_state, "forward")
+        self$feel_backward <- SPACE$new(game_state, "backward")
       }
     },
     walk = function(direction = "forward") {

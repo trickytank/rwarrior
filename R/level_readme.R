@@ -51,7 +51,7 @@ method_description <- function(warrior) {
   if(warrior$feel) {
     cat('- warrior$feel(direction = "forward")\n')
     cat('  Checks what is in front (or behind) the warrior.\n')
-    cat('  Returns a FEEL object with fields as below:\n')
+    cat('  Returns a SPACE object with fields as below:\n')
     cat('    - $empty returns TRUE if the space is empty or the stairs.\n')
     cat('    - $stairs returns TRUE if the space has the stairs.\n')
     cat('    - $enemy returns TRUE if the space has an enemy.\n')
