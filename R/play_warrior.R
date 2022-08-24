@@ -59,7 +59,7 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
     level_score <- level_score + points
 
     if(game_state$warrior$hp <= 0) {
-      if(output) cli_text("{warrior_name} died.")
+      if(output) cli_text(col_red("{warrior_name} died."))
       complete <- TRUE
       next
     }
@@ -69,26 +69,26 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
       if(output) {
         cli_h1("Found stairs")
         cat(game_state$ascii)
-        cli_text("Success, you have found the stairs.")
+        cli_text("Success, you have found the stairs." %>% col_green() %>% style_bold)
         time_bonus <- max(0, game_state$level_time_bonus - turn)
         clear_bonus <- game_state$level_clear_bonus
         total_score <- time_bonus + level_score + clear_bonus
         cli_text("Level Score: {level_score}")
-        cli_text("Time Bonus:  {time_bonus}") # TODO: preserve this whitespace
+        cat_line(glue("Time Bonus:  {time_bonus}")) # TODO: preserve this whitespace
         cli_text("Clear Bonus: {clear_bonus}")
         cli_text("Level Score: {level_score}")
         cli_text("Total Score: {total_score}")
         # 0 8 2 10
         if(is.null(level)) {
-          cli_text("Congratulations, you have completed this custom level.")
+          cli_text(col_blue("Congratulations, you have completed this custom level."))
         } else {
           if(level + 1 > length(levels)) {
-            cli_text("Congratulations, you have completed all the levels of R Warrior and reached the precious Hex.")
+            cli_text(col_blue("Congratulations, you have completed all the levels of R Warrior and reached the precious Hex."))
             if(level <= 18) {
-              cli_text("{18 - level} more levels are planned to be ported from Ruby Warrior.")
+              cli_text(col_blue("{18 - level} more levels are planned to be ported from Ruby Warrior."))
             }
           } else {
-            cli_text("See the readme for the next level of the tower with level_readme({level + 1})")
+            cli_text(col_blue("See the readme for the next level of the tower with level_readme({level + 1})"))
           }
         }
       }
@@ -97,7 +97,7 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
 
     turn <- turn + 1L
     if(turn > max_turns) {
-      if(output) cli_text("Sorry, you have run out of time.")
+      if(output) cli_text(col_red("Sorry, you have run out of time."))
       complete <- TRUE
       next
     }

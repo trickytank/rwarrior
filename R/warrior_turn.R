@@ -37,7 +37,7 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
   }
   if(w$action == "walk") {
     if(game_state$return_object(y_subject, x_subject)$empty) {
-      if(output) cli_text("{warrior_name} walks {direc}.\n\n")
+      if(output) cli_text(warrior_name, style_bold(" walks "), direc)
       game_state$warrior$y <- y_subject
       game_state$warrior$x <- x_subject
     } else {

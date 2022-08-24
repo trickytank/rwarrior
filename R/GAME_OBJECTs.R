@@ -61,7 +61,7 @@ WARRIOR <- R6Class(
   inherit = NPC,
   public = list(
     name = "Warrior",
-    symbol = "@",
+    symbol = "@" %>% style_bold %>% col_green,
     hp = 20L,
     max_hp = 20L,
     attack_power = 5L,

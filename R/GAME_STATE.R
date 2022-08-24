@@ -134,8 +134,8 @@ GAME_STATE <- R6Class(
           # if charac is not warrior, then not allowed
           # if charac is warrior, then only stairs is allowed
           if(level_map[charac$y, charac$x] != " " &&
-             (charac$symbol != "@" ||
-             (charac$symbol == "@" && level_map[charac$y, charac$x] != ">"))) {
+             (!charac$player ||
+             (charac$player && level_map[charac$y, charac$x] != ">"))) {
             stop("More than one object at location (", charac$y, ", ", charac$x, ")")
           }
           level_map[charac$y, charac$x] <- charac$symbol
