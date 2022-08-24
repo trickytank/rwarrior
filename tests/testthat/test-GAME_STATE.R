@@ -115,18 +115,18 @@ test_that("GAME_STATE class", {
   expect_false(GAME_STATE$new(levels[[1]])$is_wall(1, 5))
   # return_object()
   expect_true(GAME_STATE$new(levels[[1]])$return_object(1, 5)$empty)
-  expect_true(GAME_STATE$new(levels[[1]])$return_object(1, 1)$symbol == WARRIOR$new()$symbol)
-  expect_true(GAME_STATE$new(levels[[2]])$return_object(1, 5)$symbol == sludge_here(1,1)$symbol)
+  expect_equal(ansi_strip(GAME_STATE$new(levels[[1]])$return_object(1, 1)$symbol), ansi_strip(WARRIOR$new()$symbol))
+  expect_equal(ansi_strip(GAME_STATE$new(levels[[2]])$return_object(1, 5)$symbol), ansi_strip(sludge_here(1,1)$symbol))
   # feel()
   expect_equal(game_state_2_1$feel_symbol(game_state_2_1$warrior), empty$symbol)
   expect_equal(game_state_2_1$feel_symbol(game_state_2_1$warrior, "back"), wall$symbol)
   expect_false(game_state_2_1$feel_symbol(game_state_2_1$warrior, "back") != wall$symbol)
-  expect_equal(game_state_test_2_1$feel_symbol(game_state_test_2_1$warrior, "f"), sludge_here(1,1)$symbol)
+  expect_equal(ansi_strip(game_state_test_2_1$feel_symbol(game_state_test_2_1$warrior, "f")), ansi_strip(sludge_here(1,1)$symbol))
   expect_equal(game_state_test_2_1$feel_symbol(game_state_test_2_1$npcs[[1]], "f"), WARRIOR$new()$symbol)
   # look
   expect_equal(game_state_1_1$look_first_symbol(game_state_1_1$warrior), empty$symbol)
   # look: check that look finds objects 2 and 3 spaces away, but not 4
-  expect_equal(game_state_test_5_1$look_first_symbol(game_state_1_1$warrior), sludge_here(1,1)$symbol)
+  expect_equal(ansi_strip(game_state_test_5_1$look_first_symbol(game_state_1_1$warrior)), ansi_strip(sludge_here(1,1)$symbol))
   expect_equal(game_state_test_6_1$look_first_symbol(game_state_1_1$warrior), empty$symbol)
   # attack_routine()
   expect_match(purrr::quietly(game_state_2_1$attack_routine)(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "forward", output = TRUE)$messages,

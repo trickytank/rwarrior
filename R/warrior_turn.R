@@ -46,9 +46,9 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
   } else if (w$action == "attack") {
     enemy <- game_state$return_object(y_subject, x_subject)
     if(enemy$empty) {
-      if(output) cli_alert_warning(warrior_name, style_bold(" attacks "), "forward and hits nothing.")
+      if(output) cli_alert_warning(paste(warrior_name, style_bold("attacks"), "forward and hits nothing."))
     } else if (enemy$name == "Wall") {
-      if(output) cli_alert_warning(warrior_name, style_bold(" attacks "), "forward and hits the wall.")
+      if(output) cli_alert_warning(paste(warrior_name, style_bold("attacks"), "forward and hits the wall."))
     } else {
       points <- points + game_state$attack_routine(game_state$warrior, enemy, direc, sleep = sleep, debug = debug, output = output)
     }
