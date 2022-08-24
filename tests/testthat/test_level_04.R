@@ -29,11 +29,12 @@ test_that("Solutions not working for level 4.", {
     AI_04,
     sleep = 0, level = 4)
   )
-  expect_match(purrr::quietly(play_warrior_inbuilt_levels)(
-    AI_04, sleep = 0, level = 4, output = TRUE)$messages,
-    "precious Hex", all = FALSE
-  )
 })
+# Add to final level
+  # expect_match(purrr::quietly(play_warrior_inbuilt_levels)(
+  #   AI_04, sleep = 0, level = 4, output = TRUE)$messages,
+  #   "precious Hex", all = FALSE
+  # )
 
 test_that("Solutions that should not work for level 4", {
   purrr::quietly(expect_false)(play_warrior_inbuilt_levels(
