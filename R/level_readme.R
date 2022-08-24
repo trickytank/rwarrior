@@ -72,4 +72,8 @@ method_description <- function(warrior) {
     cat('- warrior$health\n')
     cat('  Returns the health of the warrior, up to 20HP.\n')
   }
+  if(warrior$rescue) {
+    cat_line('- warrior$rescue(direction = "forward")')
+    cat_line('  Attempts to rescue the NPC in the given direction.')
+  }
 }

@@ -29,7 +29,7 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
     }
   }
 
-  if(w$action %in% c("walk", "attack")) {
+  if(w$action %in% c("walk", "attack", "rescue")) {
     coord <- give_coordinates(game_state$warrior$compass, w$direction, y, x)
     y_subject <- coord$y_subject
     x_subject <- coord$x_subject
@@ -61,6 +61,17 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
     } else {
       game_state$warrior$hp <- game_state$warrior$hp + 2L
       if(output) cli_text("{warrior_name} receives 2 health from ", style_bold("resting"), ", up to {game_state$warrior$hp} health.")
+    }
+  } else if (w$action == "rescue") {
+    target <- game_state$return_object(y_subject, x_subject)
+    if(target$empty) {
+      if(output) cli_alert_warning(paste(warrior_name, style_bold("rescues"), "forward into empty space."))
+    } else if (target$enemy) {
+      if(output) cli_alert_warning(paste(warrior_name, "attempts to", style_bold("rescue"), "{target$name} but does nothing."))
+    } else if (target$rescuable) {
+      if(output) cli_text("{warrior_name} ", style_bold("rescues"), " {target$name} unbinding them from their chains and gains {target$points} points.")
+      points <- points + target$points
+      game_state$remove_npc(target)
     }
   } else {
     stop("Invalid warrior action: ", w$action, ".")

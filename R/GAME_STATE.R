@@ -92,6 +92,15 @@ GAME_STATE <- R6Class(
     look_first_symbol = function(charac, direction = "forward") {
       object <- self$look_first_object(charac, direction)$symbol
     },
+    remove_npc = function(charac) {
+      charac$death_flag <- TRUE
+      for(i in seq_along(self$npcs)) {
+        if(self$npcs[[i]]$death_flag) {
+          self$npcs[[i]] <- NULL
+          break
+        }
+      }
+    },
     attack_routine = function(attacker, defender, direction, attack_type = "attacks", sleep = 0, debug = FALSE, output = FALSE) {
       if(attack_type == "attacks") {
         hit_power <- attacker$attack_power
@@ -111,13 +120,7 @@ GAME_STATE <- R6Class(
         if(output) cli_text("{defender$name} dies.")
         message_sleep(sleep, debug)
         if(output) cli_text("{attacker$name} earns {points} points.")
-        defender$death_flag <- TRUE
-        for(i in seq_along(self$npcs)) {
-          if(self$npcs[[i]]$death_flag) {
-            self$npcs[[i]] <- NULL
-            break
-          }
-        }
+        self$remove_npc(defender)
         return(points)
       }
       return(0)
