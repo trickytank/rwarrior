@@ -27,7 +27,7 @@ devtools::install_github("trickytank/Rwarrior", build_vignettes = TRUE)
 ## Play
 
 Play levels in sequential order. 
-Levels implemented so far are from 1 to 3.
+Levels implemented so far are from 1 to 4.
 
 To play the first level, first read the level readme. 
 
