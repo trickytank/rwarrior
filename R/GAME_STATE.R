@@ -19,7 +19,7 @@ GAME_STATE <- R6Class(
       }
       self$size <- level_spec$size
       self$warrior <- level_spec$warrior$clone()
-      self$stairs <- level_spec$stairs
+      self$stairs <- stairs_here(level_spec$stairs)
       self$level_description <- level_spec$description
       self$level_tip <- level_spec$tip
       self$level_time_bonus <- level_spec$time_bonus
@@ -36,7 +36,7 @@ GAME_STATE <- R6Class(
       X
     },
     is_stairs = function(y, x) {
-      self$stairs[1] == y && self$stairs[2] == x
+      self$stairs$y == y && self$stairs$x == x
     },
     is_wall = function(y, x) {
       y == 0 || x == 0 || y == self$size[1] + 1 || x == self$size[2] + 1
@@ -101,7 +101,7 @@ GAME_STATE <- R6Class(
         stop("attack_routine() unknown attack_type.")
       }
       defender$hp <- defender$hp - hit_power
-      if(output) cli_text("{attacker$name} {attack_type} {direction} and hits {defender$name}.")
+      if(output) cli_text(attacker$name, style_bold(" {attack_type}"),  " {direction} and hits {defender$name}.")
       message_sleep(sleep, debug)
       if(output) cli_text("{defender$name} takes {hit_power} damage, {defender$hp} health power left.")
       if(defender$hp <= 0 && ! "WARRIOR" %in% class(defender)) {
@@ -128,14 +128,12 @@ GAME_STATE <- R6Class(
       if (missing(value)) {
         lines <- ""
         level_map <- matrix(" ", nrow = self$size[1], ncol = self$size[2])
-        level_map[self$stairs[1], self$stairs[2]] <- ">"
+        level_map[self$stairs$y, self$stairs$x] <- self$stairs$symbol
         for(charac in c(list(self$warrior), self$npcs)) {
           # either space or
           # if charac is not warrior, then not allowed
           # if charac is warrior, then only stairs is allowed
-          if(level_map[charac$y, charac$x] != " " &&
-             (charac$symbol != "@" ||
-             (charac$symbol == "@" && level_map[charac$y, charac$x] != ">"))) {
+          if(level_map[charac$y, charac$x] != " " && level_map[charac$y, charac$x] != stairs_here(c(1,1))$symbol) {
             stop("More than one object at location (", charac$y, ", ", charac$x, ")")
           }
           level_map[charac$y, charac$x] <- charac$symbol

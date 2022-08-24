@@ -61,7 +61,7 @@ WARRIOR <- R6Class(
   inherit = NPC,
   public = list(
     name = "Warrior",
-    symbol = "@",
+    symbol = "@" %>% style_bold %>% col_blue,
     hp = 20L,
     max_hp = 20L,
     attack_power = 5L,
@@ -87,7 +87,7 @@ WARRIOR <- R6Class(
 )
 
 stairs_here <- function(yx) {
-    GAME_OBJECT$new("Stairs", ">", empty = TRUE)$set_loc(yx[1], yx[2])
+    GAME_OBJECT$new("Stairs", ">" %>% col_blue %>% style_bold, empty = TRUE)$set_loc(yx[1], yx[2])
 }
 
 empty <- GAME_OBJECT$new("Empty", " ", empty = TRUE)
@@ -95,15 +95,15 @@ empty <- GAME_OBJECT$new("Empty", " ", empty = TRUE)
 wall <- GAME_OBJECT$new("Wall", "-")
 
 sludge_here <- function(y, x) {
-  NPC$new("Sludge", "s", 12L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x)
+  NPC$new("Sludge", col_green("s"), 12L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x)
 }
 
 thick_sludge_here <- function(y, x) {
-  thick_sludge <- NPC$new("Thick Sludge", "S", 24L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x)
+  thick_sludge <- NPC$new("Thick Sludge", "S" %>% col_green %>% style_bold, 24L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x)
 }
 
 archer_here <- function(y, x) {
-  NPC$new("Archer", "a", 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)$set_loc(y, x)
+  NPC$new("Archer", col_red("a"), 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)$set_loc(y, x)
 }
 
 x <- sludge_here(1L, 4L)

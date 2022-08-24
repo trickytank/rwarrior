@@ -31,7 +31,8 @@ test_that("No message that attacking an empty space is failing.", {
     function(warrior, memory) {
       warrior$attack()
     },
-    sleep = 0, level = 2, max_turns = 2, output = TRUE)$messages,
+    sleep = 0, level = 2, max_turns = 2, output = TRUE)$messages %>%
+      ansi_strip,
     "attacks forward and hits nothing.", all = FALSE
   )
 })
