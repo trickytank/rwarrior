@@ -5,7 +5,8 @@ GAME_OBJECT <- R6Class(
     symbol = NULL,
     x = NULL,
     y = NULL,
-    compass = "west",
+    # direction represented on the complex plane, for easy combining of directions. (simply use multiplication)
+    compass = -1 + 0i, # "west"
     enemy = FALSE,
     empty = FALSE,
     player = FALSE,
@@ -75,7 +76,7 @@ WARRIOR <- R6Class(
     rest = NULL,
     rescue = NULL,
     health = NULL,
-    compass = "east",
+    compass = 1 + 0i, # "east"
     enemy = FALSE,
     player = TRUE,
     initialize = function(walk = FALSE, feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE,
@@ -102,22 +103,22 @@ empty <- GAME_OBJECT$new("Empty", " ", empty = TRUE)
 
 wall <- GAME_OBJECT$new("Wall", "-")
 
-captive_here <- function(y, x, compass = "west") {
+captive_here <- function(y, x, compass = -1) {
   captive <- NPC$new("Captive", col_blue("C"), 1L, points = 20L)$set_loc(y, x, compass)
   captive$rescuable <- TRUE
   captive$enemy <- FALSE
   captive
 }
 
-sludge_here <- function(y, x, compass = "west") {
+sludge_here <- function(y, x, compass = -1) {
   NPC$new("Sludge", col_green("s"), 12L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x, compass)
 }
 
-thick_sludge_here <- function(y, x, compass = "west") {
+thick_sludge_here <- function(y, x, compass = -1) {
   thick_sludge <- NPC$new("Thick Sludge", "S" %>% col_green %>% style_bold, 24L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x, compass)
 }
 
-archer_here <- function(y, x, compass = "west") {
+archer_here <- function(y, x, compass = -1) {
   NPC$new("Archer", col_red("a"), 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)$set_loc(y, x, compass)
 }
 

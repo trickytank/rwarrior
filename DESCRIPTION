@@ -14,6 +14,7 @@ Imports:
     R6,
     glue,
     cli,
+    dplyr,
     stringr
 Suggests: 
     covr,
