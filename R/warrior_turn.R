@@ -88,9 +88,12 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
   }
   for(enemy in enemys_to_shoot) {
     if(enemy$death_flag) { next }
-    # Do the shooting
-    game_state$attack_routine(enemy, game_state$warrior, "forward", attack_type = "shoots", sleep = sleep, debug = debug, output = output)
-    message_sleep(sleep, debug)
+    # check the warrior is still within range
+    if(game_state$look_first_object(enemy)$player) {
+      # Do the shooting
+      game_state$attack_routine(enemy, game_state$warrior, "forward", attack_type = "shoots", sleep = sleep, debug = debug, output = output)
+      message_sleep(sleep, debug)
+    }
   }
 
   list(points = points)
