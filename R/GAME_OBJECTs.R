@@ -25,11 +25,17 @@ GAME_OBJECT <- R6Class(
     set_loc = function(y, x, compass = self$compass) {
       self$y <- y
       self$x <- x
-      self$compass <- compass
+      self$set_compass(compass)
       invisible(self)
     },
     set_compass = function(compass = self$compass) {
-      self$compass <- compass
+      self$compass <- case_when(
+        compass == "east" ~ 1 + 0i,
+        compass == "north" ~ 0 + 1i,
+        compass == "west" ~ -1 + 0i,
+        compass == "south" ~ 0 - 1i,
+        TRUE ~ ifelse(is.character(compass), 0i, as.complex(compass))
+      )
       invisible(self)
     }
   )
@@ -119,26 +125,26 @@ empty <- GAME_OBJECT$new("Empty", " ", empty = TRUE)
 
 wall <- GAME_OBJECT$new("Wall", "-")
 
-captive_here <- function(y, x, compass = -1) {
+captive_here <- function(y, x, compass = "west") {
   captive <- NPC$new("Captive", col_blue("C"), 1L, points = 20L)$set_loc(y, x, compass)
   captive$rescuable <- TRUE
   captive$enemy <- FALSE
   captive
 }
 
-sludge_here <- function(y, x, compass = -1) {
+sludge_here <- function(y, x, compass = "west") {
   NPC$new("Sludge", col_green("s"), 12L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x, compass)
 }
 
-thick_sludge_here <- function(y, x, compass = -1) {
+thick_sludge_here <- function(y, x, compass = "west") {
   thick_sludge <- NPC$new("Thick Sludge", "S" %>% col_green %>% style_bold, 24L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x, compass)
 }
 
-archer_here <- function(y, x, compass = -1) {
+archer_here <- function(y, x, compass = "west") {
   NPC$new("Archer", col_red("a"), 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)$set_loc(y, x, compass)
 }
 
-wizard_here <- function(y, x, compass = -1) {
+wizard_here <- function(y, x, compass = "west") {
   NPC$new("Wizard", col_red("w"), 3L, shoot_power = 11L, look = TRUE, shoot = TRUE)$set_loc(y, x, compass)
 }
 
