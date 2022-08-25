@@ -4,6 +4,7 @@ give_coordinates <- function(compass, direction, y = 0, x = 0) {
   direction <- direc_list$direction
   # Using complex math to calculate the compass direction!
   offset_complex <- compass * direc_complex
+  # We need to flip the y direction as indexes increase as you go down.
   y_subject <- y - Im(offset_complex)
   x_subject <- x + Re(offset_complex)
   list(direc = direction, y_subject = y_subject, x_subject = x_subject)
