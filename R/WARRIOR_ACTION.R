@@ -77,9 +77,7 @@ WARRIOR_ACTION <- R6Class(
       }
     },
     look = function(direction = "forward") {
-      if(is.null(self$look_ability)) {
-        stop("Warrior does not yet have the look function.")
-      } else {
+      if(private$look_ability) {
         direc_l <- give_direction(direction)
         if(direc_l$direction == "forward") {
           self$look_forward
@@ -90,6 +88,8 @@ WARRIOR_ACTION <- R6Class(
         } else if (direc_l$direction == "right") {
           self$look_right
         }
+      } else {
+        stop("Warrior does not yet have the look function.")
       }
     },
     rescue = function(direction = "forward") {
