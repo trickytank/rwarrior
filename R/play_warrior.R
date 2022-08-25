@@ -76,7 +76,7 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
         cli_text("Level Score: {level_score}")
         cat_line(glue("Time Bonus:  {time_bonus}")) # TODO: preserve this whitespace
         cli_text("Clear Bonus: {clear_bonus}")
-        cli_text("Total Score: {total_score}")
+        cli_text("Total level score: {total_score}")
         # 0 8 2 10
         if(is.null(level)) {
           cli_text(col_blue("Congratulations, you have completed this custom level.") %>% style_bold)
