@@ -143,3 +143,25 @@ levels[[7]] <- list(
   clear_bonus = 14,
   ace_score = 50
 )
+
+
+# ---------
+# |@  Cww>|
+# ---------
+levels[[8]] <- list(
+  description = "You hear the mumbling of wizards. Beware of their deadly wands! Good thing you found a bow.",
+  size = c(1,7),
+  warrior = WARRIOR$new(feel = TRUE, attack = TRUE, health = TRUE, rest = TRUE, rescue = TRUE,
+                        pivot = TRUE, look = TRUE, shoot = TRUE)$set_loc(1L, 1L),
+  npcs = list(
+    captive_here(1, 4),
+    wizard_here(1, 5),
+    wizard_here(1, 6)
+  ),
+  stairs = c(1, 7),
+  tip = "Use warrior$look() to determine your surroundings, and warrior$shoot() to fire an arrow.",
+  clue = "Wizards are deadly but low in health. Kill them before they have time to attack.",
+  time_bonus = 20,
+  clear_bonus = 16,
+  ace_score = 46
+)
