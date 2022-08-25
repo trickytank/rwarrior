@@ -101,3 +101,91 @@ levels[[5]] <- list(
   clear_bonus = 10,
   ace_score = 123
 )
+
+
+# ----------
+# |C @ S aa|
+# ----------
+levels[[6]] <- list(
+  description = "The wall behind you feels a bit further away in this room. And you hear more cries for help.",
+  size = c(1,8),
+  warrior = WARRIOR$new(feel = TRUE, attack = TRUE, health = TRUE, rest = TRUE, rescue = TRUE)$set_loc(1L, 3L),
+  npcs = list(
+    captive_here(1,1),
+    thick_sludge_here(1, 5),
+    archer_here(1, 7),
+    archer_here(1, 8)
+  ),
+  stairs = c(1, 8),
+  tip = "You can walk backward by passing \"backward\" as an argument to warrior$walk(). Same goes for feel(), rescue() and attack(). Archers have a limited attack distance.",
+  clue = "Walk backward if you are taking damage from afar and do not have enough health to attack. You may also want to consider walking backward until warrior$feel(\"backward\")$wall.",
+  time_bonus = 55,
+  clear_bonus = 12,
+  ace_score = 105
+)
+
+
+# --------
+# |>a S @|
+# --------
+levels[[7]] <- list(
+  description = "You feel a wall right in front of you and an opening behind you.",
+  size = c(1,6),
+  warrior = WARRIOR$new(feel = TRUE, attack = TRUE, health = TRUE, rest = TRUE, rescue = TRUE, pivot = TRUE)$set_loc(1L, 6L),
+  npcs = list(
+    thick_sludge_here(1, 4, compass = "east"),
+    archer_here(1, 2, compass = "east")
+  ),
+  stairs = c(1, 1),
+  tip = "You are not as effective at attacking backward. Use warrior$feel()$wall and warrior$pivot() to turn around.",
+  clue = "After callig warrior$pivot(), you have turned around and warrior$walk() sends you west.",
+  time_bonus = 30,
+  clear_bonus = 14,
+  ace_score = 50
+)
+
+
+# ---------
+# |@  Cww>|
+# ---------
+levels[[8]] <- list(
+  description = "You hear the mumbling of wizards. Beware of their deadly wands! Good thing you found a bow.",
+  size = c(1,7),
+  warrior = WARRIOR$new(feel = TRUE, attack = TRUE, health = TRUE, rest = TRUE, rescue = TRUE,
+                        pivot = TRUE, look = TRUE, shoot = TRUE)$set_loc(1L, 1L),
+  npcs = list(
+    captive_here(1, 4),
+    wizard_here(1, 5),
+    wizard_here(1, 6)
+  ),
+  stairs = c(1, 7),
+  tip = "Use warrior$look() to determine your surroundings, and warrior$shoot() to fire an arrow.",
+  clue = "Wizards are deadly but low in health. Kill them before they have time to attack.",
+  time_bonus = 20,
+  clear_bonus = 16,
+  ace_score = 46
+)
+
+
+# -------------
+# |>Ca  @ S wC|
+# -------------
+levels[[9]] <- list(
+  description = "Time to hone your skills and apply all of the abilities that you have learned.",
+  size = c(1,11),
+  warrior = WARRIOR$new(feel = TRUE, attack = TRUE, health = TRUE, rest = TRUE, rescue = TRUE,
+                        pivot = TRUE, look = TRUE, shoot = TRUE)$set_loc(1L, 6L),
+  npcs = list(
+    captive_here(1, 2, compass = "east"),
+    archer_here(1, 3, compass = "east"),
+    thick_sludge_here(1, 8),
+    wizard_here(1, 10),
+    captive_here(1, 11)
+  ),
+  stairs = c(1, 1),
+  tip = "Watch your back.",
+  clue = "Don't just keep shooting the bow while you are being attacked from behind.",
+  time_bonus = 40,
+  clear_bonus = 18,
+  ace_score = 100
+)

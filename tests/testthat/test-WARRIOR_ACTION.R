@@ -28,5 +28,5 @@ test_that("WARRIOR_ACTION", {
   expect_error(WARRIOR_ACTION$new(game_state_1_1)$rest(), "Warrior does not yet have the rest function")
   expect_error(WARRIOR_ACTION$new(game_state_3_1)$walk()$attack(), "A warrior action has already been defined.")
   expect_true(WARRIOR_ACTION$new(game_state_3_1)$feel("backward")$wall)
-  expect_error(WARRIOR_ACTION$new(game_state_3_1)$feel("goose")$wall, "Invalid direction specified: goose")
+  expect_error(WARRIOR_ACTION$new(game_state_3_1)$feel("goose")$wall, "'arg' should be one of")
 })

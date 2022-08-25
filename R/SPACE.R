@@ -8,8 +8,7 @@ SPACE <- R6Class(
     wall = NULL,
     ticking = NULL,
     golem = NULL,
-    initialize = function(game_state, direction) {
-      A <- game_state$feel_warrior(direction)
+    initialize = function(A) { # A is a game object
       self$empty <- A$empty
       self$stairs <- A$name == "Stairs"
       self$enemy <- A$enemy

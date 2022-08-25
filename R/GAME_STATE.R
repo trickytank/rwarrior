@@ -81,6 +81,14 @@ GAME_STATE <- R6Class(
       }
       object_list
     },
+    look_space = function(charac, direction = "forward") {
+      look_ar <- self$look_array(charac, direction)
+      space_array <- list(NULL, NULL, NULL)
+      for(i in seq_along(space_array)) {
+        space_array[[i]] <- SPACE$new(look_ar[[i]])
+      }
+      space_array
+    },
     look_first_object = function(charac, direction = "forward") {
       la <- self$look_array(charac, direction)
       for(i in seq_along(la)) {

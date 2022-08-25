@@ -5,7 +5,12 @@ GAME_OBJECT <- R6Class(
     symbol = NULL,
     x = NULL,
     y = NULL,
-    compass = "west",
+    # direction represented on the complex plane, for easy combining of directions. (simply use multiplication)
+    # "east" = 1 + 0i
+    # "north" = 0 + 1i
+    # "west" = -1 + 0i
+    # "south" = 0 - 1i
+    compass = -1 + 0i, # "west"
     enemy = FALSE,
     empty = FALSE,
     player = FALSE,
@@ -20,11 +25,17 @@ GAME_OBJECT <- R6Class(
     set_loc = function(y, x, compass = self$compass) {
       self$y <- y
       self$x <- x
-      self$compass <- compass
+      self$set_compass(compass)
       invisible(self)
     },
     set_compass = function(compass = self$compass) {
-      self$compass <- compass
+      self$compass <- case_when(
+        compass == "east" ~ 1 + 0i,
+        compass == "north" ~ 0 + 1i,
+        compass == "west" ~ -1 + 0i,
+        compass == "south" ~ 0 - 1i,
+        TRUE ~ ifelse(is.character(compass), 0i, as.complex(compass))
+      )
       invisible(self)
     }
   )
@@ -71,15 +82,19 @@ WARRIOR <- R6Class(
     hp = 20L,
     max_hp = 20L,
     attack_power = 5L,
+    shoot_power = 3L,
     walk = NULL,
     rest = NULL,
     rescue = NULL,
+    pivot = NULL,
     health = NULL,
-    compass = "east",
+    look = NULL,
+    shoot = NULL,
+    compass = 1 + 0i, # "east"
     enemy = FALSE,
     player = TRUE,
     initialize = function(walk = FALSE, feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE,
-                          rest = FALSE, health = FALSE, rescue = FALSE) {
+                          rest = FALSE, health = FALSE, rescue = FALSE, pivot = FALSE) {
       self$walk <- walk
       self$feel <- feel
       self$look <- look
@@ -88,9 +103,17 @@ WARRIOR <- R6Class(
       self$rest <- rest
       self$health <- health
       self$rescue <- rescue
+      self$pivot <- pivot
+      self$look <- look
+      self$shoot <- shoot
+      invisible(self)
+    },
+    pivot_self = function(direction = "backward", warrior_name = "Fisher", output = FALSE) {
+      direc <- give_direction(direction)
+      self$compass <- self$compass * direc$complex
+      if(output) { cli_text("{warrior_name} ", style_bold("pivots"), " {direc$direction}.") }
       invisible(self)
     }
-
   )
 )
 
@@ -119,6 +142,10 @@ thick_sludge_here <- function(y, x, compass = "west") {
 
 archer_here <- function(y, x, compass = "west") {
   NPC$new("Archer", col_red("a"), 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)$set_loc(y, x, compass)
+}
+
+wizard_here <- function(y, x, compass = "west") {
+  NPC$new("Wizard", col_red("w"), 3L, shoot_power = 11L, look = TRUE, shoot = TRUE)$set_loc(y, x, compass)
 }
 
 x <- sludge_here(1L, 4L)

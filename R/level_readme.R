@@ -76,4 +76,13 @@ method_description <- function(warrior) {
     cat_line('- warrior$rescue(direction = "forward")')
     cat_line('  Attempts to rescue the NPC in the given direction.')
   }
+  if(warrior$pivot) {
+    cli_alert_danger("To write doc")
+  }
+  if(warrior$look) {
+    cli_alert_danger("To write doc")
+  }
+  if(warrior$shoot) {
+    cli_alert_danger("To write doc")
+  }
 }
