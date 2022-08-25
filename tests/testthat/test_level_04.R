@@ -25,10 +25,6 @@ test_that("Solutions not working for level 4.", {
     AI_04,
     sleep = 0, level = 4)
   )
-  expect_true(play_warrior_inbuilt_levels(
-    AI_04,
-    sleep = 0, level = 4)
-  )
 })
 # Add to final level
   # expect_match(purrr::quietly(play_warrior_inbuilt_levels)(
