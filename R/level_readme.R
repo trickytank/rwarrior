@@ -32,7 +32,7 @@ level_readme <- function(level = 1) {
 }
 
 map_icon_description <- function(game_state) {
-  cat("  > = Stairs\n")
+  cat_line("  ", game_state$stairs$symbol, " = Stairs")
   names_so_far <- c()
   for(object in c(list(game_state$warrior), game_state$npcs)) {
     if(object$name %in% names_so_far) next
