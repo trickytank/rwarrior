@@ -61,8 +61,8 @@ method_description <- function(warrior) {
     cat('    - $golem returns TRUE if a golem is occupying this space.\n')
   }
   if(warrior$attack) {
-    cat('- warrior$attack(direction = "forward")\n')
-    cat('  Attack the space in the given direction (foward by default).\n')
+    cat_line('- warrior$attack(direction = "forward")')
+    cat_line('  Attack the space in the given direction for ', WARRIOR$new()$attack_power, ' damage.')
   }
   if(warrior$rest) {
     cat('- warrior$rest()\n')
@@ -77,12 +77,16 @@ method_description <- function(warrior) {
     cat_line('  Attempts to rescue the NPC in the given direction.')
   }
   if(warrior$pivot) {
-    cli_alert_danger("To write doc")
+    cat_line('- warrior$pivot(direction = "backward")')
+    cat_line('  Pivot to another direction, relative to current direction.')
   }
   if(warrior$look) {
-    cli_alert_danger("To write doc")
+    cat_line('- warrior$look(direction = "forward")')
+    cat_line('  Return a list of 3 SPACE objects, the same as warrior$feel().')
+    cat_line('  Access with warrior$look()[[i]] where i is an integer from 1 to 3.')
   }
   if(warrior$shoot) {
-    cli_alert_danger("To write doc")
+    cat_line('- warrior$shoot(direction = "forward")')
+    cat_line('  Shoot an arrow in the given direction for ', WARRIOR$new()$shoot_power, " damage.")
   }
 }
