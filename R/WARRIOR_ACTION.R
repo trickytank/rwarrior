@@ -13,6 +13,7 @@ WARRIOR_ACTION <- R6Class(
       private$attack_ability <- game_state$warrior$attack
       private$rest_ability <- game_state$warrior$rest
       private$rescue_ability <- game_state$warrior$rescue
+      private$pivot_ability <- game_state$warrior$pivot
       if(game_state$warrior$feel) {
         self$feel_forward <- SPACE$new(game_state, "forward")
         self$feel_backward <- SPACE$new(game_state, "backward")
@@ -65,12 +66,19 @@ WARRIOR_ACTION <- R6Class(
       } else {
         stop("Warrior does not yet have the rescue function.")
       }
+    },
+    pivot = function(direction = "backward") {
+        private$check_one_action()
+        self$action <- "pivot"
+        self$direction <- direction
+        invisible(self)
     }
   ),
   private = list(
     attack_ability = NULL,
     rest_ability = NULL,
     rescue_ability = NULL,
+    pivot_ability = NULL,
     check_one_action = function() {
       if(!is.null(self$action)) {
         stop("A warrior action has already been defined.")

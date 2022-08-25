@@ -43,6 +43,6 @@ test_that("Invalid direction doesn't result in an error", {
       warrior$walk("goat")
     },
     sleep = 0),
-    "Invalid direction specified"
+    "should be one of"
   )
 })

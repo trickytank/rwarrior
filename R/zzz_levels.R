@@ -124,3 +124,22 @@ levels[[6]] <- list(
   ace_score = 105
 )
 
+
+# --------
+# |>a S @|
+# --------
+levels[[7]] <- list(
+  description = "You feel a wall right in front of you and an opening behind you.",
+  size = c(1,6),
+  warrior = WARRIOR$new(feel = TRUE, attack = TRUE, health = TRUE, rest = TRUE, rescue = TRUE, pivot = TRUE)$set_loc(1L, 6L),
+  npcs = list(
+    thick_sludge_here(1, 4, compass = 1),
+    archer_here(1, 2, compass = 1)
+  ),
+  stairs = c(1, 1),
+  tip = "You are not as effective at attacking backward. Use warrior$feel()$wall and warrior$pivot() to turn around.",
+  clue = "After callig warrior$pivot(), you have turned around and warrior$walk() sends you west.",
+  time_bonus = 30,
+  clear_bonus = 14,
+  ace_score = 50
+)
