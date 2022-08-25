@@ -101,3 +101,26 @@ levels[[5]] <- list(
   clear_bonus = 10,
   ace_score = 123
 )
+
+
+# ----------
+# |C @ S aa|
+# ----------
+levels[[6]] <- list(
+  description = "The wall behind you feels a bit further away in this room. And you hear more cries for help.",
+  size = c(1,8),
+  warrior = WARRIOR$new(feel = TRUE, attack = TRUE, health = TRUE, rest = TRUE, rescue = TRUE)$set_loc(1L, 3L),
+  npcs = list(
+    captive_here(1,1),
+    thick_sludge_here(1, 5),
+    archer_here(1, 7),
+    archer_here(1, 8)
+  ),
+  stairs = c(1, 8),
+  tip = "You can walk backward by passing \"backward\" as an argument to warrior$walk(). Same goes for feel(), rescue() and attack(). Archers have a limited attack distance.",
+  clue = "Walk backward if you are taking damage from afar and do not have enough health to attack. You may also want to consider walking backward until warrior$feel(\"backward\")$wall.",
+  time_bonus = 55,
+  clear_bonus = 12,
+  ace_score = 105
+)
+
