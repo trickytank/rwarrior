@@ -12,6 +12,7 @@ GAME_STATE <- R6Class(
     level_clear_bonus = NULL,
     level_ace_score = NULL,
     level_clue = NULL,
+    fail = FALSE,
     initialize = function(level_spec) {
       self$npcs <- list()
       for(i in seq_along(level_spec$npcs)) {
@@ -19,7 +20,7 @@ GAME_STATE <- R6Class(
       }
       self$size <- level_spec$size
       self$warrior <- level_spec$warrior$clone()
-      self$stairs <- level_spec$stairs
+      self$stairs <- stairs_here(level_spec$stairs)
       self$level_description <- level_spec$description
       self$level_tip <- level_spec$tip
       self$level_time_bonus <- level_spec$time_bonus
@@ -36,7 +37,7 @@ GAME_STATE <- R6Class(
       X
     },
     is_stairs = function(y, x) {
-      self$stairs[1] == y && self$stairs[2] == x
+      self$stairs$y == y && self$stairs$x == x
     },
     is_wall = function(y, x) {
       y == 0 || x == 0 || y == self$size[1] + 1 || x == self$size[2] + 1
@@ -92,6 +93,15 @@ GAME_STATE <- R6Class(
     look_first_symbol = function(charac, direction = "forward") {
       object <- self$look_first_object(charac, direction)$symbol
     },
+    remove_npc = function(charac) {
+      charac$death_flag <- TRUE
+      for(i in seq_along(self$npcs)) {
+        if(self$npcs[[i]]$death_flag) {
+          self$npcs[[i]] <- NULL
+          break
+        }
+      }
+    },
     attack_routine = function(attacker, defender, direction, attack_type = "attacks", sleep = 0, debug = FALSE, output = FALSE) {
       if(attack_type == "attacks") {
         hit_power <- attacker$attack_power
@@ -100,24 +110,29 @@ GAME_STATE <- R6Class(
       } else {
         stop("attack_routine() unknown attack_type.")
       }
+      if(direction != "forward") {
+        # Reduce hit power when not going forward
+        # This may not be a true replication of Ruby warrior, though it replicates:
+        # 5 attack power forward and 3 attack power backward.
+        hit_power <- ceiling(hit_power / 2)
+      }
       defender$hp <- defender$hp - hit_power
-      if(output) cli_text("{attacker$name} {attack_type} {direction} and hits {defender$name}.")
+      if(output) cli_text(attacker$name, style_bold(" {attack_type}"),  " {direction} and hits {defender$name}.")
       message_sleep(sleep, debug)
       if(output) cli_text("{defender$name} takes {hit_power} damage, {defender$hp} health power left.")
       if(defender$hp <= 0 && ! "WARRIOR" %in% class(defender)) {
-        # defender is an enemy and has died
+        # defender is an npc and has died
         message_sleep(sleep, debug)
-        points <- defender$max_hp
         if(output) cli_text("{defender$name} dies.")
         message_sleep(sleep, debug)
-        if(output) cli_text("{attacker$name} earns {points} points.")
-        defender$death_flag <- TRUE
-        for(i in seq_along(self$npcs)) {
-          if(self$npcs[[i]]$death_flag) {
-            self$npcs[[i]] <- NULL
-            break
-          }
+        if(defender$rescuable) {
+          if(output) cli_text("{attacker$name} has killed the innocent.")
+          self$fail <- TRUE
+          return(0)
         }
+        points <- defender$max_hp
+        if(output) cli_text("{attacker$name} earns {points} points.")
+        self$remove_npc(defender)
         return(points)
       }
       return(0)
@@ -128,14 +143,12 @@ GAME_STATE <- R6Class(
       if (missing(value)) {
         lines <- ""
         level_map <- matrix(" ", nrow = self$size[1], ncol = self$size[2])
-        level_map[self$stairs[1], self$stairs[2]] <- ">"
+        level_map[self$stairs$y, self$stairs$x] <- self$stairs$symbol
         for(charac in c(list(self$warrior), self$npcs)) {
           # either space or
           # if charac is not warrior, then not allowed
           # if charac is warrior, then only stairs is allowed
-          if(level_map[charac$y, charac$x] != " " &&
-             (charac$symbol != "@" ||
-             (charac$symbol == "@" && level_map[charac$y, charac$x] != ">"))) {
+          if(level_map[charac$y, charac$x] != " " && level_map[charac$y, charac$x] != stairs_here(c(1,1))$symbol) {
             stop("More than one object at location (", charac$y, ", ", charac$x, ")")
           }
           level_map[charac$y, charac$x] <- charac$symbol

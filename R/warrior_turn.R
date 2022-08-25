@@ -29,38 +29,49 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
     }
   }
 
-  if(w$action %in% c("walk", "attack")) {
+  if(w$action %in% c("walk", "attack", "rescue")) {
     coord <- give_coordinates(game_state$warrior$compass, w$direction, y, x)
     y_subject <- coord$y_subject
     x_subject <- coord$x_subject
     direc <- coord$direc
+    target <- game_state$return_object(y_subject, x_subject)
   }
   if(w$action == "walk") {
-    if(game_state$return_object(y_subject, x_subject)$empty) {
-      if(output) cli_text("{warrior_name} walks {direc}.\n\n")
+    if(target$empty) {
+      if(output) cli_text(warrior_name, style_bold(" walks "), direc)
       game_state$warrior$y <- y_subject
       game_state$warrior$x <- x_subject
     } else {
       if(output) cli_alert_warning("{warrior_name} is blocked and doesn't move.")
     }
   } else if (w$action == "attack") {
-    enemy <- game_state$return_object(y_subject, x_subject)
-    if(enemy$empty) {
-      if(output) cli_alert_warning("{warrior_name} attacks forward and hits nothing.")
-    } else if (enemy$name == "Wall") {
-      if(output) cli_alert_warning("{warrior_name} attacks forward and hits the wall.")
+    if(target$empty) {
+      if(output) cli_alert_warning(paste(warrior_name, style_bold("attacks"), "{direc} and hits nothing."))
+    } else if (target$name == "Wall") {
+      if(output) cli_alert_warning(paste(warrior_name, style_bold("attacks"), "{direc} and hits the wall."))
     } else {
-      points <- points + game_state$attack_routine(game_state$warrior, enemy, direc, sleep = sleep, debug = debug, output = output)
+      points <- points + game_state$attack_routine(game_state$warrior, target, direc, sleep = sleep, debug = debug, output = output)
     }
   } else if(w$action == "rest") {
     if(game_state$warrior$hp >= game_state$warrior$max_hp) {
       if(output) cli_text("{warrior_name} is already fit as a fiddle.")
     } else if(game_state$warrior$hp == game_state$warrior$max_hp - 1L) {
       game_state$warrior$hp <- game_state$warrior$hp + 1L
-      if(output) cli_text("{warrior_name} receives 1 health from resting, up to {game_state$warrior$hp} health.")
+      if(output) cli_text("{warrior_name} receives 1 health from ", style_bold("resting"), ", up to {game_state$warrior$hp} health.")
     } else {
       game_state$warrior$hp <- game_state$warrior$hp + 2L
-      if(output) cli_text("{warrior_name} receives 2 health from resting, up to {game_state$warrior$hp} health.")
+      if(output) cli_text("{warrior_name} receives 2 health from ", style_bold("resting"), ", up to {game_state$warrior$hp} health.")
+    }
+  } else if (w$action == "rescue") {
+    if(target$empty) {
+      if(output) cli_alert_warning(paste(warrior_name, style_bold("rescues"), "{direc} into empty space."))
+    } else if (target$enemy || target$name == "Wall") {
+      if(output) cli_alert_warning(paste(warrior_name, "attempts to", style_bold("rescue"), "{direc} on {target$name} but is not bound."))
+    } else if (target$rescuable) {
+      if(output) cli_text("{warrior_name} unbinds {direc} and ", style_bold("rescues"), " {target$name}.")
+      if(output) cli_text("{warrior_name} gains {target$points} points.")
+      points <- points + target$points
+      game_state$remove_npc(target)
     }
   } else {
     stop("Invalid warrior action: ", w$action, ".")
@@ -77,8 +88,8 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
   }
   for(enemy in enemys_to_shoot) {
     if(enemy$death_flag) { next }
-    # Do the attacking
-    game_state$attack_routine(enemy, game_state$warrior, "forward", attack_type = "shoots", sleep = sleep, debug = debug)
+    # Do the shooting
+    game_state$attack_routine(enemy, game_state$warrior, "forward", attack_type = "shoots", sleep = sleep, debug = debug, output = output)
     message_sleep(sleep, debug)
   }
 

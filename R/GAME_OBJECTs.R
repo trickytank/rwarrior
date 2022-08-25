@@ -5,20 +5,25 @@ GAME_OBJECT <- R6Class(
     symbol = NULL,
     x = NULL,
     y = NULL,
-    compass = NULL,
-    compass_default = "west",
+    compass = "west",
     enemy = FALSE,
     empty = FALSE,
     player = FALSE,
+    points = NULL,
+    rescuable = FALSE,
     initialize = function(name, symbol, empty = FALSE) {
       self$name <- name
       self$symbol <- symbol
       self$empty <- empty
       invisible(self)
     },
-    set_loc = function(y, x, compass = self$compass_default) {
+    set_loc = function(y, x, compass = self$compass) {
       self$y <- y
       self$x <- x
+      self$compass <- compass
+      invisible(self)
+    },
+    set_compass = function(compass = self$compass) {
       self$compass <- compass
       invisible(self)
     }
@@ -39,10 +44,11 @@ NPC <- R6Class(
     shoot = NULL,
     enemy = TRUE,
     death_flag = FALSE,
-    initialize = function(name, symbol, max_hp, attack_power = NULL, shoot_power = NULL,
+    initialize = function(name, symbol, max_hp, points = NULL, attack_power = NULL, shoot_power = NULL,
                feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE) {
       self$name <- name
       self$symbol <- symbol
+      self$points <- points
       self$max_hp <- max_hp
       self$hp <- max_hp
       self$attack_power <- attack_power
@@ -61,18 +67,19 @@ WARRIOR <- R6Class(
   inherit = NPC,
   public = list(
     name = "Warrior",
-    symbol = "@",
+    symbol = "@" %>% style_bold %>% col_blue,
     hp = 20L,
     max_hp = 20L,
     attack_power = 5L,
     walk = NULL,
     rest = NULL,
+    rescue = NULL,
     health = NULL,
-    compass_default = "east",
+    compass = "east",
     enemy = FALSE,
     player = TRUE,
     initialize = function(walk = FALSE, feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE,
-                          rest = FALSE, health = FALSE) {
+                          rest = FALSE, health = FALSE, rescue = FALSE) {
       self$walk <- walk
       self$feel <- feel
       self$look <- look
@@ -80,6 +87,7 @@ WARRIOR <- R6Class(
       self$shoot <- shoot
       self$rest <- rest
       self$health <- health
+      self$rescue <- rescue
       invisible(self)
     }
 
@@ -87,23 +95,30 @@ WARRIOR <- R6Class(
 )
 
 stairs_here <- function(yx) {
-    GAME_OBJECT$new("Stairs", ">", empty = TRUE)$set_loc(yx[1], yx[2])
+    GAME_OBJECT$new("Stairs", ">" %>% col_blue %>% style_bold, empty = TRUE)$set_loc(yx[1], yx[2])
 }
 
 empty <- GAME_OBJECT$new("Empty", " ", empty = TRUE)
 
 wall <- GAME_OBJECT$new("Wall", "-")
 
-sludge_here <- function(y, x) {
-  NPC$new("Sludge", "s", 12L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x)
+captive_here <- function(y, x, compass = "west") {
+  captive <- NPC$new("Captive", col_blue("C"), 1L, points = 20L)$set_loc(y, x, compass)
+  captive$rescuable <- TRUE
+  captive$enemy <- FALSE
+  captive
 }
 
-thick_sludge_here <- function(y, x) {
-  thick_sludge <- NPC$new("Thick Sludge", "S", 24L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x)
+sludge_here <- function(y, x, compass = "west") {
+  NPC$new("Sludge", col_green("s"), 12L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x, compass)
 }
 
-archer_here <- function(y, x) {
-  NPC$new("Archer", "a", 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)$set_loc(y, x)
+thick_sludge_here <- function(y, x, compass = "west") {
+  thick_sludge <- NPC$new("Thick Sludge", "S" %>% col_green %>% style_bold, 24L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x, compass)
+}
+
+archer_here <- function(y, x, compass = "west") {
+  NPC$new("Archer", col_red("a"), 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)$set_loc(y, x, compass)
 }
 
 x <- sludge_here(1L, 4L)

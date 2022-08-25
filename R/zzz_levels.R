@@ -78,3 +78,26 @@ levels[[4]] <- list(
   clear_bonus = 8,
   ace_score = 90
 )
+
+
+# ---------
+# |@ CaaSC|
+# ---------
+levels[[5]] <- list(
+  description = "You hear cries for help. Captives must need rescuing.",
+  size = c(1,7),
+  warrior = WARRIOR$new(feel = TRUE, attack = TRUE, health = TRUE, rest = TRUE, rescue = TRUE)$set_loc(1L, 1L),
+  npcs = list(
+    captive_here(1,3),
+    archer_here(1, 4),
+    archer_here(1, 5),
+    thick_sludge_here(1, 6),
+    captive_here(1,7)
+  ),
+  stairs = c(1, 7),
+  tip = "Use warrior$feel()$captive to see if there is a captive and warrior$rescue() to rescue him. Don't attack captives.",
+  clue = "Don't forget to constantly check if you're taking damage. Rest until your health is full if you aren't taking damage.",
+  time_bonus = 45,
+  clear_bonus = 10,
+  ace_score = 123
+)

@@ -12,9 +12,10 @@ WARRIOR_ACTION <- R6Class(
       self$health <- game_state$warrior$hp
       private$attack_ability <- game_state$warrior$attack
       private$rest_ability <- game_state$warrior$rest
+      private$rescue_ability <- game_state$warrior$rescue
       if(game_state$warrior$feel) {
-        self$feel_forward <- FEEL$new(game_state, "forward")
-        self$feel_backward <- FEEL$new(game_state, "backward")
+        self$feel_forward <- SPACE$new(game_state, "forward")
+        self$feel_backward <- SPACE$new(game_state, "backward")
       }
     },
     walk = function(direction = "forward") {
@@ -54,11 +55,22 @@ WARRIOR_ACTION <- R6Class(
           stop("Invalid direction specified: ", direction, "")
         }
       }
+    },
+    rescue = function(direction = "forward") {
+      if(private$rescue_ability) {
+        private$check_one_action()
+        self$action <- "rescue"
+        self$direction <- direction
+        invisible(self)
+      } else {
+        stop("Warrior does not yet have the rescue function.")
+      }
     }
   ),
   private = list(
     attack_ability = NULL,
     rest_ability = NULL,
+    rescue_ability = NULL,
     check_one_action = function() {
       if(!is.null(self$action)) {
         stop("A warrior action has already been defined.")

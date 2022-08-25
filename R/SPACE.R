@@ -1,5 +1,5 @@
-FEEL <- R6Class(
-  "FEEL",
+SPACE <- R6Class(
+  "SPACE",
   public = list(
     empty = NULL,
     stairs = NULL,
