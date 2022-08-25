@@ -49,9 +49,6 @@ AI_09 <- function(warrior, memory) {
   memory
 }
 
-play_warrior(
-  AI_09, level = 9)
-
 test_that("Solutions not working for level 8.", {
   expect_true(play_warrior_inbuilt_levels(
     AI_09, level = 9)
