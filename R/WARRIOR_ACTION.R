@@ -63,7 +63,7 @@ WARRIOR_ACTION <- R6Class(
         self$direction <- direction
         invisible(self)
       } else {
-        stop("Warrior does not yet have the attack function.")
+        stop("Warrior does not yet have the rescue function.")
       }
     }
   ),

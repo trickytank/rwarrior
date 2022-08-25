@@ -5,8 +5,7 @@ GAME_OBJECT <- R6Class(
     symbol = NULL,
     x = NULL,
     y = NULL,
-    compass = NULL,
-    compass_default = "west",
+    compass = "west",
     enemy = FALSE,
     empty = FALSE,
     player = FALSE,
@@ -18,13 +17,13 @@ GAME_OBJECT <- R6Class(
       self$empty <- empty
       invisible(self)
     },
-    set_loc = function(y, x, compass = self$compass_default) {
+    set_loc = function(y, x, compass = self$compass) {
       self$y <- y
       self$x <- x
       self$compass <- compass
       invisible(self)
     },
-    set_compass = function(compass = self$compass_default) {
+    set_compass = function(compass = self$compass) {
       self$compass <- compass
       invisible(self)
     }
@@ -76,7 +75,7 @@ WARRIOR <- R6Class(
     rest = NULL,
     rescue = NULL,
     health = NULL,
-    compass_default = "east",
+    compass = "east",
     enemy = FALSE,
     player = TRUE,
     initialize = function(walk = FALSE, feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE,
