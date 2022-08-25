@@ -1,4 +1,4 @@
-AI_04 <- function(warrior, memory) {
+AI_05 <- function(warrior, memory) {
   if(is.null(memory)) {
     # give initial values when memory is NULL
     memory <- list(previous_health = 20)
@@ -13,6 +13,8 @@ AI_04 <- function(warrior, memory) {
     } else {
       warrior$walk()
     }
+  } else if (warrior$feel()$captive) {
+    warrior$rescue()
   } else {
     warrior$attack()
   }
@@ -20,30 +22,23 @@ AI_04 <- function(warrior, memory) {
   memory
 }
 
-test_that("Solutions not working for level 4.", {
+test_that("Solutions not working for level 5.", {
   expect_true(play_warrior_inbuilt_levels(
-    AI_04,
-    sleep = 0, level = 4)
+    AI_05,
+    sleep = 0, level = 5)
   )
 })
-# Add to final level
-  # expect_match(purrr::quietly(play_warrior_inbuilt_levels)(
-  #   AI_04, sleep = 0, level = 4, output = TRUE)$messages,
-  #   "precious Hex", all = FALSE
-  # )
 
-test_that("Solutions that should not work for level 4", {
-  purrr::quietly(expect_false)(play_warrior_inbuilt_levels(
+test_that("Non-solutions checking for expected results", {
+  purrr::quietly(expect_message)(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       if(warrior$feel()$empty) {
-        if(warrior$health < 20) {
-          warrior$rest()
-        } else {
-          warrior$walk()
-        }
+        warrior$walk()
       } else {
         warrior$attack()
       }
     },
-    sleep = 0, level = 4))$result
+    sleep = 0, level = 5, output = TRUE, max_turns = 3),
+    "innocent"
+  )$result
 })

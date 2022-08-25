@@ -76,14 +76,13 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
         cli_text("Level Score: {level_score}")
         cat_line(glue("Time Bonus:  {time_bonus}")) # TODO: preserve this whitespace
         cli_text("Clear Bonus: {clear_bonus}")
-        cli_text("Level Score: {level_score}")
-        cli_text("Total Score: {total_score}")
+        cli_text("Total level score: {total_score}")
         # 0 8 2 10
         if(is.null(level)) {
           cli_text(col_blue("Congratulations, you have completed this custom level.") %>% style_bold)
         } else {
           if(level + 1 > length(levels)) {
-            cli_text(col_blue("Congratulations, you have completed all the levels of R Warrior and reached the precious Hex.") %>% style_bold)
+            cli_text(col_blue("Congratulations, You have climbed to the top of the tower and reached the precious Hex.") %>% style_bold)
             if(level <= 18) {
               cli_text(col_blue("{18 - level} more levels are planned to be ported from Ruby Warrior.") %>% style_bold)
             }
@@ -100,6 +99,11 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
       if(output) cli_text(col_red("Sorry, you have run out of time."))
       complete <- TRUE
       next
+    }
+
+    if(game_state$fail) {
+      if(output) cli_text(col_red("You have failed."))
+      complete <- TRUE
     }
   }
 
