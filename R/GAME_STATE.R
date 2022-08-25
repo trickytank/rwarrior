@@ -12,6 +12,7 @@ GAME_STATE <- R6Class(
     level_clear_bonus = NULL,
     level_ace_score = NULL,
     level_clue = NULL,
+    fail = FALSE,
     initialize = function(level_spec) {
       self$npcs <- list()
       for(i in seq_along(level_spec$npcs)) {
@@ -109,16 +110,27 @@ GAME_STATE <- R6Class(
       } else {
         stop("attack_routine() unknown attack_type.")
       }
+      if(direction != "forward") {
+        # Reduce hit power when not going forward
+        # This may not be a true replication of Ruby warrior, though it replicates:
+        # 5 attack power forward and 3 attack power backward.
+        hit_power <- ceiling(hit_power / 2)
+      }
       defender$hp <- defender$hp - hit_power
       if(output) cli_text(attacker$name, style_bold(" {attack_type}"),  " {direction} and hits {defender$name}.")
       message_sleep(sleep, debug)
       if(output) cli_text("{defender$name} takes {hit_power} damage, {defender$hp} health power left.")
       if(defender$hp <= 0 && ! "WARRIOR" %in% class(defender)) {
-        # defender is an enemy and has died
+        # defender is an npc and has died
         message_sleep(sleep, debug)
-        points <- defender$max_hp
         if(output) cli_text("{defender$name} dies.")
         message_sleep(sleep, debug)
+        if(defender$rescuable) {
+          if(output) cli_text("{attacker$name} has killed the innocent.")
+          self$fail <- TRUE
+          return(0)
+        }
+        points <- defender$max_hp
         if(output) cli_text("{attacker$name} earns {points} points.")
         self$remove_npc(defender)
         return(points)

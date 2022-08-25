@@ -21,3 +21,24 @@ AI_05 <- function(warrior, memory) {
   memory$previous_health <- warrior$health
   memory
 }
+
+test_that("Solutions not working for level 5.", {
+  expect_true(play_warrior_inbuilt_levels(
+    AI_05,
+    sleep = 0, level = 5)
+  )
+})
+
+test_that("Non-solutions checking for expected results", {
+  purrr::quietly(expect_message)(play_warrior_inbuilt_levels(
+    function(warrior, memory) {
+      if(warrior$feel()$empty) {
+        warrior$walk()
+      } else {
+        warrior$attack()
+      }
+    },
+    sleep = 0, level = 5, output = TRUE, max_turns = 3),
+    "innocent"
+  )$result
+})

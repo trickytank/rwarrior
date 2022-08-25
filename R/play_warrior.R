@@ -100,6 +100,11 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
       complete <- TRUE
       next
     }
+
+    if(game_state$fail) {
+      if(output) cli_text(col_red("You have failed."))
+      complete <- TRUE
+    }
   }
 
   give_clue <- askYesNo("Would you like a clue for this level?", !interactive()) # default TRUE when testing
