@@ -6,6 +6,10 @@ GAME_OBJECT <- R6Class(
     x = NULL,
     y = NULL,
     # direction represented on the complex plane, for easy combining of directions. (simply use multiplication)
+    # "east" = 1 + 0i
+    # "north" = 0 + 1i
+    # "west" = -1 + 0i
+    # "south" = 0 - 1i
     compass = -1 + 0i, # "west"
     enemy = FALSE,
     empty = FALSE,
@@ -75,12 +79,13 @@ WARRIOR <- R6Class(
     walk = NULL,
     rest = NULL,
     rescue = NULL,
+    pivot = NULL,
     health = NULL,
     compass = 1 + 0i, # "east"
     enemy = FALSE,
     player = TRUE,
     initialize = function(walk = FALSE, feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE,
-                          rest = FALSE, health = FALSE, rescue = FALSE) {
+                          rest = FALSE, health = FALSE, rescue = FALSE, pivot = FALSE) {
       self$walk <- walk
       self$feel <- feel
       self$look <- look
@@ -89,9 +94,15 @@ WARRIOR <- R6Class(
       self$rest <- rest
       self$health <- health
       self$rescue <- rescue
+      self$pivot <- pivot
+      invisible(self)
+    },
+    pivot_self = function(direction = "backward", warrior_name = "Fisher", output = FALSE) {
+      direc <- give_direction(direction)
+      self$compass <- self$compass * direc$complex
+      if(output) { cli_text("{warrior_name} ", style_bold("pivots"), " {direc$direction}.") }
       invisible(self)
     }
-
   )
 )
 

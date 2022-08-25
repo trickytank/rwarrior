@@ -73,6 +73,8 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
       points <- points + target$points
       game_state$remove_npc(target)
     }
+  } else if (w$action == "pivot") {
+    game_state$warrior$pivot_self(w$direction, warrior_name = warrior_name, output = output)
   } else {
     stop("Invalid warrior action: ", w$action, ".")
   }
