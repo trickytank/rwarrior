@@ -76,11 +76,14 @@ WARRIOR <- R6Class(
     hp = 20L,
     max_hp = 20L,
     attack_power = 5L,
+    shoot_power = 3L,
     walk = NULL,
     rest = NULL,
     rescue = NULL,
     pivot = NULL,
     health = NULL,
+    look = NULL,
+    shoot = NULL,
     compass = 1 + 0i, # "east"
     enemy = FALSE,
     player = TRUE,
@@ -95,6 +98,8 @@ WARRIOR <- R6Class(
       self$health <- health
       self$rescue <- rescue
       self$pivot <- pivot
+      self$look <- look
+      self$shoot <- shoot
       invisible(self)
     },
     pivot_self = function(direction = "backward", warrior_name = "Fisher", output = FALSE) {
@@ -131,6 +136,10 @@ thick_sludge_here <- function(y, x, compass = -1) {
 
 archer_here <- function(y, x, compass = -1) {
   NPC$new("Archer", col_red("a"), 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)$set_loc(y, x, compass)
+}
+
+wizard_here <- function(y, x, compass = -1) {
+  NPC$new("Wizard", col_red("w"), 3L, shoot_power = 11L, look = TRUE, shoot = TRUE)$set_loc(y, x, compass)
 }
 
 x <- sludge_here(1L, 4L)
