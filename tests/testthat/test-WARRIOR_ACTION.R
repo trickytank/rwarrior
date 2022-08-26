@@ -1,7 +1,7 @@
-game_state_1_1 <- GAME_STATE$new(levels[[1]])
-game_state_2_1 <- GAME_STATE$new(levels[[2]])
-game_state_3_1 <- GAME_STATE$new(levels[[2]])
-game_state_4_1 <- GAME_STATE$new(levels[[2]])
+game_state_1_1 <- GAME_STATE$new(levels_beginner[[1]])
+game_state_2_1 <- GAME_STATE$new(levels_beginner[[2]])
+game_state_3_1 <- GAME_STATE$new(levels_beginner[[2]])
+game_state_4_1 <- GAME_STATE$new(levels_beginner[[2]])
 test_levels <- list()
 
 test_levels[[2]] <- list(

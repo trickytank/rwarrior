@@ -14,20 +14,23 @@
 #' AI <- AI <- function(warrior, memory) {
 #'   warrior$walk()
 #' }
-#' play_warrior(AI, level = 1)
-play_warrior <- function(ai, level = 1, warrior_name = "Fisher", sleep = getOption("Rwarrior.sleep", 0.6)) {
+#' play_beginner(AI, level = 1)
+play_beginner <- function(ai, level = 1, warrior_name = "Fisher", sleep = getOption("Rwarrior.sleep", 0.6)) {
   play_warrior_inbuilt_levels(ai = ai, level = level, warrior_name = warrior_name, sleep = sleep, debug = FALSE, output = TRUE)
 }
 
 # For inbuilt levels
 play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher",
+                                        tower = "beginner",
                                         sleep = 0, debug = FALSE, output = FALSE,
                                         max_turns = 100L) {
+  if(tower == "beginner") {
+    levels <- levels_beginner
+  } else {
+    stop("Unknown tower ", tower)
+  }
   if(level > length(levels)) {
-    if(level <= 18) {
-      stop("Level ", level, " does not exist, though it is planned for the future.")
-    }
-    stop("Level ", level, " does not exist.")
+    stop("Level ", level, " does not exist in the ", tower, " tower.")
   }
   game_state <- GAME_STATE$new(levels[[level]])
   play_warrior_work(ai, game_state, level = level, warrior_name = warrior_name,
@@ -38,17 +41,13 @@ play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher",
 play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fisher",
                               sleep = 0, debug = TRUE, output = FALSE, max_turns = 100L) {
   game_state$warrior$name <- warrior_name
-  at_stairs <- FALSE
   complete <- FALSE
   turn <- 1L
-  alive <- TRUE
   level_score <- 0L
   memory <- NULL
   while(!complete) {
     if(output) cli_h1("Turn {turn}")
     if(output) cat(game_state$ascii)
-    x <- game_state$x
-    y <- game_state$y
     # clone here to prevent tampering the game_state. Doesn't prevent all cheating such as inspecting the entire game_state.
     w <- WARRIOR_ACTION$new(game_state$deep_clone())
     # w is also modified here

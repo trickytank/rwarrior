@@ -4,10 +4,12 @@
 \alias{level_readme}
 \title{Level read me}
 \usage{
-level_readme(level = 1)
+level_readme(level = 1, tower = c("beginner"))
 }
 \arguments{
 \item{level}{The level number (or custom level).}
+
+\item{tower}{The tower the level comes from.}
 }
 \description{
 Level read me

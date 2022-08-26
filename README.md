@@ -27,7 +27,7 @@ devtools::install_github("trickytank/Rwarrior", build_vignettes = TRUE)
 ## Play
 
 Play levels in sequential order. 
-Levels implemented so far are from 1 to 6.
+Levels implemented so far are from 1 to 9.
 
 To play the first level, first read the level readme. 
 
@@ -35,7 +35,7 @@ To play the first level, first read the level readme.
 level_readme(1)
 ```
 
-Use the information gained to write your AI and run `play_warrior()`.
+Use the information gained to write your AI and run `play_beginner()`.
 
 ```
 AI <- function(warrior, memory) {
@@ -43,7 +43,7 @@ AI <- function(warrior, memory) {
     }
 warrior_name <- "Fisher" # A name for your warrior
     
-play_warrior(AI, warrior_name = warrior_name, level = 1)
+play_beginner(AI, warrior_name = warrior_name, level = 1)
 ```
 
 More advanced levels require use of the memory argument to the AI (or use of a reference class). 
