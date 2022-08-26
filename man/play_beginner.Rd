@@ -30,5 +30,5 @@ Play R Warrior
 AI <- AI <- function(warrior, memory) {
   warrior$walk()
 }
-play_warrior(AI, level = 1)
+play_beginner(AI, level = 1)
 }

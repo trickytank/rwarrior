@@ -14,7 +14,7 @@
 #' AI <- AI <- function(warrior, memory) {
 #'   warrior$walk()
 #' }
-#' play_warrior(AI, level = 1)
+#' play_beginner(AI, level = 1)
 play_beginner <- function(ai, level = 1, warrior_name = "Fisher", sleep = getOption("Rwarrior.sleep", 0.6)) {
   play_warrior_inbuilt_levels(ai = ai, level = level, warrior_name = warrior_name, sleep = sleep, debug = FALSE, output = TRUE)
 }

@@ -1,6 +1,7 @@
 #' Level read me
 #'
 #' @param level The level number (or custom level).
+#' @param tower The tower the level comes from.
 #' @export
 #' @examples
 #'
