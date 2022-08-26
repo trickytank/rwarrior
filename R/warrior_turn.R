@@ -4,8 +4,6 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
   if(is.null(w$action)) {
     stop("No warrior action was provided.")
   }
-  at_stairs = FALSE
-  map <- game_state$map
   J <- game_state$warrior$J
   I <- game_state$warrior$I
   points <- 0
