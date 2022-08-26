@@ -29,11 +29,12 @@ GAME_OBJECT <- R6Class(
       invisible(self)
     },
     set_compass = function(compass = self$compass) {
+      # Complex plane is rotated clockwise by 90 degrees
       self$compass <- case_when(
-        compass == "east" ~ 1 + 0i,
-        compass == "north" ~ 0 + 1i,
-        compass == "west" ~ -1 + 0i,
-        compass == "south" ~ 0 - 1i,
+        compass == "east" ~ 0 + 1i,
+        compass == "north" ~ -1 + 0i,
+        compass == "west" ~ 0 - 1i,
+        compass == "south" ~ 1 + 0i,
         TRUE ~ ifelse(is.character(compass), 0i, as.complex(compass))
       )
       invisible(self)
@@ -90,7 +91,7 @@ WARRIOR <- R6Class(
     health = NULL,
     look = NULL,
     shoot = NULL,
-    compass = 1 + 0i, # "east"
+    compass = 0 + 1i, # "east"
     enemy = FALSE,
     player = TRUE,
     initialize = function(walk = FALSE, feel = FALSE, look = FALSE, attack = FALSE, shoot = FALSE,
