@@ -6,8 +6,8 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
   }
   at_stairs = FALSE
   map <- game_state$map
-  x <- game_state$warrior$x
-  y <- game_state$warrior$y
+  J <- game_state$warrior$J
+  I <- game_state$warrior$I
   points <- 0
   # Prepare for enemies to attack if they are close enough
   enemys_to_attack <- list()
@@ -30,11 +30,11 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
   }
 
   if(w$action %in% c("walk", "attack", "rescue", "shoot")) {
-    coord <- give_coordinates(game_state$warrior$compass, w$direction, y, x)
-    y_subject <- coord$y_subject
-    x_subject <- coord$x_subject
+    coord <- give_coordinates(game_state$warrior$compass, w$direction, I, J)
+    I_subject <- coord$I_subject
+    J_subject <- coord$J_subject
     direc <- coord$direc
-    target <- game_state$return_object(y_subject, x_subject)
+    target <- game_state$return_object(I_subject, J_subject)
   }
   if(w$action %in% c("shoot")) {
     target <- game_state$look_first_object(game_state$warrior, w$direction)
@@ -42,8 +42,8 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
   if(w$action == "walk") {
     if(target$empty) {
       if(output) cli_text(warrior_name, style_bold(" walks "), direc)
-      game_state$warrior$y <- y_subject
-      game_state$warrior$x <- x_subject
+      game_state$warrior$I <- I_subject
+      game_state$warrior$J <- J_subject
     } else {
       if(output) cli_alert_warning("{warrior_name} is blocked and doesn't move.")
     }

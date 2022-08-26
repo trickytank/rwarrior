@@ -3,8 +3,8 @@ GAME_OBJECT <- R6Class(
   public = list(
     name = NULL,
     symbol = NULL,
-    x = NULL,
-    y = NULL,
+    J = NULL,
+    I = NULL,
     # direction represented on the complex plane, for easy combining of directions. (simply use multiplication)
     # "east" = 1 + 0i
     # "north" = 0 + 1i
@@ -22,9 +22,9 @@ GAME_OBJECT <- R6Class(
       self$empty <- empty
       invisible(self)
     },
-    set_loc = function(y, x, compass = self$compass) {
-      self$y <- y
-      self$x <- x
+    set_loc = function(I, J, compass = self$compass) {
+      self$I <- I
+      self$J <- J
       self$set_compass(compass)
       invisible(self)
     },
@@ -125,27 +125,27 @@ empty <- GAME_OBJECT$new("Empty", " ", empty = TRUE)
 
 wall <- GAME_OBJECT$new("Wall", "-")
 
-captive_here <- function(y, x, compass = "west") {
-  captive <- NPC$new("Captive", col_blue("C"), 1L, points = 20L)$set_loc(y, x, compass)
+captive_here <- function(I, J, compass = "west") {
+  captive <- NPC$new("Captive", col_blue("C"), 1L, points = 20L)$set_loc(I, J, compass)
   captive$rescuable <- TRUE
   captive$enemy <- FALSE
   captive
 }
 
-sludge_here <- function(y, x, compass = "west") {
-  NPC$new("Sludge", col_green("s"), 12L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x, compass)
+sludge_here <- function(I, J, compass = "west") {
+  NPC$new("Sludge", col_green("s"), 12L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(I, J, compass)
 }
 
-thick_sludge_here <- function(y, x, compass = "west") {
-  thick_sludge <- NPC$new("Thick Sludge", "S" %>% col_green %>% style_bold, 24L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(y, x, compass)
+thick_sludge_here <- function(I, J, compass = "west") {
+  thick_sludge <- NPC$new("Thick Sludge", "S" %>% col_green %>% style_bold, 24L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(I, J, compass)
 }
 
-archer_here <- function(y, x, compass = "west") {
-  NPC$new("Archer", col_red("a"), 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)$set_loc(y, x, compass)
+archer_here <- function(I, J, compass = "west") {
+  NPC$new("Archer", col_red("a"), 7L, shoot_power = 3L, look = TRUE, shoot = TRUE)$set_loc(I, J, compass)
 }
 
-wizard_here <- function(y, x, compass = "west") {
-  NPC$new("Wizard", col_red("w"), 3L, shoot_power = 11L, look = TRUE, shoot = TRUE)$set_loc(y, x, compass)
+wizard_here <- function(I, J, compass = "west") {
+  NPC$new("Wizard", col_red("w"), 3L, shoot_power = 11L, look = TRUE, shoot = TRUE)$set_loc(I, J, compass)
 }
 
 x <- sludge_here(1L, 4L)

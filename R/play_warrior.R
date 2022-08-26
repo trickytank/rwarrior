@@ -47,8 +47,6 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
   while(!complete) {
     if(output) cli_h1("Turn {turn}")
     if(output) cat(game_state$ascii)
-    x <- game_state$x
-    y <- game_state$y
     # clone here to prevent tampering the game_state. Doesn't prevent all cheating such as inspecting the entire game_state.
     w <- WARRIOR_ACTION$new(game_state$deep_clone())
     # w is also modified here
