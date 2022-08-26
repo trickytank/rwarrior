@@ -41,10 +41,8 @@ play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher",
 play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fisher",
                               sleep = 0, debug = TRUE, output = FALSE, max_turns = 100L) {
   game_state$warrior$name <- warrior_name
-  at_stairs <- FALSE
   complete <- FALSE
   turn <- 1L
-  alive <- TRUE
   level_score <- 0L
   memory <- NULL
   while(!complete) {

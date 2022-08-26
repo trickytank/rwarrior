@@ -138,7 +138,7 @@ sludge_here <- function(I, J, compass = "west") {
 }
 
 thick_sludge_here <- function(I, J, compass = "west") {
-  thick_sludge <- NPC$new("Thick Sludge", "S" %>% col_green %>% style_bold, 24L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(I, J, compass)
+  NPC$new("Thick Sludge", "S" %>% col_green %>% style_bold, 24L, attack_power = 3L, feel = TRUE, attack = TRUE)$set_loc(I, J, compass)
 }
 
 archer_here <- function(I, J, compass = "west") {

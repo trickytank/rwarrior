@@ -7,7 +7,7 @@ give_coordinates <- function(compass, direction, I = 0, J = 0) {
   # We need to flip the y direction as indexes increase as you go down.
   I_subject <- I + Re(offset_complex)
   J_subject <- J + Im(offset_complex)
-  x <- list(direc = direction, I_subject = I_subject, J_subject = J_subject)
+  list(direc = direction, I_subject = I_subject, J_subject = J_subject)
 }
 
 #' @importFrom dplyr case_when
