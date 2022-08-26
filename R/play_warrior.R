@@ -15,19 +15,22 @@
 #'   warrior$walk()
 #' }
 #' play_warrior(AI, level = 1)
-play_warrior <- function(ai, level = 1, warrior_name = "Fisher", sleep = getOption("Rwarrior.sleep", 0.6)) {
+play_beginner <- function(ai, level = 1, warrior_name = "Fisher", sleep = getOption("Rwarrior.sleep", 0.6)) {
   play_warrior_inbuilt_levels(ai = ai, level = level, warrior_name = warrior_name, sleep = sleep, debug = FALSE, output = TRUE)
 }
 
 # For inbuilt levels
 play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher",
+                                        tower = "beginner",
                                         sleep = 0, debug = FALSE, output = FALSE,
                                         max_turns = 100L) {
+  if(tower == "beginner") {
+    levels <- levels_beginner
+  } else {
+    stop("Unknown tower ", tower)
+  }
   if(level > length(levels)) {
-    if(level <= 18) {
-      stop("Level ", level, " does not exist, though it is planned for the future.")
-    }
-    stop("Level ", level, " does not exist.")
+    stop("Level ", level, " does not exist in the ", tower, " tower.")
   }
   game_state <- GAME_STATE$new(levels[[level]])
   play_warrior_work(ai, game_state, level = level, warrior_name = warrior_name,

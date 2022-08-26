@@ -5,12 +5,13 @@
 #' @examples
 #'
 #' level_readme(1)
-level_readme <- function(level = 1) {
+level_readme <- function(level = 1, tower = c("beginner")) {
+  tower <- match.arg(tower)
+  if(tower == "beginner") {
+    levels <- levels_beginner
+  }
   if(is.numeric(level)) {
     if(level > length(levels)) {
-      if(level <= 18) {
-        stop("Level ", level, " does not exist, though it is planned for the future.")
-      }
       stop("Level ", level, " does not exist.")
     }
     cat("Level", level, "\n")

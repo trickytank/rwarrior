@@ -15,7 +15,7 @@ test_that("Solution to level 1 doesn't work.", {
       warrior$walk()
     },
     sleep = 0))
-  expect_true(purrr::quietly(play_warrior)(
+  expect_true(purrr::quietly(play_beginner)(
     function(warrior, memory) {
       warrior$walk()
     },
@@ -30,7 +30,7 @@ test_that("Solution to level 1 doesn't work.", {
     function(warrior, memory) {
       warrior$walk("for")
     },
-    game_state = GAME_STATE$new(levels[[1]]), sleep = 0, output = TRUE, debug = FALSE)$messages,
+    game_state = GAME_STATE$new(levels_beginner[[1]]), sleep = 0, output = TRUE, debug = FALSE)$messages,
     "custom level", all = FALSE
   )
 })
