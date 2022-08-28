@@ -10,7 +10,7 @@ GAME_OBJECT <- R6Class(
     # "north" = 0 + 1i
     # "west" = -1 + 0i
     # "south" = 0 - 1i
-    compass = -1 + 0i, # "west"
+    compass = -1i, # "west"
     enemy = FALSE,
     empty = FALSE,
     player = FALSE,
