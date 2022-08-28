@@ -9,7 +9,8 @@ play_warrior(
   level = 1,
   tower = c("beginner"),
   warrior_name = "Fisher",
-  sleep = getOption("Rwarrior.sleep", 0.6)
+  sleep = getOption("Rwarrior.sleep", 0.6),
+  practice = FALSE
 )
 }
 \arguments{
@@ -19,18 +20,20 @@ play_warrior(
 
 \item{tower}{Tower the level comes from.}
 
-\item{warrior_name}{Name of your warrior, for flavour.}
+\item{warrior_name}{Name of your warrior, for flavor.}
 
 \item{sleep}{Time between text updates. Set to "prompt" to only progress when pressing the return key.}
+
+\item{practice}{If TRUE, any functions available for that tower may be used.}
 }
 \value{
-A logical that is TRUE on successfully getting to the stairs.
+A tibble if successful, or otherwise FALSE.
 }
 \description{
 Play R Warrior
 }
 \examples{
-AI <- AI <- function(warrior, memory) {
+AI <- function(warrior, memory) {
   warrior$walk()
 }
 play_warrior(AI, level = 1)

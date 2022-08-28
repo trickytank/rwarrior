@@ -5,41 +5,51 @@
 #' @param ai AI function to control your warrior.
 #' @param level Level number.
 #' @param tower Tower the level comes from.
-#' @param warrior_name Name of your warrior, for flavour.
+#' @param warrior_name Name of your warrior, for flavor.
 #' @param sleep Time between text updates. Set to "prompt" to only progress when pressing the return key.
-#' @return A logical that is TRUE on successfully getting to the stairs.
+#' @param practice If TRUE, any functions available for that tower may be used.
+#' @return A tibble if successful, or otherwise FALSE.
 #' @import cli
 #' @importFrom utils askYesNo
 #' @export
 #' @examples
-#' AI <- AI <- function(warrior, memory) {
+#' AI <- function(warrior, memory) {
 #'   warrior$walk()
 #' }
 #' play_warrior(AI, level = 1)
 play_warrior <- function(ai, level = 1,
                           tower = c("beginner"),
                           warrior_name = "Fisher",
-                          sleep = getOption("Rwarrior.sleep", 0.6)) {
+                          sleep = getOption("Rwarrior.sleep", 0.6),
+                          practice = FALSE) {
   tower <- match.arg(tower)
   play_warrior_inbuilt_levels(ai = ai, level = level, warrior_name = warrior_name,
                               tower = tower,
-                              sleep = sleep, debug = FALSE, output = TRUE)
+                              sleep = sleep, practice = practice,
+                              debug = FALSE, output = TRUE)
 }
 
 # For inbuilt levels
 play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher",
                                         tower = "beginner",
-                                        sleep = 0, debug = FALSE, output = FALSE,
+                                        sleep = 0, practice = FALSE,
+                                        debug = FALSE, output = FALSE,
                                         max_turns = 100L) {
   if(tower == "beginner") {
     levels <- levels_beginner
   } else {
+    # TODO: work for custom towers
     stop("Unknown tower ", tower)
   }
   if(level > length(levels)) {
     stop("Level ", level, " does not exist in the ", tower, " tower.")
   }
   game_state <- GAME_STATE$new(levels[[level]])
+  if(practice) {
+    # Assume that the final level warrior has all the abilities to be used
+    cw <- game_state$warrior
+    game_state$warrior <- GAME_STATE$new(last(levels))$warrior$set_loc(cw$I, cw$J, cw$compass)
+  }
   invisible(play_warrior_work(ai, game_state, level = level, warrior_name = warrior_name,
                     sleep = sleep, debug = debug, output = output, max_turns = max_turns))
 }
@@ -74,8 +84,13 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
     if(game_state$at_stairs) {
       complete <- TRUE
       time_bonus <- max(0, game_state$level_time_bonus - turn)
-      clear_bonus <- game_state$level_clear_bonus
+      if(length(game_state$npcs) == 0) {
+        clear_bonus <- round((level_score + time_bonus) / 5)
+      } else {
+        clear_bonus <- 0
+      }
       total_score <- time_bonus + level_score + clear_bonus
+      level_rank <- level_ranker(total_score, game_state$level_ace_score)
       if(output) {
         cli_h2("Found stairs")
         cat(game_state$ascii)
@@ -101,7 +116,10 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
         level = level,
         level_score = level_score,
         clear_bonus = clear_bonus,
-        total_level_score = total_score
+        total_level_score = total_score,
+        ace_score = game_state$level_ace_score,
+        rank = level_rank,
+        rank_percentage = 100 * total_score / game_state$level_ace_score
       ))
     }
 
