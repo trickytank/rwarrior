@@ -29,7 +29,8 @@ play_warrior <- function(ai, level = 1,
                               debug = FALSE, output = TRUE)
 }
 
-# For inbuilt levels
+#' For inbuilt levels
+#' @importFrom dplyr last
 play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher",
                                         tower = "beginner",
                                         sleep = 0, practice = FALSE,

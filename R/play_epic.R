@@ -3,6 +3,7 @@
 #' @param ai AI function to control your warrior.
 #' @param tower Tower to attempt.
 #' @param warrior_name Name of your warrior, for flavor.
+#' @param level_output A logical denoting whether to give individual level progress.
 #' @param sleep Time between text updates. Set to "prompt" to only progress when pressing the return key.
 #' @return A tibble if successful, or otherwise FALSE.
 #' @return A tibble giving the scores for each level passed.
@@ -13,14 +14,23 @@
 #' }
 #' play_epic(AI, tower = "beginner", warrior_name = "Euler")
 #' }
-play_epic <- function(ai, tower = c("beginner"), warrior_name = "Fisher", sleep = getOption("Rwarrior.sleep", 0.6)) {
+play_epic <- function(ai, tower = c("beginner"), warrior_name = "Fisher",
+                      level_output = TRUE,
+                      sleep = getOption("Rwarrior.sleep", 0.6)) {
   tower <- match.arg(tower)
+  if(!level_output) {
+    sleep <- 0
+  }
   play_epic_internal(ai, tower = tower, warrior_name = warrior_name, sleep = sleep, output = TRUE)
 }
 
+#' @importFrom methods show
+#' @importFrom tibble tibble
+#' @importFrom dplyr bind_rows
 play_epic_internal <-  function(ai, warrior_name = "Fisher",
                                 tower = "beginner",
                                 sleep = 0,
+                                level_output = FALSE,
                                 debug = FALSE, output = FALSE,
                                 max_turns = 100L) {
   if(tower == "beginner") {
@@ -31,30 +41,31 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
   }
   summaries <- tibble()
   for(level in seq_along(levels)) {
-    cli_h1("Tower {tower}, level {level}.")
+    if(level_output) { cli_h1("Tower {tower}, level {level}.") }
     game_state <- GAME_STATE$new(levels[[level]])
     # Assume that the final level warrior has all the abilities to be used
     cw <- game_state$warrior
     game_state$warrior <- GAME_STATE$new(last(levels))$warrior$set_loc(cw$I, cw$J, cw$compass)
     level_summary <- play_warrior_work(ai, game_state, level = level, warrior_name = warrior_name,
-                                sleep = sleep, debug = debug, output = output, max_turns = max_turns)
+                                sleep = sleep, debug = debug, output = level_output, max_turns = max_turns)
     summaries <- bind_rows(summaries, level_summary)
-    cli_text("Level grade: {level_summary$grade}")
+    if(level_output) { cli_text("Level grade: {level_summary$grade}"); cli_text() }
     for(i in 1:4) {
       message_sleep(sleep, debug)
     }
-    cli_text()
   }
-  cli_h1("Summary")
-  show(summaries)
   # Max out over-performing to 110%
-  cli_text("Total score {sum(summaries$level_score)}")
   average_rank <- level_ranker(mean(pmin(summaries$grade_percentage, 100)), 100)
-  cli_text("Overall grade: {average_rank}")
-  if(average_rank == "S") {
-    cli_text("Congratulations! You achieved the top grade!")
-  } else {
-    cli_text("Try to improve your AI to get an S grade! (all levels with an S grade)")
+  if(output) {
+    cli_h1("Summary")
+    show(summaries)
+    cli_text("Total score {sum(summaries$level_score)}")
+    cli_text("Overall grade: {average_rank}")
+    if(average_rank == "S") {
+      cli_text("Congratulations! You achieved the top grade!")
+    } else {
+      cli_text("Try to improve your AI to get an S grade! (all levels with an S grade)")
+    }
   }
   invisible(summaries)
 }

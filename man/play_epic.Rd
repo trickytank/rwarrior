@@ -8,6 +8,7 @@ play_epic(
   ai,
   tower = c("beginner"),
   warrior_name = "Fisher",
+  level_output = TRUE,
   sleep = getOption("Rwarrior.sleep", 0.6)
 )
 }
@@ -17,6 +18,8 @@ play_epic(
 \item{tower}{Tower to attempt.}
 
 \item{warrior_name}{Name of your warrior, for flavor.}
+
+\item{level_output}{A logical denoting whether to give individual level progress.}
 
 \item{sleep}{Time between text updates. Set to "prompt" to only progress when pressing the return key.}
 }
