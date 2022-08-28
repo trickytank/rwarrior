@@ -34,7 +34,7 @@ jobs:
 
       - name: move test file
         run: |
-          mv ${RUNNER_TEMP}/test_play_epic_S_grade.R NON/tests/testthat/test_play_epic_S_grade.R
+          mv ${RUNNER_TEMP}/test_play_epic_S_grade.R tests/testthat/test_play_epic_S_grade.R
         shell:
           bash
 
