@@ -11,6 +11,7 @@
 #' @return A tibble if successful, or otherwise FALSE.
 #' @import cli
 #' @importFrom utils askYesNo
+#' @importFrom dplyr last
 #' @export
 #' @examples
 #' AI <- function(warrior, memory) {
@@ -29,8 +30,7 @@ play_warrior <- function(ai, level = 1,
                               debug = FALSE, output = TRUE)
 }
 
-#' For inbuilt levels
-#' @importFrom dplyr last
+# For inbuilt levels
 play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher",
                                         tower = "beginner",
                                         sleep = 0, practice = FALSE,
