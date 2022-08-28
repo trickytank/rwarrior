@@ -17,6 +17,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Create test_play_epic_S_grade.R from TEST_S_GRADE_EPIC_AI
+        id: secret-file1
+        run: |
+          $secretFile = Join-Path -Path $env:RUNNER_TEMP -ChildPath "tests/testthat/secret-file.txt";
+          $encodedBytes = [System.Convert]::FromBase64String($env:SECRET_DATA1);
+          Set-Content $secretFile -Value $encodedBytes -AsByteStream;
+          $secretFileHash = Get-FileHash $secretFile;
+          Write-Output "::set-output name=SECRET_FILE::$secretFile";
+          Write-Output "::set-output name=SECRET_FILE_HASH::$($secretFileHash.Hash)";
+          Write-Output "Secret file $secretFile has hash $($secretFileHash.Hash)";
+        shell: pwsh
+        env:
+          SECRET_DATA1: ${{ secrets.TEST_S_GRADE_EPIC_AI }}
+
       - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
@@ -29,3 +43,11 @@ jobs:
       - name: Test coverage
         run: covr::codecov(quiet = FALSE)
         shell: Rscript {0}
+
+      - name: Delete secret file
+        run: |
+          Remove-Item -Path $env:SECRET_FILE;
+        shell: pwsh
+        if: always()
+        env:
+          SECRET_FILE: ${{ steps.secret-file1.outputs.SECRET_FILE }}
