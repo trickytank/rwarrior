@@ -53,8 +53,6 @@ jobs:
 
       - name: Delete secret file
         run: |
-          Remove-Item -Path $env:SECRET_FILE;
-        shell: pwsh
+          rm tests/testthat/test_play_epic_S_grade.R
+        shell: bash
         if: always()
-        env:
-          SECRET_FILE: ${{ steps.secret-file1.outputs.SECRET_FILE }}
