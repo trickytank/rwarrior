@@ -10,7 +10,7 @@ SPACE <- R6Class(
     golem = NULL,
     initialize = function(A) { # A is a game object
       self$empty <- A$empty
-      self$stairs <- A$name == "Stairs"
+      self$stairs <- A$stairs
       self$enemy <- A$enemy
       self$captive <- A$name == "Captive"
       self$wall <- A$name == "Wall"

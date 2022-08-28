@@ -16,6 +16,8 @@ GAME_OBJECT <- R6Class(
     player = FALSE,
     points = NULL,
     rescuable = FALSE,
+    bound = FALSE,
+    stairs = FALSE,
     initialize = function(name, symbol, empty = FALSE) {
       self$name <- name
       self$symbol <- symbol
@@ -119,7 +121,9 @@ WARRIOR <- R6Class(
 )
 
 stairs_here <- function(yx) {
-    GAME_OBJECT$new("Stairs", ">" %>% col_blue %>% style_bold, empty = TRUE)$set_loc(yx[1], yx[2])
+    stairs <- GAME_OBJECT$new("Stairs", ">" %>% col_blue %>% style_bold, empty = TRUE)$set_loc(yx[1], yx[2])
+    stairs$stairs <- TRUE
+    stairs
 }
 
 empty <- GAME_OBJECT$new("Empty", " ", empty = TRUE)
@@ -130,6 +134,7 @@ captive_here <- function(I, J, compass = "west") {
   captive <- NPC$new("Captive", col_blue("C"), 1L, points = 20L)$set_loc(I, J, compass)
   captive$rescuable <- TRUE
   captive$enemy <- FALSE
+  captive$bound <- TRUE
   captive
 }
 
