@@ -115,6 +115,7 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
       return(tibble::tibble(
         level = level,
         level_score = level_score,
+        time_bonus = time_bonus,
         clear_bonus = clear_bonus,
         total_level_score = total_score,
         ace_score = game_state$level_ace_score,
