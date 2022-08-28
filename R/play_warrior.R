@@ -95,7 +95,7 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
         cli_h2("Found stairs")
         cat(game_state$ascii)
         cli_text("Success, you have found the stairs." %>% col_green() %>% style_bold)
-        cli_text("Level Score: {level_score}")
+        cli_text("Score: {level_score}")
         cat_line(glue("Time Bonus:  {time_bonus}")) # TODO: preserve this whitespace
         cli_text("Clear Bonus: {clear_bonus}")
         cli_text("Total level score: {total_score}")
@@ -114,13 +114,13 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
       }
       return(tibble::tibble(
         level = level,
-        level_score = level_score,
+        score = level_score,
         time_bonus = time_bonus,
         clear_bonus = clear_bonus,
-        total_level_score = total_score,
+        level_score = total_score,
         ace_score = game_state$level_ace_score,
-        rank = level_rank,
-        rank_percentage = 100 * total_score / game_state$level_ace_score
+        grade = level_rank,
+        grade_percentage = 100 * total_score / game_state$level_ace_score
       ))
     }
 

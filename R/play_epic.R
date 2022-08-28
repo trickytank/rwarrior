@@ -39,7 +39,7 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
     level_summary <- play_warrior_work(ai, game_state, level = level, warrior_name = warrior_name,
                                 sleep = sleep, debug = debug, output = output, max_turns = max_turns)
     summaries <- bind_rows(summaries, level_summary)
-    cli_text("Level grade: {level_summary$rank}")
+    cli_text("Level grade: {level_summary$grade}")
     for(i in 1:4) {
       message_sleep(sleep, debug)
     }
@@ -48,7 +48,8 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
   cli_h1("Summary")
   show(summaries)
   # Max out over-performing to 110%
-  average_rank <- level_ranker(mean(pmin(X$rank_percentage, 100)), 100)
+  cli_text("Total score {sum(summaries$level_score)}")
+  average_rank <- level_ranker(mean(pmin(summaries$grade_percentage, 100)), 100)
   cli_text("Overall grade: {average_rank}")
   if(average_rank == "S") {
     cli_text("Congratulations! You achieved the top grade!")
