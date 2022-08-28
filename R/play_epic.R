@@ -54,7 +54,7 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
   if(average_rank == "S") {
     cli_text("Congratulations! You achieved the top grade!")
   } else {
-    cli_text("Try to improve your AI to get an average S grade!")
+    cli_text("Try to improve your AI to get an S grade! (all levels with an S grade)")
   }
   invisible(summaries)
 }
