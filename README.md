@@ -43,7 +43,7 @@ AI <- function(warrior, memory) {
     }
 warrior_name <- "Fisher" # A name for your warrior
     
-play_beginner(AI, warrior_name = warrior_name, level = 1)
+play_warrior(AI, warrior_name = warrior_name, level = 1)
 ```
 
 More advanced levels require use of the memory argument to the AI (or use of a reference class). 

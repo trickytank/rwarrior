@@ -15,7 +15,7 @@ test_that("Solution to level 1 doesn't work.", {
       warrior$walk()
     }),
     "tbl_df")
-  expect_s3_class(purrr::quietly(play_beginner)(
+  expect_s3_class(purrr::quietly(play_warrior)(
     function(warrior, memory) {
       warrior$walk()
     },

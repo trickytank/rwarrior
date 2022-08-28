@@ -4,6 +4,7 @@
 #'
 #' @param ai AI function to control your warrior.
 #' @param level Level number.
+#' @param tower Tower the level comes from.
 #' @param warrior_name Name of your warrior, for flavour.
 #' @param sleep Time between text updates. Set to "prompt" to only progress when pressing the return key.
 #' @return A logical that is TRUE on successfully getting to the stairs.
@@ -14,9 +15,15 @@
 #' AI <- AI <- function(warrior, memory) {
 #'   warrior$walk()
 #' }
-#' play_beginner(AI, level = 1)
-play_beginner <- function(ai, level = 1, warrior_name = "Fisher", sleep = getOption("Rwarrior.sleep", 0.6)) {
-  play_warrior_inbuilt_levels(ai = ai, level = level, warrior_name = warrior_name, sleep = sleep, debug = FALSE, output = TRUE)
+#' play_warrior(AI, level = 1)
+play_warrior <- function(ai, level = 1,
+                          tower = c("beginner"),
+                          warrior_name = "Fisher",
+                          sleep = getOption("Rwarrior.sleep", 0.6)) {
+  tower <- match.arg(tower)
+  play_warrior_inbuilt_levels(ai = ai, level = level, warrior_name = warrior_name,
+                              tower = tower,
+                              sleep = sleep, debug = FALSE, output = TRUE)
 }
 
 # For inbuilt levels
