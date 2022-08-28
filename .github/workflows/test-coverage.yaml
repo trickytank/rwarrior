@@ -2,9 +2,9 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [main, master, devel, beta, alpha]
+    branches: [main, master, devel, beta, alpha, playaround]
   pull_request:
-    branches: [main, master, devel, beta, alpha]
+    branches: [main, master, devel, beta, alpha, playaround]
 
 name: test-coverage
 
@@ -34,7 +34,7 @@ jobs:
 
       - name: move test file
         run: |
-          mv ${RUNNER_TEMP}/test_play_epic_S_grade.R tests/testthat/test_play_epic_S_grade.R
+          mv ${RUNNER_TEMP}/test_play_epic_S_grade.R NON/tests/testthat/test_play_epic_S_grade.R
         shell:
           bash
 
