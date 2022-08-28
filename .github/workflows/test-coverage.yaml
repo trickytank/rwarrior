@@ -33,8 +33,8 @@ jobs:
           SECRET_DATA1: ${{ secrets.B64_SECRET1 }}
 
       - name: move test file
-        run:
-          mv test_play_epic_S_grade.R tests/testthat/test_play_epic_S_grade.R
+        run: |
+          mv ${RUNNER_TEMP}/test_play_epic_S_grade.R tests/testthat/test_play_epic_S_grade.R
         shell:
           bash
 
