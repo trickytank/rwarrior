@@ -37,8 +37,9 @@ AI_06 <- function(warrior, memory) {
 }
 
 test_that("Solutions not working for level 6.", {
-  expect_true(play_warrior_inbuilt_levels(
+  expect_s3_class(play_warrior_inbuilt_levels(
     AI_06,
-    sleep = 0, level = 6)
+    level = 6),
+    "tbl_df"
   )
 })

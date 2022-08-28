@@ -1,25 +1,25 @@
 # Warrior AI tests for level 1
 
 test_that("Solution to level 1 doesn't work.", {
-  expect_true(play_warrior_inbuilt_levels(
+  expect_s3_class(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       warrior$walk()
-    }))
-  expect_true(play_warrior_inbuilt_levels(
+    }), "tbl_df")
+  expect_s3_class(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       warrior$walk("for")
-    },
-    sleep = 0))
-  expect_true(play_warrior_inbuilt_levels(
+    }
+    ), "tbl_df")
+  expect_s3_class(play_warrior_inbuilt_levels(
+    function(warrior, memory) {
+      warrior$walk()
+    }),
+    "tbl_df")
+  expect_s3_class(purrr::quietly(play_beginner)(
     function(warrior, memory) {
       warrior$walk()
     },
-    sleep = 0))
-  expect_true(purrr::quietly(play_beginner)(
-    function(warrior, memory) {
-      warrior$walk()
-    },
-    sleep = 0)$result)
+    sleep = 0)$result, "tbl_df")
   purrr::quietly(expect_false)(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       warrior$walk("bac")

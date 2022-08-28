@@ -15,6 +15,7 @@ Imports:
     glue,
     cli,
     dplyr,
+    tibble,
     stringr
 Suggests: 
     covr,
