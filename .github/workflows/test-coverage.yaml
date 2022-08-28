@@ -20,7 +20,7 @@ jobs:
       - name: Create test_play_epic_S_grade.R from TEST_S_GRADE_EPIC_AI
         id: secret-file1
         run: |
-          $secretFile = Join-Path -Path $env:RUNNER_TEMP -ChildPath "tests/testthat/secret-file.txt";
+          $secretFile = Join-Path -Path $env:RUNNER_TEMP -ChildPath "tests/testthat/test_play_epic_S_grade.R";
           $encodedBytes = [System.Convert]::FromBase64String($env:SECRET_DATA1);
           Set-Content $secretFile -Value $encodedBytes -AsByteStream;
           $secretFileHash = Get-FileHash $secretFile;
