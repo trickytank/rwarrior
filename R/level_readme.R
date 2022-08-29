@@ -11,7 +11,7 @@ level_readme <- function(level = 1, tower = c("beginner")) {
   if(tower == "beginner") {
     levels <- levels_beginner
   }
-  if(is.numeric(level)) {
+  if(is.numeric(level) && length(level) == 1) {
     if(level > length(levels)) {
       stop("Level ", level, " does not exist.")
     }
