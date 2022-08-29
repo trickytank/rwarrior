@@ -16,7 +16,7 @@ test_that("Epic tower S rank", {
     AI_epic_great,
     tower = c("beginner"),
     warrior_name = "Fisher",
-    level_output = FALSE,
+    level_output = TRUE,
     sleep = 0)$messages,
     "Overall grade: A", all = FALSE # want to make this S grade
   )
