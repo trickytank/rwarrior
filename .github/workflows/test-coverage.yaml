@@ -30,7 +30,7 @@ jobs:
           Write-Output "Secret file $secretFile has hash $($secretFileHash.Hash)";
         shell: pwsh
         env:
-          SECRET_DATA1: ${{ secrets.B64_SECRET1 }}
+          SECRET_DATA1: ${{ secrets.TEST_S_GRADE_EPIC_AI }}
 
       - name: move test file
         run: |
