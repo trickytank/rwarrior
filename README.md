@@ -61,3 +61,11 @@ AI <- function(warrior, memory) {
       return(memory)
     }
 ```
+
+Once you have completed the beginner levels, it is time to take on all the levels with 
+one AI in epic mode! 
+Optimise your AI to get S rank in all the levels of the tower.
+
+```
+play_epic(AI)
+```
