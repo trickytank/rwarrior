@@ -41,7 +41,7 @@ jobs:
 
       - name: show test file
         run: |
-          cat ${RUNNER_TEMP}/test_play_epic_S_grade_AI.R
+          cat ${RUNNER_TEMP}/test_play_epic_S_grade_AI.R 2>&1
         shell:
           bash
 
