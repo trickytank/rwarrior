@@ -62,6 +62,22 @@ AI <- function(warrior, memory) {
     }
 ```
 
+## Scoring
+
+Your objective is to not only reach the stairs, but to get the highest score you can. 
+There are many ways you can earn points on a level.
+
+* defeat an enemy to add his max health to your score
+* rescue a captive to earn 20 points
+* pass the level within the bonus time to earn the amount of bonus time remaining
+* defeat all enemies and rescue all captives to receive a 20% overall bonus
+
+Don't be too concerned about scoring perfectly in the beginning. 
+After you reach the top of the tower you will be able to re-run the tower and fine-tune your warrior to get the highest score. 
+See the Epic Mode below for details.
+
+## Epic Mode 
+
 Once you have completed the beginner levels, it is time to take on all the levels with 
 one AI in epic mode! 
 Optimise your AI to get S rank in all the levels of the tower.
