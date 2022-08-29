@@ -3,4 +3,3 @@
 .RData
 .Ruserdata
 inst/doc
-tests/testthat/test_play_epic_S_grade.R
