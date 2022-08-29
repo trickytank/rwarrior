@@ -1,4 +1,8 @@
-path_to_ai <- "../Rwarrior-private/tests/testthat/test_play_epic_S_grade_AI.R"
+if(Sys.getenv("SECRET_FILE") != "") {
+  path_to_ai <- Sys.getenv("SECRET_FILE")
+} else {
+  path_to_ai <- "../Rwarrior-private/tests/testthat/test_play_epic_S_grade_AI.R"
+}
 if(file.exists(path_to_ai)) {
   source(path_to_ai)
   test_that("Epic tower S rank", {
