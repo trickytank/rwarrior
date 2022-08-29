@@ -106,6 +106,7 @@ play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fish
         } else {
           if(level + 1 > length(levels)) {
             cli_text(col_blue("Congratulations, You have climbed to the top of the tower and reached the precious Hex.") %>% style_bold)
+            cli_text("Try writing a single AI for all the levels of this tower with play_epic().")
           } else {
             if(!epic) {
               cli_text(col_blue("See the readme for the next level of the tower with level_readme({level + 1})") %>% style_bold)
