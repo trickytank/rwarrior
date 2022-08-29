@@ -17,6 +17,7 @@ Imports:
     cli,
     dplyr,
     tibble,
+    checkmate,
     stringr
 Suggests: 
     covr,

@@ -24,6 +24,13 @@ play_warrior <- function(ai, level = 1,
                           sleep = getOption("Rwarrior.sleep", 0.6),
                           practice = FALSE) {
   tower <- match.arg(tower)
+  checkmate::assert_function(ai)
+  checkmate::assert_int(level)
+  checkmate::assert_string(warrior_name)
+  if(!checkmate::test_number(sleep) && !identical(sleep, "prompt")) {
+    stop("Sleep is not correctly specified")
+  }
+  checkmate::assert_flag(practice)
   play_warrior_inbuilt_levels(ai = ai, level = level, warrior_name = warrior_name,
                               tower = tower,
                               sleep = sleep, practice = practice,

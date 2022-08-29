@@ -18,6 +18,12 @@ play_epic <- function(ai, tower = c("beginner"), warrior_name = "Fisher",
                       level_output = TRUE,
                       sleep = getOption("Rwarrior.sleep", 0.6)) {
   tower <- match.arg(tower)
+  checkmate::assert_function(ai)
+  checkmate::assert_string(warrior_name)
+  checkmate::assert_flag(level_output)
+  if(!checkmate::test_number(sleep) || identical(sleep, "prompt")) {
+    stop("Sleep is not correctly specified")
+  }
   if(!level_output) {
     sleep <- 0
   }
