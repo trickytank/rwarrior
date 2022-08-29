@@ -50,11 +50,11 @@ jobs:
 
       - name: show environment variables in R
         run: show(Sys.getenv("SECRET_FILE"))
-        shell Rscript {0}
+        shell: Rscript {0}
 
       - name: show environment variables in R
         run: show(Sys.getenv("RUNNER_TEMP"))
-        shell Rscript {0}
+        shell: Rscript {0}
 
       - name: Test coverage
         run: covr::codecov(quiet = FALSE)
