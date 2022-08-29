@@ -85,3 +85,11 @@ Optimise your AI to get S rank in all the levels of the tower.
 ```
 play_epic(AI)
 ```
+
+# Future directions
+
+*   Submit to CRAN (with beginner towers initially).
+*   Add intermediate towers (9 more levels).
+*   Create a graphical representation of the warrior's movement. Hit me up if this is something you would be interested in helping out in, either on the programming side or creating the sprites. I'd like to see the warrior in Pixel Art, but there would be room to have more than one skin available.
+*   Create a Hex logo with a pixel-art warrior (as used in the graphical representation).
+*   Write an AI to complete the epic mode beginner tower with S rank on all levels to to find if it's possible, and adjust the ace score (target score for an S rank) accordingly. This AI is a secret!
