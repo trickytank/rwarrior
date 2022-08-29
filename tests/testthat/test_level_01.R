@@ -1,26 +1,25 @@
 # Warrior AI tests for level 1
 
 test_that("Solution to level 1 doesn't work.", {
-  expect_true(play_warrior_inbuilt_levels(
+  expect_s3_class(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       warrior$walk()
-    },
-    sleep = 0))
-  expect_true(play_warrior_inbuilt_levels(
+    }), "tbl_df")
+  expect_s3_class(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       warrior$walk("for")
-    },
-    sleep = 0))
-  expect_true(play_warrior_inbuilt_levels(
+    }
+    ), "tbl_df")
+  expect_s3_class(play_warrior_inbuilt_levels(
+    function(warrior, memory) {
+      warrior$walk()
+    }),
+    "tbl_df")
+  expect_s3_class(purrr::quietly(play_warrior)(
     function(warrior, memory) {
       warrior$walk()
     },
-    sleep = 0))
-  expect_true(purrr::quietly(play_warrior)(
-    function(warrior, memory) {
-      warrior$walk()
-    },
-    sleep = 0)$result)
+    sleep = 0)$result, "tbl_df")
   purrr::quietly(expect_false)(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       warrior$walk("bac")
@@ -31,7 +30,7 @@ test_that("Solution to level 1 doesn't work.", {
     function(warrior, memory) {
       warrior$walk("for")
     },
-    game_state = GAME_STATE$new(levels[[1]]), sleep = 0, output = TRUE, debug = FALSE)$messages,
+    game_state = GAME_STATE$new(levels_beginner[[1]]), sleep = 0, output = TRUE, debug = FALSE)$messages,
     "custom level", all = FALSE
   )
 })

@@ -36,29 +36,29 @@ GAME_STATE <- R6Class(
       }
       X
     },
-    is_stairs = function(y, x) {
-      self$stairs$y == y && self$stairs$x == x
+    is_stairs = function(I, J) {
+      self$stairs$I == I && self$stairs$J == J
     },
-    is_wall = function(y, x) {
-      y == 0 || x == 0 || y == self$size[1] + 1 || x == self$size[2] + 1
+    is_wall = function(I, J) {
+      I == 0 || J == 0 || I == self$size[1] + 1 || J == self$size[2] + 1
     },
-    return_object = function(y, x) {
+    return_object = function(I, J) {
       for(npc in self$npcs) {
-        if(y == npc$y && x == npc$x) {
+        if(I == npc$I && J == npc$J) {
           return(npc)
         }
       }
-      if(y == self$warrior$y && x == self$warrior$x) {
+      if(I == self$warrior$I && J == self$warrior$J) {
         return(self$warrior)
       }
-      if(self$is_wall(y, x)) {
+      if(self$is_wall(I, J)) {
         return(wall$clone()) # clone for safety
       }
       return(empty)
     },
     feel_object = function(charac, direction = "forward") {
-      coord <- give_coordinates(charac$compass, direction, charac$y, charac$x)
-      object <- self$return_object(coord$y_subject, coord$x_subject)
+      coord <- give_coordinates(charac$compass, direction, charac$I, charac$J)
+      object <- self$return_object(coord$I_subject, coord$J_subject)
       object
     },
     feel_warrior = function(direction = "forward") {
@@ -71,13 +71,13 @@ GAME_STATE <- R6Class(
     # Look up to three spaces
     look_array = function(charac, direction = "forward") {
       object_list <- list(NULL, NULL, NULL)
-      y_subject <- charac$y
-      x_subject <- charac$x
+      I_subject <- charac$I
+      J_subject <- charac$J
       for(i in 1:3) {
-        coord <- give_coordinates(charac$compass, direction, y_subject, x_subject)
-        y_subject <- coord$y_subject
-        x_subject <- coord$x_subject
-        object_list[[i]] <- self$return_object(y_subject, x_subject)
+        coord <- give_coordinates(charac$compass, direction, I_subject, J_subject)
+        I_subject <- coord$I_subject
+        J_subject <- coord$J_subject
+        object_list[[i]] <- self$return_object(I_subject, J_subject)
       }
       object_list
     },
@@ -151,15 +151,15 @@ GAME_STATE <- R6Class(
       if (missing(value)) {
         lines <- ""
         level_map <- matrix(" ", nrow = self$size[1], ncol = self$size[2])
-        level_map[self$stairs$y, self$stairs$x] <- self$stairs$symbol
+        level_map[self$stairs$I, self$stairs$J] <- self$stairs$symbol
         for(charac in c(list(self$warrior), self$npcs)) {
           # either space or
           # if charac is not warrior, then not allowed
           # if charac is warrior, then only stairs is allowed
-          if(level_map[charac$y, charac$x] != " " && level_map[charac$y, charac$x] != stairs_here(c(1,1))$symbol) {
-            stop("More than one object at location (", charac$y, ", ", charac$x, ")")
+          if(level_map[charac$I, charac$J] != " " && level_map[charac$I, charac$J] != stairs_here(c(1,1))$symbol) {
+            stop("More than one object at location (", charac$I, ", ", charac$J, ")")
           }
-          level_map[charac$y, charac$x] <- charac$symbol
+          level_map[charac$I, charac$J] <- charac$symbol
         }
         tpmatrix <- matrix(rep("\u2014", self$size[2] + 2L), nrow = 1)
         sidematrix <- matrix(rep("|", self$size[1]))
@@ -177,7 +177,7 @@ GAME_STATE <- R6Class(
     },
     at_stairs = function(value) {
       if (missing(value)) {
-          self$is_stairs(self$warrior$y, self$warrior$x)
+          self$is_stairs(self$warrior$I, self$warrior$J)
         } else {
           stop("Cannot assign at_stairs")
         }

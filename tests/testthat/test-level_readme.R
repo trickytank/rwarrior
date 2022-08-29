@@ -10,16 +10,16 @@ test_that("Level readme is successful.", {
     "warrior\\$feel\\("
   )
   expect_output(
-    level_readme(levels[[4]]),
+    level_readme(levels_beginner[[4]]),
     "warrior\\$attack\\("
   )
   expect_output(
-    level_readme(GAME_STATE$new(levels[[4]])),
+    level_readme(GAME_STATE$new(levels_beginner[[4]])),
     "warrior\\$rest"
   )
   expect_error(
     level_readme(17),
-    "does not exist, though it is planned"
+    "does not exist"
   )
   expect_error(
     level_readme(20),

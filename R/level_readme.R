@@ -1,16 +1,18 @@
 #' Level read me
 #'
 #' @param level The level number (or custom level).
+#' @param tower The tower the level comes from.
 #' @export
 #' @examples
 #'
 #' level_readme(1)
-level_readme <- function(level = 1) {
-  if(is.numeric(level)) {
+level_readme <- function(level = 1, tower = c("beginner")) {
+  tower <- match.arg(tower)
+  if(tower == "beginner") {
+    levels <- levels_beginner
+  }
+  if(checkmate::test_int(level)) {
     if(level > length(levels)) {
-      if(level <= 18) {
-        stop("Level ", level, " does not exist, though it is planned for the future.")
-      }
       stop("Level ", level, " does not exist.")
     }
     cat("Level", level, "\n")

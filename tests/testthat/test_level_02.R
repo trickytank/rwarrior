@@ -1,7 +1,7 @@
 # Warrior tests for level 2
 
 test_that("Solutions not working for level 2.", {
-  expect_true(
+  expect_s3_class(
     play_warrior_inbuilt_levels(
       function(warrior, memory) {
         if(warrior$feel()$empty) {
@@ -10,9 +10,10 @@ test_that("Solutions not working for level 2.", {
           warrior$attack()
         }
       },
-      sleep = 0, level = 2)
+      level = 2),
+    "tbl_df"
   )
-  expect_true(
+  expect_s3_class(
     play_warrior_inbuilt_levels(
       function(warrior, memory) {
         if(warrior$feel()$empty) {
@@ -21,7 +22,8 @@ test_that("Solutions not working for level 2.", {
           warrior$attack()
         }
       },
-      sleep = 0, level = 2)
+      level = 2),
+    "tbl_df"
   )
 })
 

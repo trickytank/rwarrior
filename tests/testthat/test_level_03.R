@@ -1,5 +1,5 @@
 test_that("Solutions not working for level 3.", {
-  expect_true(play_warrior_inbuilt_levels(
+  expect_s3_class(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       if(warrior$feel()$empty) {
         if(warrior$health < 20) {
@@ -11,9 +11,10 @@ test_that("Solutions not working for level 3.", {
         warrior$attack()
       }
     },
-    sleep = 0, level = 3)
+    level = 3),
+    "tbl_df"
   )
-  expect_true(play_warrior_inbuilt_levels(
+  expect_s3_class(play_warrior_inbuilt_levels(
     function(warrior, memory) {
       if(warrior$feel()$empty) {
         if(warrior$health < 20) {
@@ -25,7 +26,8 @@ test_that("Solutions not working for level 3.", {
         warrior$attack()
       }
     },
-    sleep = 0, level = 3)
+    level = 3),
+    "tbl_df"
   )
 })
 

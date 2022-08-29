@@ -1,8 +1,8 @@
-game_state_1_1 <- GAME_STATE$new(levels[[1]])
-game_state_2_1 <- GAME_STATE$new(levels[[2]])
-game_state_3_1 <- GAME_STATE$new(levels[[3]])
-game_state_4_1 <- GAME_STATE$new(levels[[4]])
-game_state_5_1 <- GAME_STATE$new(levels[[5]])
+game_state_1_1 <- GAME_STATE$new(levels_beginner[[1]])
+game_state_2_1 <- GAME_STATE$new(levels_beginner[[2]])
+game_state_3_1 <- GAME_STATE$new(levels_beginner[[3]])
+game_state_4_1 <- GAME_STATE$new(levels_beginner[[4]])
+game_state_5_1 <- GAME_STATE$new(levels_beginner[[5]])
 
 game_state_5_2 <- game_state_5_1$deep_clone()
 game_state_5_2$warrior$set_loc(1, 2)

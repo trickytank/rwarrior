@@ -35,7 +35,7 @@ To play the first level, first read the level readme.
 level_readme(1)
 ```
 
-Use the information gained to write your AI and run `play_warrior()`.
+Use the information gained to write your AI and run `play_beginner()`.
 
 ```
 AI <- function(warrior, memory) {
@@ -60,4 +60,12 @@ AI <- function(warrior, memory) {
       # The AI result should be the memory
       return(memory)
     }
+```
+
+Once you have completed the beginner levels, it is time to take on all the levels with 
+one AI in epic mode! 
+Optimise your AI to get S rank in all the levels of the tower.
+
+```
+play_epic(AI)
 ```
