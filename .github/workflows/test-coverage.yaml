@@ -56,6 +56,10 @@ jobs:
         run: show(Sys.getenv("RUNNER_TEMP"))
         shell: Rscript {0}
 
+      - name: Tests
+        run: devtools::test()
+        shell: Rscript {0}
+
       - name: Test coverage
         run: covr::codecov(quiet = FALSE)
         shell: Rscript {0}
