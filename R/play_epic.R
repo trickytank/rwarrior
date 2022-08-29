@@ -21,7 +21,8 @@ play_epic <- function(ai, tower = c("beginner"), warrior_name = "Fisher",
   if(!level_output) {
     sleep <- 0
   }
-  play_epic_internal(ai, tower = tower, warrior_name = warrior_name, sleep = sleep, output = TRUE)
+  play_epic_internal(ai, tower = tower, warrior_name = warrior_name, sleep = sleep,
+                     level_output = level_output, output = TRUE)
 }
 
 #' @importFrom methods show
@@ -55,11 +56,13 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
     }
   }
   # Max out over-performing to 110%
-  average_rank <- level_ranker(mean(pmin(summaries$grade_percentage, 100)), 100)
+  average_grade_percentage <- mean(pmin(summaries$grade_percentage, 100))
+  average_rank <- level_ranker(average_grade_percentage, 100)
   if(output) {
     cli_h1("Summary")
     show(summaries)
     cli_text("Total score {sum(summaries$level_score)}")
+    cli_text("Grade perecentage: {round(average_grade_percentage, 1)}%")
     cli_text("Overall grade: {average_rank}")
     if(average_rank == "S") {
       cli_text("Congratulations! You achieved the top grade!")
