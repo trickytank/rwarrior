@@ -1,5 +1,5 @@
-if(Sys.getenv("SECRET_FILE") != "") {
-  path_to_ai <- Sys.getenv("SECRET_FILE")
+if(Sys.getenv("RUNNER_TEMP") != "") {
+  path_to_ai <- file.path(Sys.getenv("SECRET_FILE"), "test_play_epic_S_grade_AI.R")
 } else {
   path_to_ai <- "../../../Rwarrior-private/tests/testthat/test_play_epic_S_grade_AI.R"
 }
