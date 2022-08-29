@@ -43,18 +43,26 @@ GAME_STATE <- R6Class(
       I == 0 || J == 0 || I == self$size[1] + 1 || J == self$size[2] + 1
     },
     return_object = function(I, J) {
+      out_object <- empty
       for(npc in self$npcs) {
         if(I == npc$I && J == npc$J) {
-          return(npc)
+          out_object <- npc
         }
       }
-      if(I == self$warrior$I && J == self$warrior$J) {
-        return(self$warrior)
+      if(out_object$empty) {
+        if(I == self$warrior$I && J == self$warrior$J) {
+          out_object <- self$warrior
+        } else if(self$is_wall(I, J)) {
+          out_object <- wall$clone() # clone for safety
+        } else if (self$is_stairs(I, J)) {
+          out_object <- self$stairs
+        }
       }
-      if(self$is_wall(I, J)) {
-        return(wall$clone()) # clone for safety
+      if(!out_object$player && self$is_stairs(I, J)) {
+        # assume objects and NPC don't move (except for player)
+        out_object$stairs <- TRUE
       }
-      return(empty)
+      return(out_object)
     },
     feel_object = function(charac, direction = "forward") {
       coord <- give_coordinates(charac$compass, direction, charac$I, charac$J)
