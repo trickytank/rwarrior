@@ -105,7 +105,7 @@ play_warrior_work <- function(ai, game_state, level = NULL, levels = NULL,
         cli_h2("Found stairs")
         cat(game_state$ascii)
         cli_text("Success, you have found the stairs." %>% col_green() %>% style_bold)
-        cli_text("Score: {level_score}")
+        cli_text("Points: {level_score}")
         cat_line(glue("Time Bonus:  {time_bonus}")) # TODO: preserve this whitespace
         cli_text("Clear Bonus: {clear_bonus}")
         cli_text("Total level score: {total_score}")
