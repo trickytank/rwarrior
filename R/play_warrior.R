@@ -115,7 +115,7 @@ play_warrior_work <- function(ai, game_state, level = NULL, levels = NULL,
         } else {
           if(level + 1 > length(levels)) {
             cli_text(col_blue("Congratulations, You have climbed to the top of the tower and reached the precious Hex.") %>% style_bold)
-            cli_text("Try writing a single AI for all the levels of this tower with play_epic().")
+            if(!epic) cli_text("Try writing a single AI for all the levels of this tower with play_epic().")
           } else {
             if(!epic) {
               cli_text(col_blue("See the readme for the next level of the tower with level_readme({level + 1})") %>% style_bold)
@@ -124,14 +124,14 @@ play_warrior_work <- function(ai, game_state, level = NULL, levels = NULL,
         }
       }
       return(tibble::tibble(
-        level = level,
-        score = level_score,
-        time_bonus = time_bonus,
-        clear_bonus = clear_bonus,
-        level_score = total_score,
-        ace_score = game_state$level_ace_score,
-        grade = level_rank,
-        grade_percentage = 100 * total_score / game_state$level_ace_score
+        Level = level,
+        Points = level_score,
+        Time_bonus = time_bonus,
+        Clear_bonus = clear_bonus,
+        Level_score = total_score,
+        Target_score = game_state$level_ace_score,
+        Rank = level_rank,
+        Rank_percentage = 100 * total_score / game_state$level_ace_score
       ))
     }
 
