@@ -53,27 +53,29 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
     # Assume that the final level warrior has all the abilities to be used
     cw <- game_state$warrior
     game_state$warrior <- GAME_STATE$new(last(levels))$warrior$set_loc(cw$I, cw$J, cw$compass)
-    level_summary <- play_warrior_work(ai, game_state, level = level, warrior_name = warrior_name,
-                                sleep = sleep, debug = debug, output = level_output, max_turns = max_turns)
+    level_summary <- play_warrior_work(ai, game_state, level = level, levels = levels,
+                                warrior_name = warrior_name,
+                                sleep = sleep, debug = debug, output = level_output,
+                                max_turns = max_turns, epic = TRUE)
     summaries <- bind_rows(summaries, level_summary)
-    if(level_output) { cli_text("Level grade: {level_summary$grade}"); cli_text() }
+    if(level_output) { cli_text("Level rank: {level_summary$Rank}"); cli_text() }
     for(i in 1:4) {
       message_sleep(sleep, debug)
     }
   }
   # Max out over-performing to 110%
-  average_grade_percentage <- mean(pmin(summaries$grade_percentage, 100))
+  average_grade_percentage <- mean(pmin(summaries$Rank_percentage, 100))
   average_rank <- level_ranker(average_grade_percentage, 100)
   if(output) {
     cli_h1("Summary")
     show(summaries)
-    cli_text("Total score {sum(summaries$level_score)}")
+    cli_text("Total score {sum(summaries$Level_score)}")
     cli_text("Grade perecentage: {round(average_grade_percentage, 1)}%")
-    cli_text("Overall grade: {average_rank}")
+    cli_text("Overall rank: {average_rank}")
     if(average_rank == "S") {
-      cli_text("Congratulations! You achieved the top grade!")
+      cli_text("Congratulations! You achieved the top rank!")
     } else {
-      cli_text("Try to improve your AI to get an S grade! (all levels with an S grade)")
+      cli_text("Try to improve your AI to get an S rank! (all levels with an S rank)")
     }
     cli_text("Submit your AI to the leader board at https://tankard.id/post/r-warrior-leaderboard/")
   }

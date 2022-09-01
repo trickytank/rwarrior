@@ -18,7 +18,7 @@ test_that("Epic tower S rank", {
     warrior_name = "Fisher",
     level_output = TRUE,
     sleep = 0)$messages,
-    "Overall grade: A", all = FALSE # want to make this S grade
+    "Overall rank: A", all = FALSE # want to make this S grade
   )
 })
 
@@ -80,6 +80,6 @@ test_that("Epic tower A rank", {
     warrior_name = "Fisher",
     level_output = TRUE,
     sleep = 0)$messages,
-    "Overall grade: A", all = FALSE
+    "Overall rank: A", all = FALSE
   )
 })
