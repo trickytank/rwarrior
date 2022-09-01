@@ -12,7 +12,7 @@ level_readme <- function(level = 1, tower = c("beginner")) {
     levels <- levels_beginner
   }
   if(checkmate::test_int(level)) {
-    if(level > length(levels)) {
+    if(level > length(levels) || level < 1) {
       stop("Level ", level, " does not exist.")
     }
     cat("Level", level, "\n")

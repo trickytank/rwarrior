@@ -3,6 +3,7 @@ GAME_OBJECT <- R6Class(
   public = list(
     name = NULL,
     symbol = NULL,
+    symbol_directional = NULL, # vector of length 4, starting with the south direction going anticlockwise
     J = NULL,
     I = NULL,
     # direction represented on the complex plane, for easy combining of directions. (simply use multiplication)
@@ -39,6 +40,9 @@ GAME_OBJECT <- R6Class(
         compass == "south" ~ 1 + 0i,
         TRUE ~ ifelse(is.character(compass), 0i, as.complex(compass))
       )
+      if(!is.null(self$symbol_directional)) {
+        self$symbol <- self$symbol_directional[2 * Arg(self$compass) / pi + 2]
+      }
       invisible(self)
     }
   )
@@ -82,6 +86,7 @@ WARRIOR <- R6Class(
   public = list(
     name = "Warrior",
     symbol = "@" %>% style_bold %>% col_blue,
+    symbol_directional = c("\u25C0", "\u25BC", "\u25B6", "\u25B2") %>% col_blue,
     hp = 20L,
     max_hp = 20L,
     attack_power = 5L,
@@ -113,7 +118,7 @@ WARRIOR <- R6Class(
     },
     pivot_self = function(direction = "backward", warrior_name = "Fisher", output = FALSE) {
       direc <- give_direction(direction)
-      self$compass <- self$compass * direc$complex
+      self$set_compass(self$compass * direc$complex)
       if(output) { cli_text("{warrior_name} ", style_bold("pivots"), " {direc$direction}.") }
       invisible(self)
     }
@@ -121,7 +126,7 @@ WARRIOR <- R6Class(
 )
 
 stairs_here <- function(yx) {
-    stairs <- GAME_OBJECT$new("Stairs", ">" %>% col_blue %>% style_bold, empty = TRUE)$set_loc(yx[1], yx[2])
+    stairs <- GAME_OBJECT$new("Stairs", "\u259F" %>% col_blue %>% style_bold, empty = TRUE)$set_loc(yx[1], yx[2])
     stairs$stairs <- TRUE
     stairs
 }
