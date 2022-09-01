@@ -58,12 +58,14 @@ play_warrior_inbuilt_levels <- function(ai, level = 1, warrior_name = "Fisher",
     cw <- game_state$warrior
     game_state$warrior <- GAME_STATE$new(last(levels))$warrior$set_loc(cw$I, cw$J, cw$compass)
   }
-  invisible(play_warrior_work(ai, game_state, level = level, warrior_name = warrior_name,
+  invisible(play_warrior_work(ai, game_state, level = level, levels = levels,
+                              warrior_name = warrior_name,
                     sleep = sleep, debug = debug, output = output, max_turns = max_turns))
 }
 
 # The work of the warrior, allowing for custom levels to be used.
-play_warrior_work <- function(ai, game_state, level = NULL, warrior_name = "Fisher",
+play_warrior_work <- function(ai, game_state, level = NULL, levels = NULL,
+                              warrior_name = "Fisher",
                               sleep = 0, debug = TRUE, output = FALSE, max_turns = 100L,
                               epic = FALSE) {
   game_state$warrior$name <- warrior_name
