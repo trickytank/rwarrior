@@ -75,6 +75,7 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
     } else {
       cli_text("Try to improve your AI to get an S grade! (all levels with an S grade)")
     }
+    cli_text("Submit your AI to the leader board at https://tankard.id/post/r-warrior-leaderboard/")
   }
   invisible(summaries)
 }
