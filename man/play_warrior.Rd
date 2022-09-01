@@ -22,7 +22,7 @@ play_warrior(
 
 \item{warrior_name}{Name of your warrior, for flavor.}
 
-\item{sleep}{Time between text updates. Set to "prompt" to only progress when pressing the return key.}
+\item{sleep}{Time between text updates in seconds. Set to "prompt" to only progress when pressing the return key.}
 
 \item{practice}{If TRUE, any functions available for that tower may be used.}
 }

@@ -62,6 +62,10 @@ AI <- function(warrior, memory) {
     }
 ```
 
+You may want to modify the `sleep` option to `play_warrior()` to change the time
+between updates in seconds.
+Set to "prompt" to instead update on pressing the return key.
+
 ## Scoring
 
 Your objective is to not only reach the stairs, but to get the highest score you can. 

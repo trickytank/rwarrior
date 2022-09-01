@@ -6,7 +6,7 @@
 #' @param level Level number.
 #' @param tower Tower the level comes from.
 #' @param warrior_name Name of your warrior, for flavor.
-#' @param sleep Time between text updates. Set to "prompt" to only progress when pressing the return key.
+#' @param sleep Time between text updates in seconds. Set to "prompt" to only progress when pressing the return key.
 #' @param practice If TRUE, any functions available for that tower may be used.
 #' @return A tibble if successful, or otherwise FALSE.
 #' @import cli
