@@ -35,7 +35,11 @@ Refine your AI in order to achieve an overall S rank.
 \examples{
 \dontrun{
 AI <- function(warrior, memory) {
-  # Your code goes here
+  if(is.null(memory)) {
+    # set memory initial values here
+  }
+  warrior$walk()
+  memory
 }
 play_epic(AI, tower = "beginner", warrior_name = "Euler")
 }
