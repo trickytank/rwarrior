@@ -14,6 +14,7 @@
 #' @importFrom dplyr last
 #' @export
 #' @examples
+#' \dontrun{
 #' AI <- function(warrior, memory) {
 #'   if(is.null(memory)) {
 #'     # set memory initial values here
@@ -22,6 +23,7 @@
 #'   memory
 #' }
 #' play_warrior(AI, level = 1)
+#' }
 play_warrior <- function(ai, level = 1,
                           tower = c("beginner"),
                           warrior_name = "Fisher",
