@@ -26,8 +26,8 @@ devtools::install_github("trickytank/Rwarrior", build_vignettes = TRUE)
 
 ## Play
 
-Play levels in sequential order. 
-Levels implemented so far are from 1 to 9.
+Play should be played in sequential order.
+So far, the beginner tower has been implemented with 9 levels.
 
 To play the first level, first read the level readme. 
 
@@ -84,11 +84,15 @@ See the Epic Mode below for details.
 
 Once you have completed the beginner levels, it is time to take on all the levels with 
 one AI in epic mode! 
-Optimise your AI to get S rank in all the levels of the tower.
+Optimize your AI to get S rank in all the levels of the tower.
 
 ```
 play_epic(AI)
 ```
+
+## Leader board
+
+Submit your best AI to the [R Warrior Leader Board](https://tankard.id/post/r-warrior-leaderboard/).
 
 # Future directions
 
