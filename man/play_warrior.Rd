@@ -30,7 +30,7 @@ play_warrior(
 A tibble if successful, or otherwise FALSE.
 }
 \description{
-Play R Warrior
+Attempt inbuilt levels of R Warrior.
 }
 \examples{
 AI <- function(warrior, memory) {

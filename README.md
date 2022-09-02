@@ -29,7 +29,7 @@ devtools::install_github("trickytank/Rwarrior", build_vignettes = TRUE)
 Levels should be played in sequential order.
 So far, the beginner tower has been implemented with 9 levels.
 
-To play the first level, first read the level readme. 
+To play the first level, first read the level read me. 
 
 ```
 level_readme(1)

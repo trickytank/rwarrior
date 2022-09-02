@@ -29,15 +29,14 @@ A tibble if successful, or otherwise FALSE.
 A tibble giving the scores for each level passed.
 }
 \description{
-Play through an epic quest of a tower
+Write a single AI function to play through each level of the specified tower.
+Refine your AI in order to achieve an overall S rank.
 }
 \examples{
+\dontrun{
 AI <- function(warrior, memory) {
-  if(is.null(memory)) {
-    # set memory initial values here
-  }
-  warrior$walk()
-  memory
+  # Your code goes here
 }
-play_epic(AI, warrior_name = "Duck")
+play_epic(AI, tower = "beginner", warrior_name = "Euler")
+}
 }

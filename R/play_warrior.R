@@ -1,6 +1,6 @@
-# Play the warrior game
-
 #' Play R Warrior
+#'
+#' Attempt inbuilt levels of R Warrior.
 #'
 #' @param ai AI function to control your warrior.
 #' @param level Level number.

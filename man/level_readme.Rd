@@ -12,7 +12,8 @@ level_readme(level = 1, tower = c("beginner"))
 \item{tower}{The tower the level comes from.}
 }
 \description{
-Level read me
+The starting point for R Warrior.
+Run this before attempting each level with play_warrior().
 }
 \examples{
 
