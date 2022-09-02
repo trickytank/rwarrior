@@ -95,3 +95,8 @@ test_that("AIs for epic that fail.", {
     all = FALSE
   )
 })
+
+test_that("play_epic() errors", {
+  expect_error(play_epic(function(){}, sleep = "kek"), "Sleep is not correctly specified")
+  expect_error(play_epic_internal(function() {}, tower = "fake"), "Unknown tower")
+})

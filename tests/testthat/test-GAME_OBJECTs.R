@@ -18,6 +18,7 @@ test_that("WARRIOR R6 class", {
     inherits(WARRIOR$new(feel = TRUE)$set_loc(1,1),
              c("WARRIOR", "NPC", "GAME_OBJECT"))
     )
+  expect_equal(WARRIOR$new()$set_loc(1,1, "east")$pivot_self()$symbol %>% ansi_strip, "\u25C0")
 })
 
 test_that("Stairs", {
