@@ -8,10 +8,10 @@
 
 # R Warrior
 
-This is a game designed to teach the R language and artificial intelligence in a fun, interactive way.
+R Warrior is a game designed to teach the R language and artificial intelligence in a fun, interactive way.
 
 You play as a warrior climbing a tall tower to reach the precious Hex at the top level.
-On each floor you need to write a R function to instruct the warrior to battle enemies, rescue captives, and reach the stairs. 
+On each floor, you need to write an R function to instruct the warrior to battle enemies, rescue captives, and reach the stairs. 
 You have some idea of what each floor contains, but you never know for certain what will happen. 
 You must give the Warrior enough artificial intelligence up-front to find their own way.
 
@@ -39,15 +39,15 @@ Use the information gained to write your AI and run `play_beginner()`.
 
 ```
 AI <- function(warrior, memory) {
-      # Your code goes here, can ignore memory for early levels
+      # Your code goes here, you can ignore memory for early levels
     }
 warrior_name <- "Fisher" # A name for your warrior
     
 play_warrior(AI, warrior_name = warrior_name, level = 1)
 ```
 
-More advanced levels require use of the memory argument to the AI (or use of a reference class). 
-The returned value of the AI function is given as the second argument to the next call (on the subsequent turn) of the AI function. 
+More advanced levels require using the memory argument to the AI (or the use of a reference class). 
+Return the memory object in your function and will pass it to the memory argument for the next call of your AI. 
 
 ```
 AI <- function(warrior, memory) {
@@ -68,7 +68,7 @@ Set to "prompt" to instead update on pressing the return key.
 
 ## Scoring
 
-Your objective is to not only reach the stairs, but to get the highest score you can. 
+Your objective is to not only reach the stairs but to get the highest score you can. 
 There are many ways you can earn points on a level.
 
 * defeat an enemy to add his max health to your score
@@ -77,7 +77,7 @@ There are many ways you can earn points on a level.
 * defeat all enemies and rescue all captives to receive a 20% overall bonus
 
 Don't be too concerned about scoring perfectly in the beginning. 
-After you reach the top of the tower you will be able to re-run the tower and fine-tune your warrior to get the highest score. 
+After you reach the top of the tower, you will be able to re-run the tower and fine-tune your Warrior to get the highest score.
 See the Epic Mode below for details.
 
 ## Epic Mode 
@@ -94,6 +94,6 @@ play_epic(AI)
 
 *   Submit to CRAN (with beginner towers initially).
 *   Add intermediate towers (9 more levels).
-*   Create a graphical representation of the warrior's movement. Hit me up if this is something you would be interested in helping out in, either on the programming side or creating the sprites. I'd like to see the warrior in Pixel Art, but there would be room to have more than one skin available.
-*   Create a Hex logo with a pixel-art warrior (as used in the graphical representation).
-*   Write an AI to complete the epic mode beginner tower with S rank on all levels to to find if it's possible, and adjust the ace score (target score for an S rank) accordingly. This AI is a secret!
+*   Create a graphical representation of the Warrior's movement. Hit me up if this is something you would be interested in helping out in, either on the programming side or creating the sprites. I'd like to see the Warrior in Pixel Art, but there would be room to have more than one skin available.
+*   Create a Hex logo with a pixel-art Warrior (as used in the graphical representation).
+*   Write an AI to complete the epic mode beginner tower with an S rank on all levels to find if it's possible, and adjust the ace score (target score for an S rank) accordingly. This AI is a secret!
