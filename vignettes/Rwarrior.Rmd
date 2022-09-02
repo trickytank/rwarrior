@@ -31,7 +31,7 @@ This is a port of [Ruby Warrior](https://github.com/ryanb/ruby-warrior) by Ryan 
 
 # Play
 
-Play should be played in sequential order. 
+Levels should be played in sequential order. 
 So far, the beginner tower has been implemented with 9 levels.
 
 To play the first level, first read the level readme. 
