@@ -16,7 +16,7 @@
 #'   memory
 #' }
 #' play_epic(AI, warrior_name = "Duck")
-#' @importFrom dplyr mutate
+#' @importFrom dplyr mutate across
 #' @export
 play_epic <- function(ai, tower = c("beginner"), warrior_name = "Fisher",
                       level_output = TRUE,
