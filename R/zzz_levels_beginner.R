@@ -52,7 +52,7 @@ levels_beginner[[3]] <- list(
   ),
   stairs = c(1, 9),
   tip = "Be careful not to die! Use warrior.health to keep an eye on your health, and warrior.rest! to earn 10% of max health back.",
-  clue = "When there is no enemy ahead of you call warrior$rest() until health is full before walking forward.",
+  clue = "When there is no enemy ahead of you, call warrior$rest() until health is full before walking forward.",
   time_bonus = 35,
   clear_bonus = 6,
   ace_score = 71
@@ -117,7 +117,7 @@ levels_beginner[[6]] <- list(
     archer_here(1, 8)
   ),
   stairs = c(1, 8),
-  tip = "You can walk backward by passing \"backward\" as an argument to warrior$walk(). Same goes for feel(), rescue() and attack(). Archers have a limited attack distance.",
+  tip = "You can walk backward by passing \"backward\" as an argument to warrior$walk(). For example, warrior$walk(\"backward\"). Same goes for feel(), rescue() and attack(). Archers have a limited attack distance.",
   clue = "Walk backward if you are taking damage from afar and do not have enough health to attack. You may also want to consider walking backward until warrior$feel(\"backward\")$wall.",
   time_bonus = 55,
   clear_bonus = 12,
