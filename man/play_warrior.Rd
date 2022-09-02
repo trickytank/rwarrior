@@ -30,9 +30,10 @@ play_warrior(
 A tibble if successful, or otherwise FALSE.
 }
 \description{
-Play R Warrior
+Attempt inbuilt levels of R Warrior.
 }
 \examples{
+\dontrun{
 AI <- function(warrior, memory) {
   if(is.null(memory)) {
     # set memory initial values here
@@ -41,4 +42,5 @@ AI <- function(warrior, memory) {
   memory
 }
 play_warrior(AI, level = 1)
+}
 }
