@@ -79,7 +79,7 @@ test_that("Epic tower A rank", {
     tower = c("beginner"),
     warrior_name = "Fisher",
     level_output = TRUE,
-    sleep = 0)$messages,
+    sleep = "prompt")$messages,
     "Overall rank: A", all = FALSE
   )
 })
