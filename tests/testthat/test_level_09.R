@@ -50,9 +50,10 @@ AI_09 <- function(warrior, memory) {
 }
 
 test_that("Solutions not working for level 9.", {
-  expect_s3_class(play_warrior_inbuilt_levels(
-    AI_09, level = 9),
-    "tbl_df"
+  expect_match(purrr::quietly(play_warrior_inbuilt_levels)(
+    AI_09, level = 9, output = TRUE)$messages,
+    "Try writing a single AI for all the levels of this tower with play_epic",
+    all = FALSE
   )
 })
 
