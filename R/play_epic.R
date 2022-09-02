@@ -64,6 +64,11 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
                                 warrior_name = warrior_name,
                                 sleep = sleep, debug = debug, output = level_output,
                                 max_turns = max_turns, epic = TRUE)
+    if(is.logical(level_summary) && ! level_summary) {
+      cli_alert_warning("Sorry you did not complete the tower.")
+      cli_alert("Try using play_warrior(..., practice = TRUE) to practice levels with the full set of commands.")
+      return(invisible(summaries))
+    }
     summaries <- bind_rows(summaries, level_summary)
     if(level_output) { cli_text("Level rank: {level_summary$Rank}"); cli_text() }
     for(i in sleep_cycles) {
