@@ -14,6 +14,7 @@
 #' }
 #' play_epic(AI, tower = "beginner", warrior_name = "Euler")
 #' }
+#' @export
 play_epic <- function(ai, tower = c("beginner"), warrior_name = "Fisher",
                       level_output = TRUE,
                       sleep = getOption("Rwarrior.sleep", 0.6)) {
@@ -21,7 +22,7 @@ play_epic <- function(ai, tower = c("beginner"), warrior_name = "Fisher",
   checkmate::assert_function(ai)
   checkmate::assert_string(warrior_name)
   checkmate::assert_flag(level_output)
-  if(!checkmate::test_number(sleep) || identical(sleep, "prompt")) {
+  if(!checkmate::test_number(sleep) && !identical(sleep, "prompt")) {
     stop("Sleep is not correctly specified")
   }
   if(!level_output) {
@@ -47,6 +48,11 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
     stop("Unknown tower ", tower)
   }
   summaries <- tibble()
+  if(sleep == "prompt") {
+    sleep_cycles <- 1
+  } else {
+    sleep_cycles <- 1:4
+  }
   for(level in seq_along(levels)) {
     if(level_output) { cli_h1("Tower {tower}, level {level}.") }
     game_state <- GAME_STATE$new(levels[[level]])
@@ -59,7 +65,7 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
                                 max_turns = max_turns, epic = TRUE)
     summaries <- bind_rows(summaries, level_summary)
     if(level_output) { cli_text("Level rank: {level_summary$Rank}"); cli_text() }
-    for(i in 1:4) {
+    for(i in sleep_cycles) {
       message_sleep(sleep, debug)
     }
   }
@@ -68,9 +74,9 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
   average_rank <- level_ranker(average_grade_percentage, 100)
   if(output) {
     cli_h1("Summary")
-    show(summaries)
+    show(as.data.frame(summaries))
     cli_text("Total score {sum(summaries$Level_score)}")
-    cli_text("Grade perecentage: {round(average_grade_percentage, 1)}%")
+    cli_text("Rank perecentage: {round(average_grade_percentage, 1)}%")
     cli_text("Overall rank: {average_rank}")
     if(average_rank == "S") {
       cli_text("Congratulations! You achieved the top rank!")
