@@ -130,8 +130,8 @@ play_warrior_work <- function(ai, game_state, level = NULL, levels = NULL,
         Clear_bonus = clear_bonus,
         Level_score = total_score,
         Target_score = game_state$level_ace_score,
+        Percentage = 100 * total_score / game_state$level_ace_score,
         Rank = level_rank,
-        Rank_percentage = 100 * total_score / game_state$level_ace_score
       ))
     }
 

@@ -70,11 +70,11 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
     }
   }
   # Max out over-performing to 110%
-  average_grade_percentage <- mean(pmin(summaries$Rank_percentage, 100))
+  average_grade_percentage <- mean(pmin(summaries$Percentage, 100))
   average_rank <- level_ranker(average_grade_percentage, 100)
   if(output) {
     cli_h1("Summary")
-    show(as.data.frame(summaries))
+    show(as.data.frame(summaries) %>% mutate(across(Percentage, ~paste0(floor(.x), "%"))))
     cli_text("Total score {sum(summaries$Level_score)}")
     cli_text("Rank perecentage: {round(average_grade_percentage, 1)}%")
     cli_text("Overall rank: {average_rank}")
