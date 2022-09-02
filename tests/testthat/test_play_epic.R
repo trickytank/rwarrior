@@ -83,3 +83,15 @@ test_that("Epic tower A rank", {
     "Overall rank: A", all = FALSE
   )
 })
+
+test_that("AIs for epic that fail.", {
+  expect_match(purrr::quietly(play_epic)(
+    function(w, m) { w$walk() },
+    tower = c("beginner"),
+    warrior_name = "Fisher",
+    level_output = FALSE,
+    sleep = "prompt")$messages,
+    "practice levels with the full set of commands",
+    all = FALSE
+  )
+})
