@@ -33,6 +33,7 @@ A tibble if successful, or otherwise FALSE.
 Attempt inbuilt levels of R Warrior.
 }
 \examples{
+\dontrun{
 AI <- function(warrior, memory) {
   if(is.null(memory)) {
     # set memory initial values here
@@ -41,4 +42,5 @@ AI <- function(warrior, memory) {
   memory
 }
 play_warrior(AI, level = 1)
+}
 }
