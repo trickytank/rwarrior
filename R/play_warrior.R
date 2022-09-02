@@ -15,7 +15,11 @@
 #' @export
 #' @examples
 #' AI <- function(warrior, memory) {
+#'   if(is.null(memory)) {
+#'     # set memory initial values here
+#'   }
 #'   warrior$walk()
+#'   memory
 #' }
 #' play_warrior(AI, level = 1)
 play_warrior <- function(ai, level = 1,
