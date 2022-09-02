@@ -34,7 +34,11 @@ Play R Warrior
 }
 \examples{
 AI <- function(warrior, memory) {
+  if(is.null(memory)) {
+    # set memory initial values here
+  }
   warrior$walk()
+  memory
 }
 play_warrior(AI, level = 1)
 }

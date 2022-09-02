@@ -15,7 +15,11 @@
 #' @export
 #' @examples
 #' AI <- function(warrior, memory) {
+#'   if(is.null(memory)) {
+#'     # set memory initial values here
+#'   }
 #'   warrior$walk()
+#'   memory
 #' }
 #' play_warrior(AI, level = 1)
 play_warrior <- function(ai, level = 1,
@@ -28,7 +32,7 @@ play_warrior <- function(ai, level = 1,
   checkmate::assert_int(level)
   checkmate::assert_string(warrior_name)
   if(!checkmate::test_number(sleep) && !identical(sleep, "prompt")) {
-    stop("Sleep is not correctly specified")
+    stop("Sleep is not correctly specified.")
   }
   checkmate::assert_flag(practice)
   play_warrior_inbuilt_levels(ai = ai, level = level, warrior_name = warrior_name,
@@ -130,8 +134,8 @@ play_warrior_work <- function(ai, game_state, level = NULL, levels = NULL,
         Clear_bonus = clear_bonus,
         Level_score = total_score,
         Target_score = game_state$level_ace_score,
+        Percentage = 100 * total_score / game_state$level_ace_score,
         Rank = level_rank,
-        Rank_percentage = 100 * total_score / game_state$level_ace_score
       ))
     }
 
@@ -148,10 +152,12 @@ play_warrior_work <- function(ai, game_state, level = NULL, levels = NULL,
     }
   }
 
-  give_clue <- askYesNo("Would you like a clue for this level?", !interactive()) # default TRUE when testing
-  give_clue <- ifelse(is.na(give_clue), FALSE, give_clue) # Account for cancel response
-  if(give_clue){
-    cli_text(game_state$level_clue)
+  if(!epic) {
+    give_clue <- askYesNo("Would you like a clue for this level?", !interactive()) # default TRUE when testing
+    give_clue <- ifelse(is.na(give_clue), FALSE, give_clue) # Account for cancel response
+    if(give_clue){
+      cli_text(game_state$level_clue)
+    }
   }
   return(invisible(FALSE))
 }

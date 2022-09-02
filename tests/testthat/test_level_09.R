@@ -49,9 +49,17 @@ AI_09 <- function(warrior, memory) {
   memory
 }
 
-test_that("Solutions not working for level 8.", {
-  expect_s3_class(play_warrior_inbuilt_levels(
-    AI_09, level = 9),
-    "tbl_df"
+test_that("Solutions not working for level 9.", {
+  expect_match(purrr::quietly(play_warrior_inbuilt_levels)(
+    AI_09, level = 9, output = TRUE)$messages,
+    "Try writing a single AI for all the levels of this tower with play_epic",
+    all = FALSE
+  )
+})
+
+test_that("Level 9 readme", {
+  expect_match(purrr::quietly(level_readme)(
+    9)$output,
+    "Shoot an arrow in the given direction", all = FALSE
   )
 })

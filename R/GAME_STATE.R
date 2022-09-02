@@ -69,9 +69,6 @@ GAME_STATE <- R6Class(
       object <- self$return_object(coord$I_subject, coord$J_subject)
       object
     },
-    feel_warrior = function(direction = "forward") {
-      self$feel_object(self$warrior, direction)
-    },
     feel_symbol = function(charac, direction = "forward") {
       object <- self$feel_object(charac, direction)
       object$symbol

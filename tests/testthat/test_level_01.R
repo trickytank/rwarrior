@@ -33,6 +33,11 @@ test_that("Solution to level 1 doesn't work.", {
     game_state = GAME_STATE$new(levels_beginner[[1]]), sleep = 0, output = TRUE, debug = FALSE)$messages,
     "custom level", all = FALSE
   )
+  expect_s3_class(play_warrior_inbuilt_levels(
+    function(warrior, memory) {
+      warrior$walk("for")
+    }, practice = TRUE),
+    "tbl_df")
 })
 
 

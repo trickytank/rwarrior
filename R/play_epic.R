@@ -8,12 +8,15 @@
 #' @return A tibble if successful, or otherwise FALSE.
 #' @return A tibble giving the scores for each level passed.
 #' @examples
-#' \dontrun{
 #' AI <- function(warrior, memory) {
-#'   # Your code goes here
+#'   if(is.null(memory)) {
+#'     # set memory initial values here
+#'   }
+#'   warrior$walk()
+#'   memory
 #' }
-#' play_epic(AI, tower = "beginner", warrior_name = "Euler")
-#' }
+#' play_epic(AI, warrior_name = "Duck")
+#' @importFrom dplyr mutate across
 #' @export
 play_epic <- function(ai, tower = c("beginner"), warrior_name = "Fisher",
                       level_output = TRUE,
@@ -63,6 +66,11 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
                                 warrior_name = warrior_name,
                                 sleep = sleep, debug = debug, output = level_output,
                                 max_turns = max_turns, epic = TRUE)
+    if(is.logical(level_summary) && ! level_summary) {
+      cli_alert_warning("Sorry you did not complete the tower.")
+      cli_alert("Try using play_warrior(..., practice = TRUE) to practice levels with the full set of commands.")
+      return(invisible(summaries))
+    }
     summaries <- bind_rows(summaries, level_summary)
     if(level_output) { cli_text("Level rank: {level_summary$Rank}"); cli_text() }
     for(i in sleep_cycles) {
@@ -70,11 +78,11 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
     }
   }
   # Max out over-performing to 110%
-  average_grade_percentage <- mean(pmin(summaries$Rank_percentage, 100))
+  average_grade_percentage <- mean(pmin(summaries$Percentage, 100))
   average_rank <- level_ranker(average_grade_percentage, 100)
   if(output) {
     cli_h1("Summary")
-    show(as.data.frame(summaries))
+    show(as.data.frame(summaries) %>% mutate(across(Percentage, ~paste0(floor(.x), "%"))))
     cli_text("Total score {sum(summaries$Level_score)}")
     cli_text("Rank perecentage: {round(average_grade_percentage, 1)}%")
     cli_text("Overall rank: {average_rank}")

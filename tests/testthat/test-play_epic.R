@@ -79,7 +79,24 @@ test_that("Epic tower A rank", {
     tower = c("beginner"),
     warrior_name = "Fisher",
     level_output = TRUE,
-    sleep = 0)$messages,
+    sleep = "prompt")$messages,
     "Overall rank: A", all = FALSE
   )
+})
+
+test_that("AIs for epic that fail.", {
+  expect_match(purrr::quietly(play_epic)(
+    function(w, m) { w$walk() },
+    tower = c("beginner"),
+    warrior_name = "Fisher",
+    level_output = FALSE,
+    sleep = "prompt")$messages,
+    "practice levels with the full set of commands",
+    all = FALSE
+  )
+})
+
+test_that("play_epic() errors", {
+  expect_error(play_epic(function(){}, sleep = "kek"), "Sleep is not correctly specified")
+  expect_error(play_epic_internal(function() {}, tower = "fake"), "Unknown tower")
 })

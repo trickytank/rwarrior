@@ -32,10 +32,12 @@ A tibble giving the scores for each level passed.
 Play through an epic quest of a tower
 }
 \examples{
-\dontrun{
 AI <- function(warrior, memory) {
-  # Your code goes here
+  if(is.null(memory)) {
+    # set memory initial values here
+  }
+  warrior$walk()
+  memory
 }
-play_epic(AI, tower = "beginner", warrior_name = "Euler")
-}
+play_epic(AI, warrior_name = "Duck")
 }
