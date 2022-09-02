@@ -15,7 +15,7 @@ On each floor you need to write a R function to instruct the warrior to battle e
 You have some idea of what each floor contains, but you never know for certain what will happen. 
 You must give the Warrior enough artificial intelligence up-front to find their own way.
 
-This is a port of [Ruby Warrior](https://github.com/ryanb/ruby-warrior).
+This is a port of [Ruby Warrior](https://github.com/ryanb/ruby-warrior) by Ryan Bates.
 
 ## Installation
 
