@@ -11,16 +11,15 @@
 #' @return A tibble if successful, or otherwise FALSE.
 #' @return A tibble giving the scores for each level passed.
 #' @examples
-#' \dontrun{
 #' AI <- function(warrior, memory) {
 #'   if(is.null(memory)) {
 #'     # set memory initial values here
 #'   }
+#'   # Modify the following section to be able to complete the tower
 #'   warrior$walk()
 #'   memory
 #' }
 #' play_epic(AI, tower = "beginner", warrior_name = "Euler")
-#' }
 #' @importFrom dplyr mutate across
 #' @export
 play_epic <- function(ai, tower = c("beginner"), warrior_name = "Fisher",

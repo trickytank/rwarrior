@@ -27,20 +27,19 @@ play_warrior(
 \item{practice}{If TRUE, any functions available for that tower may be used.}
 }
 \value{
-A tibble if successful, or otherwise FALSE.
+A tibble if successful, FALSE if unsuccessful,
+        and NA if the AI function caused an error or no action was called.
 }
 \description{
 Attempt inbuilt levels of R Warrior.
 }
 \examples{
-\dontrun{
 AI <- function(warrior, memory) {
   if(is.null(memory)) {
     # set memory initial values here
   }
-  warrior$walk()
+  # insert AI code here
   memory
 }
 play_warrior(AI, level = 1)
-}
 }

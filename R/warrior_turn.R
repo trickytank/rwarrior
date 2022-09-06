@@ -2,7 +2,7 @@
 #' @import glue
 warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, output = FALSE) {
   if(is.null(w$action)) {
-    stop("No warrior action was provided.")
+    return("No Warrior action was called in the AI function.")
   }
   J <- game_state$warrior$J
   I <- game_state$warrior$I
@@ -78,7 +78,7 @@ warrior_turn <- function(w, game_state, warrior_name, sleep = 0, debug = FALSE, 
   } else if (w$action == "pivot") {
     game_state$warrior$pivot_self(w$direction, warrior_name = warrior_name, output = output)
   } else {
-    stop("Invalid warrior action: ", w$action, ".")
+    return(paste0("Invalid warrior action: ", w$action, "."))
   }
 
   message_sleep(sleep, debug)
