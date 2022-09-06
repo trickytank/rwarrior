@@ -1,3 +1,6 @@
+This package was previously submitted as 'Rwarrior', but is now submitted as 'rwarrior'.
+This package has not yet existed on CRAN so the name change should not cause an issue. 
+
 # Test Environments
 
 * Local macOS 12.4, Apple M1 Chip, R 4.2.1
