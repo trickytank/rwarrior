@@ -88,7 +88,7 @@ play_warrior_work <- function(ai, game_state, level = NULL, levels = NULL,
     ai_error <- FALSE
     memory <- tryCatch(ai(w, memory), error = function(e) { ai_error <<- TRUE; e })
     if(ai_error) {
-      error_message <- paste("Error in AI function:", str_remove(as.character(memory), "^.+:"))
+      error_message <- paste("Error in AI function:", str_remove(as.character(memory), "^.+: "))
       cli_alert_danger(error_message)
       return(NA)
     }
