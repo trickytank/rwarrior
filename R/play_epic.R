@@ -21,6 +21,7 @@
 #' }
 #' play_epic(AI, tower = "beginner", warrior_name = "Euler")
 #' @importFrom dplyr mutate across
+#' @importFrom tibble is_tibble
 #' @export
 play_epic <- function(ai, tower = c("beginner"), warrior_name = "Fisher",
                       level_output = TRUE,
@@ -70,7 +71,7 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
                                 warrior_name = warrior_name,
                                 sleep = sleep, debug = debug, output = level_output,
                                 max_turns = max_turns, epic = TRUE)
-    if(is.na(level_summary) || (is.logical(level_summary) && ! level_summary)) {
+    if(!is_tibble(level_summary)) {
       cli_alert_warning("Sorry you did not complete the tower.")
       cli_alert("Try using play_warrior(..., practice = TRUE) to practice levels with the full set of commands.")
       return(invisible(summaries))
