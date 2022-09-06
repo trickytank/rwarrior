@@ -1,7 +1,7 @@
 if(Sys.getenv("RUNNER_TEMP") != "") {
   path_to_ai <- file.path(Sys.getenv("RUNNER_TEMP"), "test_play_epic_S_grade_AI.R")
 } else {
-  path_to_ai <- "../../../Rwarrior-private/tests/testthat/test_play_epic_S_grade_AI.R"
+  path_to_ai <- "../../../rwarrior-private/tests/testthat/test_play_epic_S_grade_AI.R"
 }
 skip_if_no_epic_ai <- function() {
   if (!file.exists(path_to_ai)) {

@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(Rwarrior)
+library(rwarrior)
 
-test_check("Rwarrior")
+test_check("rwarrior")

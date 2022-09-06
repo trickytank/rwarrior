@@ -9,7 +9,7 @@ play_warrior(
   level = 1,
   tower = c("beginner"),
   warrior_name = "Fisher",
-  sleep = getOption("Rwarrior.sleep", 0.6),
+  sleep = getOption("rwarrior.sleep", 0.6),
   practice = FALSE
 )
 }
