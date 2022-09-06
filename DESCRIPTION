@@ -1,7 +1,7 @@
-Package: Rwarrior
+Package: rwarrior
 Type: Package
 Title: R Warrior - An AI Programming Game
-Version: 0.4.0
+Version: 0.4.1
 Author: Rick M Tankard
 Maintainer: Rick M Tankard <rickmtankard@gmail.com>
 Description: A port of Ruby Warrior.
