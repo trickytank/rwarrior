@@ -9,7 +9,7 @@ play_epic(
   tower = c("beginner"),
   warrior_name = "Fisher",
   level_output = TRUE,
-  sleep = getOption("Rwarrior.sleep", 0.6)
+  sleep = getOption("rwarrior.sleep", ifelse(interactive(), 0.6, 0))
 )
 }
 \arguments{
@@ -33,14 +33,13 @@ Write a single AI function to play through each level of the specified tower.
 Refine your AI in order to achieve an overall S rank.
 }
 \examples{
-\dontrun{
 AI <- function(warrior, memory) {
   if(is.null(memory)) {
     # set memory initial values here
   }
+  # Modify the following section to be able to complete the tower
   warrior$walk()
   memory
 }
 play_epic(AI, tower = "beginner", warrior_name = "Euler")
-}
 }

@@ -1,8 +1,8 @@
 ---
-title: "Rwarrior"
+title: "rwarrior"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Rwarrior}
+  %\VignetteIndexEntry{rwarrior}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(Rwarrior)
+library(rwarrior)
 ```
 
 # R Warrior

@@ -11,21 +11,21 @@
 #' @return A tibble if successful, or otherwise FALSE.
 #' @return A tibble giving the scores for each level passed.
 #' @examples
-#' \dontrun{
 #' AI <- function(warrior, memory) {
 #'   if(is.null(memory)) {
 #'     # set memory initial values here
 #'   }
+#'   # Modify the following section to be able to complete the tower
 #'   warrior$walk()
 #'   memory
 #' }
 #' play_epic(AI, tower = "beginner", warrior_name = "Euler")
-#' }
 #' @importFrom dplyr mutate across
+#' @importFrom tibble is_tibble
 #' @export
 play_epic <- function(ai, tower = c("beginner"), warrior_name = "Fisher",
                       level_output = TRUE,
-                      sleep = getOption("Rwarrior.sleep", 0.6)) {
+                      sleep = getOption("rwarrior.sleep", ifelse(interactive(), 0.6, 0))) {
   tower <- match.arg(tower)
   checkmate::assert_function(ai)
   checkmate::assert_string(warrior_name)
@@ -71,7 +71,7 @@ play_epic_internal <-  function(ai, warrior_name = "Fisher",
                                 warrior_name = warrior_name,
                                 sleep = sleep, debug = debug, output = level_output,
                                 max_turns = max_turns, epic = TRUE)
-    if(is.logical(level_summary) && ! level_summary) {
+    if(!is_tibble(level_summary)) {
       cli_alert_warning("Sorry you did not complete the tower.")
       cli_alert("Try using play_warrior(..., practice = TRUE) to practice levels with the full set of commands.")
       return(invisible(summaries))

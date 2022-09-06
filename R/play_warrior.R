@@ -8,26 +8,26 @@
 #' @param warrior_name Name of your warrior, for flavor.
 #' @param sleep Time between text updates in seconds. Set to "prompt" to only progress when pressing the return key.
 #' @param practice If TRUE, any functions available for that tower may be used.
-#' @return A tibble if successful, or otherwise FALSE.
+#' @return A tibble if successful, FALSE if unsuccessful,
+#'         and NA if the AI function caused an error or no action was called.
 #' @import cli
+#' @import stringr
 #' @importFrom utils askYesNo
 #' @importFrom dplyr last
 #' @export
 #' @examples
-#' \dontrun{
 #' AI <- function(warrior, memory) {
 #'   if(is.null(memory)) {
 #'     # set memory initial values here
 #'   }
-#'   warrior$walk()
+#'   # insert AI code here
 #'   memory
 #' }
 #' play_warrior(AI, level = 1)
-#' }
 play_warrior <- function(ai, level = 1,
                           tower = c("beginner"),
                           warrior_name = "Fisher",
-                          sleep = getOption("Rwarrior.sleep", 0.6),
+                          sleep = getOption("rwarrior.sleep", ifelse(interactive(), 0.6, 0)),
                           practice = FALSE) {
   tower <- match.arg(tower)
   checkmate::assert_function(ai)
@@ -85,8 +85,19 @@ play_warrior_work <- function(ai, game_state, level = NULL, levels = NULL,
     # clone here to prevent tampering the game_state. Doesn't prevent all cheating such as inspecting the entire game_state.
     w <- WARRIOR_ACTION$new(game_state$deep_clone())
     # w is also modified here
-    memory <- ai(w, memory)
+    ai_error <- FALSE
+    memory <- tryCatch(ai(w, memory), error = function(e) { ai_error <<- TRUE; e })
+    if(ai_error) {
+      error_message <- paste("Error in AI function:", str_remove(as.character(memory), "^.+: "))
+      cli_alert_danger(error_message)
+      return(NA)
+    }
     result <- warrior_turn(w, game_state, warrior_name, sleep, debug = debug, output = output)
+    if(is.character(result)) {
+      # Error with AI
+      cli_alert_danger(result)
+      return(NA)
+    }
     points <- result$points
 
     level_score <- level_score + points

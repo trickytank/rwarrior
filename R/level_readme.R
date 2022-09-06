@@ -53,29 +53,18 @@ method_description <- function(warrior) {
     cat('    - "forward"\n')
     cat('    - "backward"\n')
   }
-  if(warrior$feel) {
-    cat('- warrior$feel(direction = "forward")\n')
-    cat('  Checks what is in front (or behind) the warrior.\n')
-    cat('  Returns a SPACE object with fields as below:\n')
-    cat('    - $empty returns TRUE if the space is empty or the stairs.\n')
-    cat('    - $stairs returns TRUE if the space has the stairs.\n')
-    cat('    - $enemy returns TRUE if the space has an enemy.\n')
-    cat('    - $captive returns TRUE if the space has a captive.\n')
-    cat('    - $wall returns TRUE if the space is a wall. You can\'t walk here.\n')
-    cat('    - $ticking returns TRUE if the space is a bomb which will explode in time.\n')
-    cat('    - $golem returns TRUE if a golem is occupying this space.\n')
-  }
+  cli_h3("Warrior actions (can only call one per turn):")
   if(warrior$attack) {
     cat_line('- warrior$attack(direction = "forward")')
     cat_line('  Attack the space in the given direction for ', WARRIOR$new()$attack_power, ' damage.')
   }
+  if(warrior$shoot) {
+    cat_line('- warrior$shoot(direction = "forward")')
+    cat_line('  Shoot an arrow in the given direction for ', WARRIOR$new()$shoot_power, " damage.")
+  }
   if(warrior$rest) {
     cat('- warrior$rest()\n')
     cat('  Rest and heal 10% of the your warrior\'s health.\n')
-  }
-  if(warrior$health) {
-    cat('- warrior$health\n')
-    cat('  Returns the health of the warrior, up to 20HP.\n')
   }
   if(warrior$rescue) {
     cat_line('- warrior$rescue(direction = "forward")')
@@ -85,13 +74,28 @@ method_description <- function(warrior) {
     cat_line('- warrior$pivot(direction = "backward")')
     cat_line('  Pivot to another direction, relative to current direction.')
   }
-  if(warrior$look) {
-    cat_line('- warrior$look(direction = "forward")')
-    cat_line('  Return a list of 3 SPACE objects, the same as warrior$feel().')
-    cat_line('  Access with warrior$look()[[i]] where i is an integer from 1 to 3.')
-  }
-  if(warrior$shoot) {
-    cat_line('- warrior$shoot(direction = "forward")')
-    cat_line('  Shoot an arrow in the given direction for ', WARRIOR$new()$shoot_power, " damage.")
+  if(warrior$health || warrior$feel || warrior$look) {
+    cli_h3("Information gathering commands (can be called multiple times in one turn):")
+    if(warrior$health) {
+      cat('- warrior$health\n')
+      cat('  Returns the health of the warrior, up to 20HP.\n')
+    }
+    if(warrior$feel) {
+      cat('- warrior$feel(direction = "forward")\n')
+      cat('  Checks what is in front (or behind) the warrior.\n')
+      cat('  Returns a SPACE object with fields as below:\n')
+      cat('    - $empty returns TRUE if the space is empty or the stairs.\n')
+      cat('    - $stairs returns TRUE if the space has the stairs.\n')
+      cat('    - $enemy returns TRUE if the space has an enemy.\n')
+      cat('    - $captive returns TRUE if the space has a captive.\n')
+      cat('    - $wall returns TRUE if the space is a wall. You can\'t walk here.\n')
+      cat('    - $ticking returns TRUE if the space is a bomb which will explode in time.\n')
+      cat('    - $golem returns TRUE if a golem is occupying this space.\n')
+    }
+    if(warrior$look) {
+      cat_line('- warrior$look(direction = "forward")')
+      cat_line('  Return a list of 3 SPACE objects, the same as warrior$feel().')
+      cat_line('  Access with warrior$look()[[i]] where i is an integer from 1 to 3.')
+    }
   }
 }

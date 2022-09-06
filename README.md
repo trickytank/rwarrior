@@ -1,6 +1,6 @@
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/trickytank/Rwarrior/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/trickytank/Rwarrior/actions/workflows/check-standard.yaml) [![test-coverage](https://github.com/trickytank/Rwarrior/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/trickytank/Rwarrior/actions/workflows/test-coverage.yaml) [![Codecov test coverage](https://codecov.io/gh/trickytank/Rwarrior/branch/master/graph/badge.svg)](https://app.codecov.io/gh/trickytank/Rwarrior?branch=master)
+[![R-CMD-check](https://github.com/trickytank/rwarrior/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/trickytank/rwarrior/actions/workflows/check-standard.yaml) [![test-coverage](https://github.com/trickytank/rwarrior/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/trickytank/rwarrior/actions/workflows/test-coverage.yaml) [![Codecov test coverage](https://codecov.io/gh/trickytank/rwarrior/branch/master/graph/badge.svg)](https://app.codecov.io/gh/trickytank/rwarrior?branch=master)
 
 <!-- badges: end -->
 
@@ -10,7 +10,7 @@ R Warrior is a game designed to teach the R language and artificial intelligence
 
 You play as a warrior climbing a tall tower to reach the precious Hex at the top level. On each floor, you need to write an R function to instruct the warrior to battle enemies, rescue captives, and reach the stairs. You have some idea of what each floor contains, but you never know for certain what will happen. You must give the Warrior enough artificial intelligence up-front to find their own way.
 
-For more information on the game, see [my blog posts with the Rwarrior tag](https://tankard.id/tag/rwarrior/).
+For more information on the game, see [my blog posts with the rwarrior tag](https://tankard.id/tag/rwarrior/).
 
 This is a port of [Ruby Warrior](https://github.com/ryanb/ruby-warrior) by Ryan Bates.
 
@@ -19,9 +19,14 @@ This is a port of [Ruby Warrior](https://github.com/ryanb/ruby-warrior) by Ryan 
 ## Installation
 
     # install.packages("devtools") # If devtools is not installed
-    devtools::install_github("trickytank/Rwarrior", build_vignettes = TRUE)
+    devtools::install_github("trickytank/rwarrior", build_vignettes = TRUE)
 
 ## Play
+
+Load the package:
+```r
+library(rwarrior)
+```
 
 Levels should be played in sequential order. So far, the beginner tower has been implemented with 9 levels.
 

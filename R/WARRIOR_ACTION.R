@@ -119,7 +119,7 @@ WARRIOR_ACTION <- R6Class(
     shoot_ability = NULL,
     check_one_action = function() {
       if(!is.null(self$action)) {
-        stop("A warrior action has already been defined.")
+        stop("Cannot call more than one Warrior action on a turn.")
       }
     }
   )
