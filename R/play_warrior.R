@@ -27,7 +27,7 @@
 play_warrior <- function(ai, level = 1,
                           tower = c("beginner"),
                           warrior_name = "Fisher",
-                          sleep = getOption("rwarrior.sleep", 0.6),
+                          sleep = getOption("rwarrior.sleep", ifelse(interactive(), 0.6, 0)),
                           practice = FALSE) {
   tower <- match.arg(tower)
   checkmate::assert_function(ai)

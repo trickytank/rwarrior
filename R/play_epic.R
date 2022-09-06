@@ -25,7 +25,7 @@
 #' @export
 play_epic <- function(ai, tower = c("beginner"), warrior_name = "Fisher",
                       level_output = TRUE,
-                      sleep = getOption("rwarrior.sleep", 0.6)) {
+                      sleep = getOption("rwarrior.sleep", ifelse(interactive(), 0.6, 0))) {
   tower <- match.arg(tower)
   checkmate::assert_function(ai)
   checkmate::assert_string(warrior_name)

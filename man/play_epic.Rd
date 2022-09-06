@@ -9,7 +9,7 @@ play_epic(
   tower = c("beginner"),
   warrior_name = "Fisher",
   level_output = TRUE,
-  sleep = getOption("rwarrior.sleep", 0.6)
+  sleep = getOption("rwarrior.sleep", ifelse(interactive(), 0.6, 0))
 )
 }
 \arguments{
