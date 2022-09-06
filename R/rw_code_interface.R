@@ -11,6 +11,7 @@ rw_code_interface <- R6Class(
   npcs = NULL,
   points = NULL,
   epic = NULL,
+  ai = NULL,
   initialize = function(
     ai,
     level = 1,
@@ -18,7 +19,17 @@ rw_code_interface <- R6Class(
     warrior_name = "Fisher",
     practice = FALSE,
     epic = FALSE) {
-
+      checkmate::assert_function(ai)
+      checkmate::assert_int(level)
+      if(is.list(tower)) {
+        levels <- tower
+      } else {
+        tower <- match.arg(tower)
+        if(tower == "beginner") {
+          levels <- levels_beginner
+        }
+      }
+      self$ai <- ai
   },
   next_event = function() {
 
@@ -28,10 +39,13 @@ rw_code_interface <- R6Class(
 
 # A class representing one event.
 # An event may be:
+#   * "start_of_level" # with `number` as level number.
+#   * "start_of_turn" # with `number` as turn number
 #   * "level_success" # Successful completion of the current level, level_scores should have a non-null value.
 #   * "tower_success" # Successful completion of in the tower. (level_success is always reported previously)
 #   * "warrior_dies" # The Warrior has run out of health and died.
 #   * "out_of_time" # The Warrior has run out of time and has missed out on the precious Hex.
+#   * "error" # There was an error when calling the AI function.
 #   * "walk" # subject walks
 #   * "attack" # subject attacks target
 #   * "rest" # subject rests
@@ -45,6 +59,7 @@ game_event <- R6Class(
   subject = NULL,
   target = NULL,
   points = 0,
+  number = NULL,
   i_offset = 0, # Direction offset North to South
   j_offset = 0, # Direction offset West to East
   i_offset_previous = 0, # previous compass direction North to South
@@ -52,7 +67,7 @@ game_event <- R6Class(
   level_scores = NULL,
   initialize = function(event, text = "", subject = NULL, target = NULL,
                         direction_compass = NULL, direction_compass_previous = NULL,
-                        points = 0,
+                        points = 0, turn_number = NULL, level_number = NULL,
                         level_scores = NULL) {
     self$event <- event
     self$text <- text
@@ -63,6 +78,8 @@ game_event <- R6Class(
     self$i_offset_previous <- Re(direction_compass_previous)
     self$j_offset_previous <- Re(direction_compass_previous)
     self$points <- points
+    self$turn_number <- turn_number
+    self$level_number <- level_number
     self$level_scores <- level_scores
     self
   }
