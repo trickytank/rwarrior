@@ -23,6 +23,11 @@ This is a port of [Ruby Warrior](https://github.com/ryanb/ruby-warrior) by Ryan 
 
 ## Play
 
+Load the package:
+```r
+library(rwarrior)
+```
+
 Levels should be played in sequential order. So far, the beginner tower has been implemented with 9 levels.
 
 To learn how to complete the first level, bring up the read me.
