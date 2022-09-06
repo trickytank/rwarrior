@@ -24,8 +24,8 @@ wa_5_rescue_captive$rescue()
 
 
 test_that("warrior_turn()", {
-  expect_error(warrior_turn(WARRIOR_ACTION$new(game_state_1_1), game_state_1_1, "Fisher"), "No warrior action was provided.")
-  expect_error(warrior_turn(wa_1, game_state_1_1, "Fisher"), "Invalid warrior action")
+  expect_equal(warrior_turn(WARRIOR_ACTION$new(game_state_1_1), game_state_1_1, "Fisher"), "No Warrior action was called in the AI function.")
+  expect_equal(warrior_turn(wa_1, game_state_1_1, "Fisher"), "Invalid warrior action: hamster.")
   expect_message(warrior_turn(wa_2, game_state_2_1, "Goose", output = TRUE), paste(style_bold("attacks"), "backward and hits the wall"))
   expect_message(warrior_turn(wa_5_rescue_wall, game_state_5_1, "Fish", output = TRUE), paste(style_bold("rescue"), "backward on Wall"))
   expect_message(warrior_turn(wa_5_rescue_empty, game_state_5_1, "Fish", output = TRUE), paste(style_bold("rescues"), "forward into empty space"))
