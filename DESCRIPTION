@@ -1,7 +1,7 @@
 Package: rwarrior
 Type: Package
 Title: R Warrior - An AI Programming Game
-Version: 0.4.1
+Version: 0.4.1.9000
 Authors@R: c(
   person("Rick M", "Tankard", email = "rickmtankard@gmail.com", role = c("cre", "aut"),
     comment = c(ORCID = "0000-0002-8847-9401"))
@@ -10,6 +10,8 @@ Description: A port of Ruby Warrior.
     Teaches R programming in a fun and interactive way.
 License: MIT + file LICENSE
 Encoding: UTF-8
+BugReports: https://github.com/trickytank/rwarrior/issues
+URL: https://github.com/trickytank/Rwarrior
 LazyData: true
 RoxygenNote: 7.2.1
 Imports:
