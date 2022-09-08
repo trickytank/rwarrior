@@ -18,6 +18,12 @@ This is a port of [Ruby Warrior](https://github.com/ryanb/ruby-warrior) by Ryan 
 
 ## Installation
 
+Install either from CRAN:
+
+    install.packages("rwarrior")
+
+Or the development version from Github:
+
     # install.packages("devtools") # If devtools is not installed
     devtools::install_github("trickytank/rwarrior", build_vignettes = TRUE)
 
