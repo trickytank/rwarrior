@@ -22,20 +22,20 @@ test_that("WARRIOR R6 class", {
 })
 
 test_that("Stairs", {
-  expect_s3_class(stairs_here(c(1, 8)), "GAME_OBJECT")
+  expect_s3_class(stairs_here(c(1, 8))()(), "GAME_OBJECT")
 })
 
 test_that("NPC generation", {
-  expect_s3_class(sludge_here(1, 3), c("NPC", "GAME_OBJECT"))
-  expect_s3_class(thick_sludge_here(1, 3), c("NPC", "GAME_OBJECT"))
-  expect_s3_class(archer_here(1, 3), c("NPC", "GAME_OBJECT"))
-  expect_s3_class(wizard_here(1, 3), c("NPC", "GAME_OBJECT"))
-  expect_s3_class(captive_here(1, 3), c("NPC", "GAME_OBJECT"))
+  expect_s3_class(sludge_here(1, 3)(), c("NPC", "GAME_OBJECT"))
+  expect_s3_class(thick_sludge_here(1, 3)(), c("NPC", "GAME_OBJECT"))
+  expect_s3_class(archer_here(1, 3)(), c("NPC", "GAME_OBJECT"))
+  expect_s3_class(wizard_here(1, 3)(), c("NPC", "GAME_OBJECT"))
+  expect_s3_class(captive_here(1, 3)(), c("NPC", "GAME_OBJECT"))
 })
 
 test_that("GAME_OBJECT$set_compass", {
-  expect_equal(sludge_here(1,3)$set_compass("north")$compass, -1 + 0i)
-  expect_equal(archer_here(1,3)$set_compass("south")$compass, 1 + 0i)
-  expect_equal(archer_here(1,2)$set_compass("east")$compass, 0 + 1i)
-  expect_equal(archer_here(2,5)$set_compass("west")$compass, 0 - 1i)
+  expect_equal(sludge_here(1,3)()$set_compass("north")$compass, -1 + 0i)
+  expect_equal(archer_here(1,3)()$set_compass("south")$compass, 1 + 0i)
+  expect_equal(archer_here(1,2)()$set_compass("east")$compass, 0 + 1i)
+  expect_equal(archer_here(2,5)()$set_compass("west")$compass, 0 - 1i)
 })
