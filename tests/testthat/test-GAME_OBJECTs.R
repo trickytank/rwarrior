@@ -22,7 +22,7 @@ test_that("WARRIOR R6 class", {
 })
 
 test_that("Stairs", {
-  expect_s3_class(stairs_here(c(1, 8))()(), "GAME_OBJECT")
+  expect_s3_class(stairs_here(c(1, 8))(), "GAME_OBJECT")
 })
 
 test_that("NPC generation", {

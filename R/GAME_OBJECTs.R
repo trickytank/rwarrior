@@ -85,8 +85,8 @@ WARRIOR <- R6Class(
   inherit = NPC,
   public = list(
     name = "Warrior",
-    symbol = "@" %>% style_bold %>% col_blue,
-    symbol_directional = c("\u25C0", "\u25BC", "\u25B6", "\u25B2") %>% col_blue,
+    symbol = "@" %>% style_bold,
+    symbol_directional = c("\u25C0", "\u25BC", "\u25B6", "\u25B2"),
     hp = 20L,
     max_hp = 20L,
     attack_power = 5L,
@@ -125,9 +125,12 @@ WARRIOR <- R6Class(
   )
 )
 
-warrior_here <- function(I, J, compass = "east") {
+warrior_here <- function(I, J, ..., compass = "east") {
   function(){
-    WARRIOR$new()$set_loc(I, J, compass)
+    w <- WARRIOR$new(...)
+    w$symbol_directional <- w$symbol_directional %>% col_blue()
+    w$set_loc(I, J, compass)
+    w
   }
 }
 
@@ -135,7 +138,6 @@ stairs_here <- function(yx) {
   function() {
     stairs <- GAME_OBJECT$new("Stairs", "\u259F" %>% col_blue %>% style_bold, empty = TRUE)$set_loc(yx[1], yx[2])
     stairs$stairs <- TRUE
-    function()
     stairs
   }
 }

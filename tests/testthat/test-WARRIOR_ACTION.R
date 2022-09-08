@@ -8,7 +8,7 @@ test_levels <- list()
 test_levels[[2]] <- list(
   description = "Test $attack_routine() and $feel()",
   size = c(1,3),
-  warrior = WARRIOR$new(feel = TRUE)$set_loc(1, 1),
+  warrior = warrior_here(1, 1, feel = TRUE),
   npcs = list(
     sludge_here(1, 2)
   ),

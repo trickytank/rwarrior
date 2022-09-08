@@ -19,8 +19,8 @@ GAME_STATE <- R6Class(
         self$npcs[[i]] <- level_spec$npcs[[i]]()
       }
       self$size <- level_spec$size
-      self$warrior <- level_spec$warrior$clone()
-      self$stairs <- stairs_here(level_spec$stairs)()()
+      self$warrior <- level_spec$warrior()
+      self$stairs <- stairs_here(level_spec$stairs)()
       self$level_description <- level_spec$description
       self$level_tip <- level_spec$tip
       self$level_time_bonus <- level_spec$time_bonus
@@ -161,7 +161,7 @@ GAME_STATE <- R6Class(
           # either space or
           # if charac is not warrior, then not allowed
           # if charac is warrior, then only stairs is allowed
-          if(level_map[charac$I, charac$J] != " " && level_map[charac$I, charac$J] != stairs_here(c(1,1))()()$symbol) {
+          if(level_map[charac$I, charac$J] != " " && level_map[charac$I, charac$J] != stairs_here(c(1,1))()$symbol) {
             stop("More than one object at location (", charac$I, ", ", charac$J, ")")
           }
           level_map[charac$I, charac$J] <- charac$symbol

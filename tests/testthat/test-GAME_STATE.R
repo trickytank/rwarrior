@@ -3,7 +3,7 @@ test_levels <- list()
 test_levels[[1]] <- list(
   description = "Test $at_stairs",
   size = c(1,2),
-  warrior = WARRIOR$new()$set_loc(1, 2),
+  warrior = warrior_here(1, 2),
   npcs = list(),
   stairs = c(1,2),
   tip = "",
@@ -14,7 +14,7 @@ test_levels[[1]] <- list(
 test_levels[[2]] <- list(
   description = "Test $attack_routine() and $feel()",
   size = c(1,3),
-  warrior = WARRIOR$new(feel = TRUE)$set_loc(1, 1),
+  warrior = warrior_here(1, 1, feel = TRUE),
   npcs = list(
     sludge_here(1, 2)
   ),
@@ -28,7 +28,7 @@ game_state_test_2_1 <- GAME_STATE$new(test_levels[[2]])
 test_levels[[3]] <- list(
   description = "Test $attack_routine() on death",
   size = c(1,3),
-  warrior = WARRIOR$new()$set_loc(1, 1),
+  warrior = warrior_here(1, 1),
   npcs = list(
     sludge_here(1, 2)
   ),
@@ -43,7 +43,7 @@ game_state_test_3_1$npcs[[1]]$hp <- 2
 test_levels[[4]] <- list(
   description = "Test multiple objects at a location causes error on $ascii",
   size = c(1,3),
-  warrior = WARRIOR$new()$set_loc(1, 1),
+  warrior = warrior_here(1, 1),
   npcs = list(
     sludge_here(1, 2),
     archer_here(1, 2)
@@ -58,7 +58,7 @@ game_state_test_4_1 <- GAME_STATE$new(test_levels[[4]])
 test_levels[[4]] <- list(
   description = "Test multiple objects at a location causes error on $ascii",
   size = c(1,3),
-  warrior = WARRIOR$new()$set_loc(1, 1),
+  warrior = warrior_here(1, 1),
   npcs = list(
     sludge_here(1, 2),
     archer_here(1, 2)
@@ -73,7 +73,7 @@ game_state_test_4_1 <- GAME_STATE$new(test_levels[[4]])
 test_levels[[5]] <- list(
   description = "Test that look finds objects 3 spaces away",
   size = c(1,5),
-  warrior = WARRIOR$new()$set_loc(1, 1),
+  warrior = warrior_here(1, 1),
   npcs = list(
     sludge_here(1, 4)
   ),
@@ -87,7 +87,7 @@ game_state_test_5_1 <- GAME_STATE$new(test_levels[[5]])
 test_levels[[6]] <- list(
   description = "Test that look does not find objects 4 spaces away",
   size = c(1,6),
-  warrior = WARRIOR$new()$set_loc(1, 1),
+  warrior = warrior_here(1, 1),
   npcs = list(
     sludge_here(1, 5)
   ),
@@ -139,7 +139,7 @@ test_that("GAME_STATE class", {
                "Sludge dies.", all = FALSE)
   expect_error(game_state_2_1$attack_routine(game_state_2_1$warrior, game_state_2_1$npcs[[1]], "forward", attack_type = "gorilla"), "attack_routine() unknown attack_type", fixed = TRUE)
   # ascii
-  expect_equal(GAME_STATE$new(levels_beginner[[1]])$ascii, paste0("——————————\n|", WARRIOR$new()$set_compass(1i)$symbol, "      ", stairs_here(c(1,1))()()$symbol, "|\n——————————\n"))
+  expect_equal(GAME_STATE$new(levels_beginner[[1]])$ascii, paste0("——————————\n|", WARRIOR$new()$set_compass(1i)$symbol, "      ", stairs_here(c(1,1))()$symbol, "|\n——————————\n"))
   expect_error(GAME_STATE$new(levels_beginner[[1]])$ascii <- "duck")
   expect_error(game_state_test_4_1$ascii, "More than one object at location")
   # at_stairs
