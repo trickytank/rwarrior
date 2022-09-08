@@ -34,7 +34,7 @@ This is a port of [Ruby Warrior](https://github.com/ryanb/ruby-warrior) by Ryan 
 Levels should be played in sequential order. 
 So far, the beginner tower has been implemented with 9 levels.
 
-To play the first level, first read the level read me. 
+To start off, read the level read me for the first level. 
 
 ```{r}
 level_readme(1)
