@@ -3,7 +3,8 @@ Type: Package
 Title: R Warrior - An AI Programming Game
 Version: 0.4.1.9000
 Authors@R: c(
-  person("Rick M", "Tankard", email = "rickmtankard@gmail.com", role = c("cre", "aut"),
+  person("Rick M", "Tankard", role = c("cre", "aut"),
+    email = "rickmtankard@gmail.com",
     comment = c(ORCID = "0000-0002-8847-9401"))
   )
 Description: A port of Ruby Warrior.
