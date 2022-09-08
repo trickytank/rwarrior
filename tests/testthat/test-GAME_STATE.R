@@ -122,7 +122,7 @@ test_that("GAME_STATE class", {
   expect_equal(game_state_2_1$feel_symbol(game_state_2_1$warrior, "back"), wall$symbol)
   expect_false(game_state_2_1$feel_symbol(game_state_2_1$warrior, "back") != wall$symbol)
   expect_equal(ansi_strip(game_state_test_2_1$feel_symbol(game_state_test_2_1$warrior, "f")), ansi_strip(sludge_here(1,1)()$symbol))
-  expect_equal(game_state_test_2_1$feel_symbol(game_state_test_2_1$npcs[[1]], "f"), WARRIOR$new()$set_compass(1i)$symbol)
+  expect_equal(game_state_test_2_1$feel_symbol(game_state_test_2_1$npcs[[1]], "f") %>% ansi_strip, warrior_here(1, 1, compass = 1i)()$symbol %>% ansi_strip)
   # look
   expect_equal(game_state_1_1$look_first_symbol(game_state_1_1$warrior), empty$symbol)
   # look: check that look finds objects 2 and 3 spaces away, but not 4
