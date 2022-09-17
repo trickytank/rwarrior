@@ -7,9 +7,11 @@
 #' @export
 rw_code_interface <- R6Class(
   "rw_code_interface",
-  warrior = NULL,
-  npcs = NULL,
+  game_state = NULL,
+  level = NULL,
+  levels = NULL,
   points = NULL,
+  practice = NULL,
   epic = NULL,
   ai = NULL,
   initialize = function(
@@ -20,16 +22,33 @@ rw_code_interface <- R6Class(
     practice = FALSE,
     epic = FALSE) {
       checkmate::assert_function(ai)
-      checkmate::assert_int(level)
+      checkmate::assert_int(level, lower = 1L)
       if(is.list(tower)) {
-        levels <- tower
+        self$levels <- tower
+        tower <- "custom" # used later
       } else {
         tower <- match.arg(tower)
         if(tower == "beginner") {
-          levels <- levels_beginner
+          self$levels <- levels_beginner
         }
       }
       self$ai <- ai
+      self$practice <- practice
+      self$epic <- epic
+      if(level > length(levels)) {
+        stop("Level ", level, " does not exist in the ", tower, " tower.")
+      }
+      self$new_level(level)
+  },
+  new_level = function(level) {
+    self$game_state <- GAME_STATE$new(self$levels[[level]])
+    self$level <- level
+    if(self$practice || self$epic) {
+      # Assume that the final level warrior has all the abilities to be used
+      cw <- self$game_state$warrior
+      self$game_state$warrior <- GAME_STATE$new(last(self$levels))$warrior$set_loc(cw$I, cw$J, cw$compass)
+    }
+    self
   },
   next_event = function() {
 
