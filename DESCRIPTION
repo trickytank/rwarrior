@@ -1,6 +1,6 @@
 Package: rwarrior
 Type: Package
-Title: R Warrior - An AI Programming Game
+Title: R Warrior - An AI Programming Game (A port of Ruby Warrior)
 Version: 0.4.1.9000
 Authors@R: c(
   person("Rick M", "Tankard", role = c("cre", "aut"),
