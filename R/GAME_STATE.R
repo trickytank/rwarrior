@@ -13,6 +13,9 @@ GAME_STATE <- R6Class(
     level_ace_score = NULL,
     level_clue = NULL,
     fail = FALSE,
+    complete = FALSE,
+    turn_number = 0L,
+    points = 0L,
     initialize = function(level_spec) {
       self$npcs <- list()
       for(i in seq_along(level_spec$npcs)) {
